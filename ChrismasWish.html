@@ -31,7 +31,7 @@
         h1 {
             position: absolute;
             margin: auto;
-            top: 50%;
+            top: 30%;
             left: 50%;
             -webkit-transform: translate(-50%, -50%);
             -moz-transform: translate(-50%, -50%);
@@ -70,6 +70,20 @@
             width: 100%;
             height: 100%;
         }
+        
+        #middlebox {
+            position: absolute;
+            top: 55%;
+            left: 25%;
+            background: url('kerstpapier.JPG');
+            width: 50%;
+            height: 280px;
+        }
+        
+        .letterType {
+            margin: 5%;
+            color: black;
+        }
     </style>
 </head>
 
@@ -78,6 +92,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Codystar">
     <h1>HAPPY XMAS!</h1>
     <div id="snow"></div>
+
+    <div id="middlebox">
+        <h2 class="letterType">GeeksforGeeks:</h2>
+        <p class="letterType">
+            The course focuses on various MCQ's & Coding question likely to be asked in the interviews & make your upcoming placement season efficient and successful.
+        </p>
+    </div>
 
 </body>
 
@@ -88,7 +109,7 @@
     var Snowflake = (function() {
 
         var flakes;
-        var flakesTotal = 250;
+        var flakesTotal = 150;
         var wind = 0;
         var mouseX;
         var mouseY;
