@@ -7,15 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         html {
-            height: 100%;
-            overflow: hidden;
+            height: 120%;
+            overflow: scroll;
         }
         
         body {
             margin: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            overflow: scroll;
             color: #fff;
             background-color: #9cf;
             background-image: -webkit-gradient(linear, left top, left bottom, from(#6af), to(#bdf));
@@ -78,26 +78,27 @@
         }
         
         #snow {
-            position: absolute;
+            position: relative;
             width: 100%;
             height: 100%;
         }
         
         #middlebox {
             position: absolute;
-            top: 55%;
             left: 20%;
+            top: 55%;
             background: url('kerstpapier.JPG');
             border-style: outset;
             width: 60%;
             min-width: 250;
-            height: auto;
+            margin-bottom: 100px;
         }
         
         .letterType {
             margin: 5%;
             color: black;
             text-align: center;
+            font-size: 1.8em;
             font-family: "Lucida Handwriting", Cursive;
         }
         
@@ -108,19 +109,19 @@
 </head>
 
 <body>
-    <div class="maxWidth">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Codystar">
-        <h1>HAPPY XMAS</h1>
-        <div id="snow"></div>
 
-        <div id="middlebox">
-            <h2 class="letterType">[Naam]</h2>
-            <p class="letterType">
-                Ik wens je hele Fijne Kerstdagen <br> en een heel gelukkig,<br> gezond en voorspoedig Nieuwjaar!<br>
-            </p>
-            <h4 class="letterType"> Quinten</h4>
-        </div>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Codystar">
+    <h1>HAPPY XMAS</h1>
+    <div id="snow"></div>
+
+    <div id="middlebox">
+        <h2 class="letterType">[Naam]</h2>
+        <p class="letterType">
+            Ik wens je hele Fijne Kerstdagen <br> en een heel gelukkig,<br> gezond en voorspoedig Nieuwjaar!<br>
+        </p>
+        <h4 class="letterType"> Quinten</h4>
     </div>
+
 </body>
 
 </html>
@@ -130,7 +131,7 @@
     var Snowflake = (function() {
 
         var flakes;
-        var flakesTotal = 150;
+        var flakesTotal = 75;
         var wind = 0;
         var mouseX;
         var mouseY;
