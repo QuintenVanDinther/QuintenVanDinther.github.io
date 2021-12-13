@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Page Title</title>
+    <title>Kerst kaart</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -33,6 +33,7 @@
             margin: auto;
             top: 30%;
             left: 50%;
+            color: rgb(223, 0, 0);
             -webkit-transform: translate(-50%, -50%);
             -moz-transform: translate(-50%, -50%);
             -ms-transform: translate(-50%, -50%);
@@ -76,6 +77,7 @@
             top: 55%;
             left: 25%;
             background: url('kerstpapier.JPG');
+            border-style: outset;
             width: 50%;
             height: 280px;
         }
@@ -84,22 +86,26 @@
             margin: 5%;
             color: black;
         }
+        
+        .maxWidth {
+            max-width: 80%;
+        }
     </style>
 </head>
 
 <body>
+    <div class="maxWidth">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Codystar">
+        <h1>HAPPY XMAS</h1>
+        <div id="snow"></div>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Codystar">
-    <h1>HAPPY XMAS!</h1>
-    <div id="snow"></div>
-
-    <div id="middlebox">
-        <h2 class="letterType">GeeksforGeeks:</h2>
-        <p class="letterType">
-            The course focuses on various MCQ's & Coding question likely to be asked in the interviews & make your upcoming placement season efficient and successful.
-        </p>
+        <div id="middlebox">
+            <h2 class="letterType">GeeksforGeeks:</h2>
+            <p class="letterType">
+                The course focuses on various MCQ's & Coding question likely to be asked in the interviews & make your upcoming placement season efficient and successful.
+            </p>
+        </div>
     </div>
-
 </body>
 
 </html>
@@ -132,7 +138,7 @@
             if (this.hit) {
                 if (Math.random() > 0.995) this.melt = true;
             } else {
-                this.x += this.vx + Math.min(Math.max(wind, -10), 10);
+                this.x += this.vx + Math.min(Math.max(wind, -5), 5);
                 this.y += this.vy;
             }
 
