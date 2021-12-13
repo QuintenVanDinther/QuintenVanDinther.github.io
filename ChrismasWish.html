@@ -44,6 +44,16 @@
             pointer-events: none;
             -webkit-user-select: none;
             user-select: none;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        @-webkit-keyframes glow {
+            from {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+            }
+            to {
+                text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+            }
         }
         
         .snowflake {
@@ -87,6 +97,8 @@
         .letterType {
             margin: 5%;
             color: black;
+            text-align: center;
+            font-family: "Lucida Handwriting", Cursive;
         }
         
         .maxWidth {
@@ -102,11 +114,11 @@
         <div id="snow"></div>
 
         <div id="middlebox">
-            <h2 class="letterType">GeeksforGeeks:</h2>
+            <h2 class="letterType">[Naam]</h2>
             <p class="letterType">
-                The course focuses on various MCQ's & Coding question likely to be asked in the interviews & make your upcoming placement season efficient and successful.
+                Ik wens je hele Fijne Kerstdagen <br> en een heel gelukkig,<br> gezond en voorspoedig Nieuwjaar!<br>
             </p>
-            <h4 class="letterType">Veel liefs Quinten:</h4>
+            <h4 class="letterType"> Quinten</h4>
         </div>
     </div>
 </body>
