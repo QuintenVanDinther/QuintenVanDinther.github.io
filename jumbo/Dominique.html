@@ -87,7 +87,19 @@
             position: absolute;
             left: 20%;
             top: 55%;
-            background: url('../kerstpapier.JPG');
+            background: url('kerstpapier.JPG');
+            border-style: outset;
+            width: 60%;
+            min-width: 250;
+            margin-bottom: 100px;
+        }
+        #show {
+            position: absolute;
+            left: 20%;
+            top: 55%;
+            font-size: 2.5em;
+            font-family: "Lucida Handwriting", Cursive;
+            background: url('kerstpapier.JPG');
             border-style: outset;
             width: 60%;
             min-width: 250;
@@ -108,24 +120,42 @@
     </style>
 </head>
 
-<body>
-
+<body>  
+    <audio controls autoplay id="myAudio" style= "visibility: hidden;">
+        <source src="ScottHolmesMusic-JingleBells.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+      </audio>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Codystar">
     <h1>HAPPY XMAS</h1>
     <div id="snow"></div>
+    
+     <button id="show">Open mijn Kerstkaart</button>
 
     <div id="middlebox">
         <h2 class="letterType">Dominique</h2>
         <p class="letterType">
-            Ik wens je hele Fijne Kerstdagen <br> en een heel gelukkig,<br> gezond en voorspoedig Nieuwjaar!<br> Mag 2022 het jaar worden waar jij veel leuke <br> dingen mag gaan doen en dat jij je diploma weet te halen. 
+            Ik wens je hele Fijne Kerstdagen <br> en een heel gelukkig,<br> gezond en voorspoedig Nieuwjaar!<br> Mag 2022 het jaar worden waar jij je diploma weet te halen en Mag beginnen aan je vervolgstudie.
         </p>
+
         <h4 class="letterType"> Quinten</h4>
     </div>
+   
 
 </body>
 
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    $(document).ready(function(){
+        $("#middlebox").hide();
+      $("#show").click(function(){
+        $("#middlebox").slideDown();
+        $("#show").hide();
+        var x = document.getElementById("myAudio");
+        x.play();
+      });
+    });
+    
     // Happy Xmas! by @neave
 
     var Snowflake = (function() {
