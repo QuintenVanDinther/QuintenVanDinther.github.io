@@ -121,7 +121,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	coneMaterial.setView(identityMatrix);
 	coneMaterial.setModel(offsetMatrixCone);
 
-	coneMaterial.setColor([0.6, 0.2, 1.0, 1.0]);
+	coneMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
 
 	xrSession.requestReferenceSpace("local-floor").then((refSpace) => { // we request our referance space - an object that defines where the center of our space lies. Here we request a local-floor referance space - that one defines the center of the world to be where the center of the ground is
 		xrRefSpace = refSpace; // we set our referance space to be the one returned by this function
