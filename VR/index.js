@@ -87,15 +87,15 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 	planeMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
 
-	const cubeMesh = new ezgfx.Mesh();
-	cubeMesh.loadFromOBJ("./cube.obj");
+// 	const cubeMesh = new ezgfx.Mesh();
+// 	cubeMesh.loadFromOBJ("./cube.obj");
 
-	const cubeMaterial = new ezgfx.Material();
-	cubeMaterial.setProjection(identityMatrix);
-	cubeMaterial.setView(identityMatrix);
-	cubeMaterial.setModel(offsetMatrix);
+// 	const cubeMaterial = new ezgfx.Material();
+// 	cubeMaterial.setProjection(identityMatrix);
+// 	cubeMaterial.setView(identityMatrix);
+// 	cubeMaterial.setModel(offsetMatrix);
 
-	cubeMaterial.setColor([0.4, 0.3, 1.0, 1.0]);
+// 	cubeMaterial.setColor([0.4, 0.3, 1.0, 1.0]);
 
 	const cilinderMesh = new ezgfx.Mesh();
 	cilinderMesh.loadFromOBJ("./cilinder.obj");
@@ -134,10 +134,10 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(planeMesh, planeMaterial);
 
-				cubeMaterial.setProjection(view.projectionMatrix);
-				cubeMaterial.setView(view.transform.inverse.matrix);
+// 				cubeMaterial.setProjection(view.projectionMatrix);
+// 				cubeMaterial.setView(view.transform.inverse.matrix);
 				
-				renderer.draw(cubeMesh, cubeMaterial);
+// 				renderer.draw(cubeMesh, cubeMaterial);
 
 				cilinderMaterial.setProjection(view.projectionMatrix);
 				cilinderMaterial.setView(view.transform.inverse.matrix);
