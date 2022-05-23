@@ -82,6 +82,12 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		2.0, 1.0, 0.0, 1.0
 	]);
+	const offsetMatrixPlanet = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		2.0, 1.0, 0.0, 1.0
+	]);
 	
 	const planeMesh = new ezgfx.Mesh();
 	planeMesh.loadFromOBJ("./plane.obj");
@@ -122,6 +128,16 @@ function onSessionStarted(_session) { // this function defines what happens when
 	coneMaterial.setModel(offsetMatrixCone);
 
 	coneMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
+
+	const planetMesh = new ezgfx.Mesh();
+	planetMesh.loadFromOBJ("./planet.obj");
+
+	const planetMaterial = new ezgfx.Material();
+	planetMaterial.setProjection(identityMatrix);
+	planetMaterial.setView(identityMatrix);
+	planetMaterial.setModel(offsetMatrixPlanet);
+
+	planetMaterial.setColor([0.9, 0.0, 0.0, 1.0]);
 
 	xrSession.requestReferenceSpace("local-floor").then((refSpace) => { // we request our referance space - an object that defines where the center of our space lies. Here we request a local-floor referance space - that one defines the center of the world to be where the center of the ground is
 		xrRefSpace = refSpace; // we set our referance space to be the one returned by this function
@@ -164,6 +180,11 @@ function onSessionStarted(_session) { // this function defines what happens when
 				coneMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(coneMesh, coneMaterial);
+
+				planetMaterial.setProjection(view.projectionMatrix);
+				planetMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(planetMesh, planetMaterial);
 			}
 		}
 	}
