@@ -86,7 +86,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		2.0, 1.0, 0.0, 1.0
+		-5.0, 5.0, 0.0, 1.0
 	]);
 	
 	const planeMesh = new ezgfx.Mesh();
