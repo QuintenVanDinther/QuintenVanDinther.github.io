@@ -80,7 +80,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		2.0, 1.0, -5.0, 1.0
+		2.0, 1.0, 0.0, 1.0
 	]);
 	
 	const planeMesh = new ezgfx.Mesh();
@@ -114,7 +114,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	cilinderMaterial.setColor([0.6, 0.2, 1.0, 1.0]);
 
 	const coneMesh = new ezgfx.Mesh();
-	coneMesh.loadFromOBJ("./cilinder.obj");
+	coneMesh.loadFromOBJ("./cone.obj");
 
 	const coneMaterial = new ezgfx.Material();
 	coneMaterial.setProjection(identityMatrix);
