@@ -70,6 +70,12 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, -5.0, 1.0
 	]);
+	const offsetMatrixCilinder = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		2.0, 1.0, 5.0, 1.0
+	]);
 	
 	const planeMesh = new ezgfx.Mesh();
 	planeMesh.loadFromOBJ("./plane.obj");
@@ -90,6 +96,16 @@ function onSessionStarted(_session) { // this function defines what happens when
 	cubeMaterial.setModel(offsetMatrix);
 
 	cubeMaterial.setColor([0.4, 0.3, 1.0, 1.0]);
+
+	const cilinderMesh = new ezgfx.Mesh();
+	cilinderMesh.loadFromOBJ("./cilinder.obj");
+
+	const cilinderMaterial = new ezgfx.Material();
+	cilinderMaterial.setProjection(identityMatrix);
+	cilinderMaterial.setView(identityMatrix);
+	cilinderMaterial.setModel(offsetMatrix);
+
+	cilinderMaterial.setColor([0.6, 0.2, 1.0, 1.0]);
 
 	xrSession.requestReferenceSpace("local-floor").then((refSpace) => { // we request our referance space - an object that defines where the center of our space lies. Here we request a local-floor referance space - that one defines the center of the world to be where the center of the ground is
 		xrRefSpace = refSpace; // we set our referance space to be the one returned by this function
@@ -122,6 +138,11 @@ function onSessionStarted(_session) { // this function defines what happens when
 				cubeMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(cubeMesh, cubeMaterial);
+
+				cilinderMaterial.setProjection(view.projectionMatrix);
+				cilinderMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(cilinderMesh, cilinderMaterial);
 			}
 		}
 	}
