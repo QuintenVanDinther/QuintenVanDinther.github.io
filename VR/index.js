@@ -2,12 +2,31 @@
 //import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
 //const polyfill = new WebXRPolyfill();
 
+// this function multiplies a 4d vector by a 4x4 matrix (it applies all the matrix operations to the vector)
+function mulVecByMat(out, m, v) {
+	out[0] = m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3] * v[3];
+	out[1] = m[4] * v[0] + m[5] * v[1] + m[6] * v[2] + m[7] * v[3];
+	out[2] = m[8] * v[0] + m[9] * v[1] + m[10] * v[2] + m[11] * v[3];
+	out[3] = m[12] * v[0] + m[13] * v[1] + m[14] * v[2] + m[15] * v[3];
+}
+
 let canvas = null; // we'll keep it as a global object
 
 // XR globals.
 let xrButton = document.getElementById("xr-button");
 let xrSession = null;
 let xrRefSpace = null;
+
+function onControllerUpdate(session, frame) { // this function will be called every frame, before rendering
+	for(let inputSource of session.inputSources) { // we loop through every input source (controller) caught by our session
+		if(inputSource.gripSpace) { // we check if our controllers actually have their space
+			let gripPose = frame.getPose(inputSource.gripSpace, xrRefSpace); // we get controller's pose, by comparing our controller's space to our referance space
+			if(gripPose) { // we check if our controller's pose was gotten correctly
+				controllers[inputSource.handedness] = {pose: gripPose, gamepad: inputSource.gamepad}; // inputSource.handedness returns a string representing in which hand we have our controller - that is "left" or "right". Which means that controllers.left and controllers.right will contain two elements, one named "pose", which will simply be their corresponding XRPose, and the second named "gamepad", which will contain their corresponding Gamepad object. 
+			}
+		}
+	}
+}
 
 function onResize() { // this function resizes our canvas in a way, that makes it fit the entire screen perfectly!
 	canvas.width = canvas.clientWidth * window.devicePixelRatio;
@@ -86,7 +105,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		-5.0, 5.0, 0.0, 1.0
+		2.0, 1.0, 0.0, 1.0
 	]);
 	
 	const planeMesh = new ezgfx.Mesh();
@@ -139,6 +158,14 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 	planetMaterial.setColor([0.9, 0.0, 0.0, 1.0]);
 
+	const controllerMesh = new ezgfx.Mesh();
+	controllerMesh.loadFromOBJ("./controller.obj");
+
+	const controllerMaterial = new ezgfx.Material();
+	controllerMaterial.setProjection(identityMatrix);
+	controllerMaterial.setView(identityMatrix);
+	controllerMaterial.setModel(identityMatrix);
+
 	xrSession.requestReferenceSpace("local-floor").then((refSpace) => { // we request our referance space - an object that defines where the center of our space lies. Here we request a local-floor referance space - that one defines the center of the world to be where the center of the ground is
 		xrRefSpace = refSpace; // we set our referance space to be the one returned by this function
 		
@@ -153,6 +180,38 @@ function onSessionStarted(_session) { // this function defines what happens when
 		if(pose) { // if the pose was possible to get (if the headset responds)
 			let glLayer = session.renderState.baseLayer; // get the WebGL layer (it contains some important information we need)
 	
+			onControllerUpdate(session, frame); // update the controllers' state
+			
+			// we get our controller's center and front
+			let front = [0.0, 0.0, 0.0, 1.0];
+			let center = [0.0, 0.0, 0.0, 1.0];
+
+			let matrix = controllers.left.pose.transform.matrix;
+
+			mulVecByMat(front, matrix, [0.0, 0.0, -1.0, 1.0]);
+			mulVecByMat(center, matrix, [0.0, 0.0, 0.0, 1.0]);
+
+			// we convert front and center into the direction
+			let xDir = front[0] - center[0];
+			let zDir = front[1] - center[1];
+			xDir = -xDir;
+
+			// we normalize the direction
+			const l = Math.sqrt(xDir * xDir + zDir * zDir);
+			xDir = xDir / l;
+			zDir = zDir / l;
+
+			// we set our offsets up, this will include both the direction of the controller and the direction of our analog sticks
+			let xOffset = controllers.left.gamepad.axes[3] * xDir + controllers.left.gamepad.axes[2] * zDir;
+			let zOffset = controllers.left.gamepad.axes[3] * zDir - controllers.left.gamepad.axes[2] * xDir;
+
+			// we slow it down a little bit, so that it will not make us nauseous once we move 
+			xOffset *= 0.1; 
+			zOffset *= 0.1;
+
+			// we offset our reference space
+			xrRefSpace = xrRefSpace.getOffsetReferenceSpace(new XRRigidTransform({x: xOffset, y: 0.0, z: zOffset})); 
+			
 			gl.bindFramebuffer(gl.FRAMEBUFFER, glLayer.framebuffer); // sets the framebuffer (drawing target of WebGL) to be our WebXR display's framebuffer
 			
 			renderer.clear([0.3, 1.0, 0.4, 1.0]);
@@ -185,6 +244,33 @@ function onSessionStarted(_session) { // this function defines what happens when
 				planetMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(planetMesh, planetMaterial);
+				
+				if(controllers.left) { // checks if WebXR got our left controller
+					controllerMaterial.setProjection(view.projectionMatrix);
+					controllerMaterial.setView(view.transform.inverse.matrix);
+					controllerMaterial.setModel(controllers.left.pose.transform.matrix); // we just get our model matrix for the controller
+					
+					const red = controllers.left.gamepad.buttons[0].value; // left controller's trigger's value
+					const green = controllers.left.gamepad.buttons[1].value; // left controller's grab's value
+					const blue = controllers.left.gamepad.buttons[4].value; // left controller's X button's value
+
+					controllerMaterial.setColor([red, green, blue, 1.0]); // color white
+
+					renderer.draw(controllerMesh, controllerMaterial);
+				}
+				if(controllers.right) { // checks if WebXR got our right controller
+					controllerMaterial.setProjection(view.projectionMatrix);
+					controllerMaterial.setView(view.transform.inverse.matrix);
+					controllerMaterial.setModel(controllers.right.pose.transform.matrix); // we just get our model matrix for the controller
+					
+					const red = controllers.right.gamepad.buttons[0].value; // left controller's trigger's value
+					const green = controllers.right.gamepad.buttons[1].value; // left controller's grab's value
+					const blue = controllers.right.gamepad.buttons[4].value; // left controller's A button's value
+
+					controllerMaterial.setColor([red, green, blue, 1.0]); // color black
+
+					renderer.draw(controllerMesh, controllerMaterial);
+				}
 			}
 		}
 	}
