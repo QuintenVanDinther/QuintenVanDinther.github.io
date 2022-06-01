@@ -1,6 +1,6 @@
 // Polyfill makes it possible to run WebXR on devices that support only WebVR.
-import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
-const polyfill = new WebXRPolyfill();
+//import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
+//const polyfill = new WebXRPolyfill();
 
 // this function multiplies a 4d vector by a 4x4 matrix (it applies all the matrix operations to the vector)
 function mulVecByMat(out, m, v) {
@@ -106,7 +106,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
 		2.0, 1.0, 0.0, 1.0
-	]); 
+	]);
 	
 	const planeMesh = new ezgfx.Mesh();
 	planeMesh.loadFromOBJ("./plane.obj");
