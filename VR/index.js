@@ -1,6 +1,6 @@
 // Polyfill makes it possible to run WebXR on devices that support only WebVR.
-import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
-const polyfill = new WebXRPolyfill();
+//import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
+//const polyfill = new WebXRPolyfill();
 
 // this function multiplies a 4d vector by a 4x4 matrix (it applies all the matrix operations to the vector)
 function mulVecByMat(out, m, v) {
@@ -16,8 +16,6 @@ let canvas = null; // we'll keep it as a global object
 let xrButton = document.getElementById("xr-button");
 let xrSession = null;
 let xrRefSpace = null;
-
-let controllers = {};
 
 function onControllerUpdate(session, frame) { // this function will be called every frame, before rendering
 	for(let inputSource of session.inputSources) { // we loop through every input source (controller) caught by our session
@@ -89,7 +87,25 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
+		-2.0, 1.0, 5.0, 1.0
+	]);
+	const offsetMatrixCilinder = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, -5.0, 1.0
+	]);
+	const offsetMatrixCone = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		2.0, 1.0, 0.0, 1.0
+	]);
+	const offsetMatrixPlanet = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		2.0, 1.0, 0.0, 1.0
 	]);
 	
 	const planeMesh = new ezgfx.Mesh();
@@ -112,6 +128,36 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 	cubeMaterial.setColor([0.4, 0.3, 1.0, 1.0]);
 
+	const cilinderMesh = new ezgfx.Mesh();
+	cilinderMesh.loadFromOBJ("./cilinder.obj");
+
+	const cilinderMaterial = new ezgfx.Material();
+	cilinderMaterial.setProjection(identityMatrix);
+	cilinderMaterial.setView(identityMatrix);
+	cilinderMaterial.setModel(offsetMatrixCilinder);
+
+	cilinderMaterial.setColor([0.6, 0.2, 1.0, 1.0]);
+
+	const coneMesh = new ezgfx.Mesh();
+	coneMesh.loadFromOBJ("./cone.obj");
+
+	const coneMaterial = new ezgfx.Material();
+	coneMaterial.setProjection(identityMatrix);
+	coneMaterial.setView(identityMatrix);
+	coneMaterial.setModel(offsetMatrixCone);
+
+	coneMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
+
+	const planetMesh = new ezgfx.Mesh();
+	planetMesh.loadFromOBJ("./planet.obj");
+
+	const planetMaterial = new ezgfx.Material();
+	planetMaterial.setProjection(identityMatrix);
+	planetMaterial.setView(identityMatrix);
+	planetMaterial.setModel(offsetMatrixPlanet);
+
+	planetMaterial.setColor([0.9, 0.0, 0.0, 1.0]);
+
 	const controllerMesh = new ezgfx.Mesh();
 	controllerMesh.loadFromOBJ("./controller.obj");
 
@@ -130,7 +176,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		const session = frame.session; // frame is a frame handling object - it's used to get frame sessions, frame WebGL layers and some more things
 		session.requestAnimationFrame(onSessionFrame); // we simply set our animation frame function to be this function again
 		let pose = frame.getViewerPose(xrRefSpace); // gets the pose of the headset, relative to the previously gotten referance space
-
+	
 		if(pose) { // if the pose was possible to get (if the headset responds)
 			let glLayer = session.renderState.baseLayer; // get the WebGL layer (it contains some important information we need)
 	
@@ -169,8 +215,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 			gl.bindFramebuffer(gl.FRAMEBUFFER, glLayer.framebuffer); // sets the framebuffer (drawing target of WebGL) to be our WebXR display's framebuffer
 			
 			renderer.clear([0.3, 1.0, 0.4, 1.0]);
-
-
+			
 			for(let view of pose.views) { // we go through every single view out of our camera's views
 				let viewport = glLayer.getViewport(view); // we get the viewport of our view (the place on the screen where things will be drawn)
 				gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height); // we set our viewport appropriately
@@ -184,7 +229,22 @@ function onSessionStarted(_session) { // this function defines what happens when
 				cubeMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(cubeMesh, cubeMaterial);
-			
+
+				cilinderMaterial.setProjection(view.projectionMatrix);
+				cilinderMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(cilinderMesh, cilinderMaterial);
+
+				coneMaterial.setProjection(view.projectionMatrix);
+				coneMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(coneMesh, coneMaterial);
+
+				planetMaterial.setProjection(view.projectionMatrix);
+				planetMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(planetMesh, planetMaterial);
+				
 				if(controllers.left) { // checks if WebXR got our left controller
 					controllerMaterial.setProjection(view.projectionMatrix);
 					controllerMaterial.setView(view.transform.inverse.matrix);
