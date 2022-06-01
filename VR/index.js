@@ -1,6 +1,6 @@
 // Polyfill makes it possible to run WebXR on devices that support only WebVR.
-import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
-const polyfill = new WebXRPolyfill();
+//import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
+//const polyfill = new WebXRPolyfill();
 
 // this function multiplies a 4d vector by a 4x4 matrix (it applies all the matrix operations to the vector)
 function mulVecByMat(out, m, v) {
@@ -89,7 +89,25 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
+		-2.0, 1.0, 5.0, 1.0
+	]);
+	const offsetMatrixCilinder = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, -5.0, 1.0
+	]);
+	const offsetMatrixCone = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		2.0, 1.0, 0.0, 1.0
+	]);
+	const offsetMatrixPlanet = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		2.0, 1.0, 0.0, 1.0
 	]);
 	
 	const planeMesh = new ezgfx.Mesh();
@@ -111,6 +129,29 @@ function onSessionStarted(_session) { // this function defines what happens when
 	cubeMaterial.setModel(offsetMatrix);
 
 	cubeMaterial.setColor([0.4, 0.3, 1.0, 1.0]);
+
+	const cilinderMesh = new ezgfx.Mesh();
+	cilinderMesh.loadFromOBJ("./cilinder.obj");
+
+	const cilinderMaterial = new ezgfx.Material();
+	cilinderMaterial.setProjection(identityMatrix);
+	cilinderMaterial.setView(identityMatrix);
+	cilinderMaterial.setModel(offsetMatrixCilinder);
+
+	cilinderMaterial.setColor([0.6, 0.2, 1.0, 1.0]);
+
+	const coneMesh = new ezgfx.Mesh();
+	coneMesh.loadFromOBJ("./cone.obj");
+
+	const coneMaterial = new ezgfx.Material();
+	coneMaterial.setProjection(identityMatrix);
+	coneMaterial.setView(identityMatrix);
+	coneMaterial.setModel(offsetMatrixCone);
+
+	coneMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
+
+	const planetMesh = new ezgfx.Mesh();
+	planetMesh.loadFromOBJ("./planet.obj");
 
 	const controllerMesh = new ezgfx.Mesh();
 	controllerMesh.loadFromOBJ("./controller.obj");
@@ -184,6 +225,21 @@ function onSessionStarted(_session) { // this function defines what happens when
 				cubeMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(cubeMesh, cubeMaterial);
+
+				cilinderMaterial.setProjection(view.projectionMatrix);
+				cilinderMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(cilinderMesh, cilinderMaterial);
+
+				coneMaterial.setProjection(view.projectionMatrix);
+				coneMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(coneMesh, coneMaterial);
+
+				planetMaterial.setProjection(view.projectionMatrix);
+				planetMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(planetMesh, planetMaterial);
 			
 				if(controllers.left) { // checks if WebXR got our left controller
 					controllerMaterial.setProjection(view.projectionMatrix);
