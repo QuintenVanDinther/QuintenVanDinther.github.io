@@ -111,33 +111,81 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
+		-2.0, 1.0, 5.0, 1.0
+	]);
+	const offsetMatrixCilinder = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, -5.0, 1.0
+	]);
+	const offsetMatrixCone = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		2.0, 1.0, 0.0, 1.0
+	]);
+	const offsetMatrixPlanet = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		-2.0, 3.0, 0.0, 1.0
 	]);
 	
 	const planeMesh = new ezgfx.Mesh();
 	planeMesh.loadFromOBJ("./plane.obj");
 
-	const planeMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	const planeMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	planeMaterial.setProjection(identityMatrix);
 	planeMaterial.setView(identityMatrix);
 	planeMaterial.setModel(identityMatrix);
-	
+
 	planeMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
 
 	const cubeMesh = new ezgfx.Mesh();
 	cubeMesh.loadFromOBJ("./cube.obj");
 
-	const cubeMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	const cubeMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	cubeMaterial.setProjection(identityMatrix);
 	cubeMaterial.setView(identityMatrix);
 	cubeMaterial.setModel(offsetMatrix);
 
 	cubeMaterial.setColor([0.4, 0.3, 1.0, 1.0]);
 
+	const cilinderMesh = new ezgfx.Mesh();
+	cilinderMesh.loadFromOBJ("./cilinder.obj");
+
+	const cilinderMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	cilinderMaterial.setProjection(identityMatrix);
+	cilinderMaterial.setView(identityMatrix);
+	cilinderMaterial.setModel(offsetMatrixCilinder);
+
+	cilinderMaterial.setColor([0.6, 0.2, 1.0, 1.0]);
+
+	const coneMesh = new ezgfx.Mesh();
+	coneMesh.loadFromOBJ("./cone.obj");
+
+	const coneMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	coneMaterial.setProjection(identityMatrix);
+	coneMaterial.setView(identityMatrix);
+	coneMaterial.setModel(offsetMatrixCone);
+
+	coneMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
+
+	const planetMesh = new ezgfx.Mesh();
+	planetMesh.loadFromOBJ("./planet.obj");
+
+	const planetMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	planetMaterial.setProjection(identityMatrix);
+	planetMaterial.setView(identityMatrix);
+	planetMaterial.setModel(offsetMatrixPlanet);
+
+	planetMaterial.setColor([0.9, 0.0, 0.0, 1.0]);
+
 	const controllerMesh = new ezgfx.Mesh();
 	controllerMesh.loadFromOBJ("./controller.obj");
 
-	const controllerMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	const controllerMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	controllerMaterial.setProjection(identityMatrix);
 	controllerMaterial.setView(identityMatrix);
 	controllerMaterial.setModel(identityMatrix);
@@ -200,6 +248,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				let viewport = glLayer.getViewport(view); // we get the viewport of our view (the place on the screen where things will be drawn)
 				gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height); // we set our viewport appropriately
 	
+				
 				planeMaterial.setProjection(view.projectionMatrix);
 				planeMaterial.setView(view.transform.inverse.matrix);
 				
@@ -209,6 +258,21 @@ function onSessionStarted(_session) { // this function defines what happens when
 				cubeMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(cubeMesh, cubeMaterial);
+
+				cilinderMaterial.setProjection(view.projectionMatrix);
+				cilinderMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(cilinderMesh, cilinderMaterial);
+
+				coneMaterial.setProjection(view.projectionMatrix);
+				coneMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(coneMesh, coneMaterial);
+
+				planetMaterial.setProjection(view.projectionMatrix);
+				planetMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(planetMesh, planetMaterial);
 			
 				if(controllers.left) { // checks if WebXR got our left controller
 					controllerMaterial.setProjection(view.projectionMatrix);
