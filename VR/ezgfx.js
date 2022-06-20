@@ -109,24 +109,24 @@ const ezgfx = {
 			ezgfxGlobals.fSSC1 = "\nvoid main() {\n\
 				o_Color = shader();\n\
 			}";
-			ezgfxGlobals.vSS = new ezgl.SubShader(gl.VERTEX_SHADER, "#version 300 es\n\
-			precision mediump float;\n\
-			\n\
-			layout(location = 0) in vec3 a_Position;\n\
-			layout(location = 1) in vec2 a_TexCoord;\n\
-			layout(location = 2) in vec3 a_Normal;\n\
-			\n\
-			uniform mat4 u_Projection;\n\
-			uniform mat4 u_View;\n\
-			uniform mat4 u_Model;\n\
-			\n\
-			out vec2 v_TexCoord;\n\
-			\n\
-			void main() {\n\
-			gl_Position = u_Projection * u_View * u_Model * vec4(a_Position, 1.0);\n\
-				v_TexCoord = a_TexCoord;\n\
-				v_TexCoord.y = 1.0 - v_TexCoord.y;\n\
-			}");
+			ezgfxGlobals.vSSC0 = "#version 300 es\n\
+precision mediump float;\n\
+\n\
+layout(location = 0) in vec3 a_Position;\n\
+layout(location = 1) in vec2 a_TexCoord;\n\
+layout(location = 2) in vec3 a_Normal;\n\
+\n\
+uniform mat4 u_Projection;\n\
+uniform mat4 u_View;\n\
+uniform mat4 u_Model;\n\
+\n\
+out vec2 v_TexCoord;\n";
+ezgfxGlobals.vSSC1 = "\nvoid main() {\n\
+	gl_Position = vertex();\n\
+	v_TexCoord = texcoord();\n\
+	v_TexCoord.y = 1.0 - v_TexCoord.y;\n\
+}";
+ezgfxGlobals.vSS = new ezgl.SubShader(gl.VERTEX_SHADER, ezgfxGlobals.vSSC0 + "\nvec4 vertex() { return u_Projection * u_View * u_Model * vec4(a_Position, 1.0); }\nvec2 texcoord() { return a_TexCoord; }\n" + ezgfxGlobals.vSSC1);
 			ezgfxGlobals.fSS = new ezgl.SubShader(gl.FRAGMENT_SHADER, ezgfxGlobals.fSSC0 + "\nvec4 shader() { return u_Color; }\n" + ezgfxGlobals.fSSC1),
 				
 			ezgfxGlobals.triangle = [
