@@ -1,6 +1,6 @@
 // Polyfill makes it possible to run WebXR on devices that support only WebVR.
-import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
-const polyfill = new WebXRPolyfill();
+//import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
+//const polyfill = new WebXRPolyfill();
 
 // this function multiplies a 4d vector by a 4x4 matrix (it applies all the matrix operations to the vector)
 function mulVecByMat(out, m, v) {
