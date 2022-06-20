@@ -1,6 +1,6 @@
 // Polyfill makes it possible to run WebXR on devices that support only WebVR.
-//import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
-//const polyfill = new WebXRPolyfill();
+import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
+const polyfill = new WebXRPolyfill();
 
 // this function multiplies a 4d vector by a 4x4 matrix (it applies all the matrix operations to the vector)
 function mulVecByMat(out, m, v) {
@@ -16,6 +16,28 @@ let canvas = null; // we'll keep it as a global object
 let xrButton = document.getElementById("xr-button");
 let xrSession = null;
 let xrRefSpace = null;
+
+const lightShader = {
+	vertex: "\n\
+	out float v_Brightness;\n\
+	vec4 vertex() {\
+		\
+		vec3 lightDirection = normalize(vec3(1.0, -1.0, -1.0));\
+		\
+		vec4 worldPoint = u_Model * vec4(a_Position, 1.0);\
+		vec4 worldPointPlusNormal = u_Model * vec4(a_Position + normalize(a_Normal), 1.0);\
+		\
+		v_Brightness = -dot(normalize(worldPointPlusNormal.xyz - worldPoint.xyz), lightDirection);\
+		\
+		return u_Projection * u_View * worldPoint;\
+	}",
+	shader: "\
+	in float v_Brightness;\
+	vec4 shader() {\
+		return vec4(u_Color.rgb * vec3(v_Brightness), 1.0);\
+	}"
+};
+
 
 let controllers = {};
 
@@ -89,81 +111,33 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		-2.0, 1.0, 5.0, 1.0
-	]);
-	const offsetMatrixCilinder = new Float32Array([
-		1.0, 0.0, 0.0, 0.0,
-		0.0, 1.0, 0.0, 0.0,
-		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, -5.0, 1.0
-	]);
-	const offsetMatrixCone = new Float32Array([
-		1.0, 0.0, 0.0, 0.0,
-		0.0, 1.0, 0.0, 0.0,
-		0.0, 0.0, 1.0, 0.0,
-		2.0, 1.0, 0.0, 1.0
-	]);
-	const offsetMatrixPlanet = new Float32Array([
-		1.0, 0.0, 0.0, 0.0,
-		0.0, 1.0, 0.0, 0.0,
-		0.0, 0.0, 1.0, 0.0,
-		-2.0, 3.0, 0.0, 1.0
 	]);
 	
 	const planeMesh = new ezgfx.Mesh();
 	planeMesh.loadFromOBJ("./plane.obj");
 
-	const planeMaterial = new ezgfx.Material();
+	const planeMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	planeMaterial.setProjection(identityMatrix);
 	planeMaterial.setView(identityMatrix);
 	planeMaterial.setModel(identityMatrix);
-
+	
 	planeMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
 
 	const cubeMesh = new ezgfx.Mesh();
 	cubeMesh.loadFromOBJ("./cube.obj");
 
-	const cubeMaterial = new ezgfx.Material();
+	const cubeMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	cubeMaterial.setProjection(identityMatrix);
 	cubeMaterial.setView(identityMatrix);
 	cubeMaterial.setModel(offsetMatrix);
 
 	cubeMaterial.setColor([0.4, 0.3, 1.0, 1.0]);
 
-	const cilinderMesh = new ezgfx.Mesh();
-	cilinderMesh.loadFromOBJ("./cilinder.obj");
-
-	const cilinderMaterial = new ezgfx.Material();
-	cilinderMaterial.setProjection(identityMatrix);
-	cilinderMaterial.setView(identityMatrix);
-	cilinderMaterial.setModel(offsetMatrixCilinder);
-
-	cilinderMaterial.setColor([0.6, 0.2, 1.0, 1.0]);
-
-	const coneMesh = new ezgfx.Mesh();
-	coneMesh.loadFromOBJ("./cone.obj");
-
-	const coneMaterial = new ezgfx.Material();
-	coneMaterial.setProjection(identityMatrix);
-	coneMaterial.setView(identityMatrix);
-	coneMaterial.setModel(offsetMatrixCone);
-
-	coneMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
-
-	const planetMesh = new ezgfx.Mesh();
-	planetMesh.loadFromOBJ("./planet.obj");
-
-	const planetMaterial = new ezgfx.Material();
-	planetMaterial.setProjection(identityMatrix);
-	planetMaterial.setView(identityMatrix);
-	planetMaterial.setModel(offsetMatrixPlanet);
-
-	planetMaterial.setColor([0.9, 0.0, 0.0, 1.0]);
-
 	const controllerMesh = new ezgfx.Mesh();
 	controllerMesh.loadFromOBJ("./controller.obj");
 
-	const controllerMaterial = new ezgfx.Material();
+	const controllerMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	controllerMaterial.setProjection(identityMatrix);
 	controllerMaterial.setView(identityMatrix);
 	controllerMaterial.setModel(identityMatrix);
@@ -181,39 +155,42 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 		if(pose) { // if the pose was possible to get (if the headset responds)
 			let glLayer = session.renderState.baseLayer; // get the WebGL layer (it contains some important information we need)
-	
+
 			onControllerUpdate(session, frame); // update the controllers' state
-			
-			// we get our controller's center and front
-			let front = [0.0, 0.0, 0.0, 1.0];
-			let center = [0.0, 0.0, 0.0, 1.0];
 
-			let matrix = controllers.left.pose.transform.matrix;
+			// we want to let the player move around only if the controller is detected, otherwise we will be trying to use non-existing values, which would crash our application
+			if(controllers.left) {
+				// we get our controller's center and front
+				let front = [0.0, 0.0, 0.0, 1.0];
+				let center = [0.0, 0.0, 0.0, 1.0];
 
-			mulVecByMat(front, matrix, [0.0, 0.0, -1.0, 1.0]);
-			mulVecByMat(center, matrix, [0.0, 0.0, 0.0, 1.0]);
+				let matrix = controllers.left.pose.transform.matrix;
 
-			// we convert front and center into the direction
-			let xDir = front[0] - center[0];
-			let zDir = front[1] - center[1];
-			xDir = -xDir;
+				mulVecByMat(front, matrix, [0.0, 0.0, -1.0, 1.0]);
+				mulVecByMat(center, matrix, [0.0, 0.0, 0.0, 1.0]);
 
-			// we normalize the direction
-			const l = Math.sqrt(xDir * xDir + zDir * zDir);
-			xDir = xDir / l;
-			zDir = zDir / l;
+				// we convert front and center into the direction
+				let xDir = front[0] - center[0];
+				let zDir = front[1] - center[1];
+				xDir = -xDir;
 
-			// we set our offsets up, this will include both the direction of the controller and the direction of our analog sticks
-			let xOffset = controllers.left.gamepad.axes[3] * xDir + controllers.left.gamepad.axes[2] * zDir;
-			let zOffset = controllers.left.gamepad.axes[3] * zDir - controllers.left.gamepad.axes[2] * xDir;
+				// we normalize the direction
+				const l = Math.sqrt(xDir * xDir + zDir * zDir);
+				xDir = xDir / l;
+				zDir = zDir / l;
 
-			// we slow it down a little bit, so that it will not make us nauseous once we move 
-			xOffset *= 0.1; 
-			zOffset *= 0.1;
+				// we set our offsets up, this will include both the direction of the controller and the direction of our analog sticks
+				let xOffset = controllers.left.gamepad.axes[3] * xDir + controllers.left.gamepad.axes[2] * zDir;
+				let zOffset = controllers.left.gamepad.axes[3] * zDir - controllers.left.gamepad.axes[2] * xDir;
 
-			// we offset our reference space
-			xrRefSpace = xrRefSpace.getOffsetReferenceSpace(new XRRigidTransform({x: xOffset, y: 0.0, z: zOffset})); 
-			
+				// we slow it down a little bit, so that it will not make us nauseous once we move 
+				xOffset *= 0.1; 
+				zOffset *= 0.1;
+
+				// we offset our reference space
+				xrRefSpace = xrRefSpace.getOffsetReferenceSpace(new XRRigidTransform({x: xOffset, y: 0.0, z: zOffset})); 
+			}
+
 			gl.bindFramebuffer(gl.FRAMEBUFFER, glLayer.framebuffer); // sets the framebuffer (drawing target of WebGL) to be our WebXR display's framebuffer
 			
 			renderer.clear([0.3, 1.0, 0.4, 1.0]);
@@ -232,21 +209,6 @@ function onSessionStarted(_session) { // this function defines what happens when
 				cubeMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(cubeMesh, cubeMaterial);
-
-				cilinderMaterial.setProjection(view.projectionMatrix);
-				cilinderMaterial.setView(view.transform.inverse.matrix);
-				
-				renderer.draw(cilinderMesh, cilinderMaterial);
-
-				coneMaterial.setProjection(view.projectionMatrix);
-				coneMaterial.setView(view.transform.inverse.matrix);
-				
-				renderer.draw(coneMesh, coneMaterial);
-
-				planetMaterial.setProjection(view.projectionMatrix);
-				planetMaterial.setView(view.transform.inverse.matrix);
-				
-				renderer.draw(planetMesh, planetMaterial);
 			
 				if(controllers.left) { // checks if WebXR got our left controller
 					controllerMaterial.setProjection(view.projectionMatrix);
