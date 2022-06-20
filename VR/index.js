@@ -153,6 +153,13 @@ function onSessionStarted(_session) { // this function defines what happens when
 	const planetMesh = new ezgfx.Mesh();
 	planetMesh.loadFromOBJ("./planet.obj");
 
+	const planetMaterial = new ezgfx.Material();
+	planetMaterial.setProjection(identityMatrix);
+	planetMaterial.setView(identityMatrix);
+	planetMaterial.setModel(offsetMatrixPlanet);
+
+	planetMaterial.setColor([0.9, 0.0, 0.0, 1.0]);
+
 	const controllerMesh = new ezgfx.Mesh();
 	controllerMesh.loadFromOBJ("./controller.obj");
 
