@@ -135,17 +135,21 @@ function onSessionStarted(_session) { // this function defines what happens when
 	const planeMesh = new ezgfx.Mesh();
 	planeMesh.loadFromOBJ("./plane.obj");
 
-	const planeMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	const planeMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	planeMaterial.setProjection(identityMatrix);
 	planeMaterial.setView(identityMatrix);
 	planeMaterial.setModel(identityMatrix);
 
 	planeMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
 
+	const planeTexture = ezgfx.Texture;
+	planeTexture.loadFromFile("https://media.istockphoto.com/vectors/green-grass-realistic-textured-background-vector-id1208399813?k=20&m=1208399813&s=612x612&w=0&h=UtOKGGTiBu3YT8ZnGleGEytyPHP0039xREo0p32LWaY=", )
+	planeMaterial.setTexture(planeTexture);
+
 	const cubeMesh = new ezgfx.Mesh();
 	cubeMesh.loadFromOBJ("./cube.obj");
 
-	const cubeMaterial =  new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	const cubeMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	cubeMaterial.setProjection(identityMatrix);
 	cubeMaterial.setView(identityMatrix);
 	cubeMaterial.setModel(offsetMatrix);
@@ -155,7 +159,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	const cilinderMesh = new ezgfx.Mesh();
 	cilinderMesh.loadFromOBJ("./cilinder.obj");
 
-	const cilinderMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	const cilinderMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	cilinderMaterial.setProjection(identityMatrix);
 	cilinderMaterial.setView(identityMatrix);
 	cilinderMaterial.setModel(offsetMatrixCilinder);
@@ -165,7 +169,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	const coneMesh = new ezgfx.Mesh();
 	coneMesh.loadFromOBJ("./cone.obj");
 
-	const coneMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	const coneMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	coneMaterial.setProjection(identityMatrix);
 	coneMaterial.setView(identityMatrix);
 	coneMaterial.setModel(offsetMatrixCone);
@@ -175,7 +179,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	const planetMesh = new ezgfx.Mesh();
 	planetMesh.loadFromOBJ("./planet.obj");
 
-	const planetMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	const planetMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	planetMaterial.setProjection(identityMatrix);
 	planetMaterial.setView(identityMatrix);
 	planetMaterial.setModel(offsetMatrixPlanet);
@@ -185,7 +189,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	const controllerMesh = new ezgfx.Mesh();
 	controllerMesh.loadFromOBJ("./controller.obj");
 
-	const controllerMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	const controllerMaterial = ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	controllerMaterial.setProjection(identityMatrix);
 	controllerMaterial.setView(identityMatrix);
 	controllerMaterial.setModel(identityMatrix);
