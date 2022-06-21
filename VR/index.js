@@ -142,10 +142,6 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 	planeMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
 
-	const planeTexture = new ezgfx.Texture();
-	planeTexture.loadFromFile("./grrass.jpg")
-	planeMaterial.setTexture(planeTexture);
-
 	const cubeMesh = new ezgfx.Mesh();
 	cubeMesh.loadFromOBJ("./cube.obj");
 
