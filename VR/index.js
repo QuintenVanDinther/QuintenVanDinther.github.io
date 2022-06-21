@@ -272,7 +272,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(coneMesh, coneMaterial);
 
 				PlanetRadians += 0.01;
-				offsetMatrixPlanet = rotate(offsetMatrixPlanet, PlanetRadians, 5);
+				offsetMatrixPlanet = rotate(offsetMatrixPlanet, PlanetRadians, 1);
 				planetMaterial.setModel(offsetMatrixPlanet);
 
 				planetMaterial.setProjection(view.projectionMatrix);
