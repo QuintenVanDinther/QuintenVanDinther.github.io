@@ -179,6 +179,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	planetMaterial.setProjection(identityMatrix);
 	planetMaterial.setView(identityMatrix);
 	planetMaterial.setModel(offsetMatrixPlanet);
+	
 
 	planetMaterial.setColor([0.9, 0.0, 0.0, 1.0]);
 
@@ -269,6 +270,9 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(coneMesh, coneMaterial);
 
+				offsetMatrixPlanet = rotate(offsetMatrixPlanet);
+				planetMaterial.setModel(offsetMatrixPlanet);
+
 				planetMaterial.setProjection(view.projectionMatrix);
 				planetMaterial.setView(view.transform.inverse.matrix);
 				
@@ -310,3 +314,10 @@ function onSessionStarted(_session) { // this function defines what happens when
 }
 
 initWebXR(); // we call our init function, therefore initializing the application
+
+
+function rotate(Matrix){
+Matrix[0] = Matrix[0] + 0.01;
+Matrix[10] = Matrix[10] + 0.01;
+	return Matrix;
+}
