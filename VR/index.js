@@ -319,7 +319,7 @@ initWebXR(); // we call our init function, therefore initializing the applicatio
 
 
 function rotate(Matrix, Radians){
-Matrix[12] = Matrix[12] + Math.cos(Radians);
-Matrix[14] = Matrix[14] + Math.cos(Radians);
+Matrix[12] = Matrix[12] + Math.cos(Radians) / 10;
+Matrix[14] = Matrix[14] + Math.sin(Radians) / 10;
 	return Matrix;
 }
