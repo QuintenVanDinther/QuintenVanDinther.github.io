@@ -35,7 +35,7 @@ const ezgfx = {
 		}
 		loadFromData(data, options = {wrap: gl.REPEAT, filter: gl.NEAREST}) {
 			this.texture.fromData(data, options);
-		}
+		} 
 	},
 	Material: class {
 		constructor(customShader = null) {
