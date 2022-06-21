@@ -272,7 +272,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(coneMesh, coneMaterial);
 
 				PlanetRadians += 0.01;
-				offsetMatrixPlanet = rotate(offsetMatrixPlanet, PlanetRadians, 1);
+				offsetMatrixPlanet = rotate(offsetMatrixPlanet, PlanetRadians, 10);
 				planetMaterial.setModel(offsetMatrixPlanet);
 
 				planetMaterial.setProjection(view.projectionMatrix);
@@ -318,8 +318,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 initWebXR(); // we call our init function, therefore initializing the application
 
 
-function rotate(Matrix, Radians, Speed){
-Matrix[12] = Math.cos(Radians) * Speed;
-Matrix[14] = Math.sin(Radians) * Speed;
+function rotate(Matrix, Radians, diameter){
+Matrix[12] = Math.cos(Radians) * diameter;
+Matrix[14] = Math.sin(Radians) * diameter;
 	return Matrix;
 }
