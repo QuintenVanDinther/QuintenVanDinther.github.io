@@ -125,7 +125,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		2.0, 1.0, 0.0, 1.0
 	]);
-	const offsetMatrixPlanet = new Float32Array([
+	var offsetMatrixPlanet = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
