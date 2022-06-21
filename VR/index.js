@@ -123,7 +123,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		2.0, 1.0, 0.0, 1.0
+		0.0, 1.0, 0.0, 1.0
 	]);
 	var PlanetRadians = 0;
 	var offsetMatrixPlanet = new Float32Array([
