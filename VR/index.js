@@ -142,7 +142,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 	planeMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
 
-	const planeTexture = ezgfx.Texture;
+	const planeTexture = new ezgfx.Texture();
 	planeTexture.loadFromFile("https://media.istockphoto.com/vectors/green-grass-realistic-textured-background-vector-id1208399813?k=20&m=1208399813&s=612x612&w=0&h=UtOKGGTiBu3YT8ZnGleGEytyPHP0039xREo0p32LWaY=", )
 	planeMaterial.setTexture(planeTexture);
 
