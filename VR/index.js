@@ -125,6 +125,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		2.0, 1.0, 0.0, 1.0
 	]);
+	var PlanetRadians = 0;
 	var offsetMatrixPlanet = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
@@ -270,7 +271,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(coneMesh, coneMaterial);
 
-				offsetMatrixPlanet = rotate(offsetMatrixPlanet);
+				PlanetRadians += 0.01;
+				offsetMatrixPlanet = rotate(offsetMatrixPlanet, PlanetRadians);
 				planetMaterial.setModel(offsetMatrixPlanet);
 
 				planetMaterial.setProjection(view.projectionMatrix);
@@ -316,8 +318,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 initWebXR(); // we call our init function, therefore initializing the application
 
 
-function rotate(Matrix){
-Matrix[12] = Matrix[12] + 0.01;
-Matrix[14] = Matrix[14] + 0.01;
+function rotate(Matrix, Radians){
+Matrix[12] = Matrix[12] + Math.cos(Radians);
+Matrix[14] = Matrix[14] + Math.cos(Radians);
 	return Matrix;
 }
