@@ -107,19 +107,19 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		0.0, 0.0, 0.0, 1.0
 	]);
-	const offsetMatrix = new Float32Array([
+	var offsetMatrix = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, 5.0, 1.0
 	]);
-	const offsetMatrixCilinder = new Float32Array([
+	var offsetMatrixCilinder = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, -5.0, 1.0
 	]);
-	const offsetMatrixCone = new Float32Array([
+	var offsetMatrixCone = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
@@ -317,7 +317,7 @@ initWebXR(); // we call our init function, therefore initializing the applicatio
 
 
 function rotate(Matrix){
-Matrix[0] = Matrix[0] + 0.01;
-Matrix[10] = Matrix[10] + 0.01;
+Matrix[12] = Matrix[12] + 0.01;
+Matrix[14] = Matrix[14] + 0.01;
 	return Matrix;
 }
