@@ -243,7 +243,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 			gl.bindFramebuffer(gl.FRAMEBUFFER, glLayer.framebuffer); // sets the framebuffer (drawing target of WebGL) to be our WebXR display's framebuffer
 			
-			renderer.clear([0.3, 1.0, 0.4, 1.0]);
+			renderer.clear([0.0, 0.0, 0.0, 1.0]);
 
 
 			for(let view of pose.views) { // we go through every single view out of our camera's views
