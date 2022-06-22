@@ -255,7 +255,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				planeMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(planeMesh, planeMaterial);
-				offsetMatrix = cirle(offsetMatrix, 1);
+				offsetMatrix = rotate(offsetMatrix, 1);
 				cubeMaterial.setModel(offsetMatrix)
 
 				cubeMaterial.setProjection(view.projectionMatrix);
