@@ -455,7 +455,7 @@ function rotate (Matrix, angle){
 }
 
 //===[Belt]===
-	var BeltAmount = 100;
+	var BeltAmount = 10;
 	var BeltRadiansMove = 0;
 	var BeltRadiansRotation = 0;
 	var BeltMashArray = [];
