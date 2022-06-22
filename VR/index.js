@@ -127,7 +127,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		1.0, 1.0, 1.0, 1.0
 	]);
-	var ShuttleRadians = 0;
+	var ShuttleRadiansMove = 0;
+	var ShuttleRadiansRotation = 0;
 	var offsetMatrixShuttle = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
@@ -303,8 +304,10 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(sandMesh, sandMaterial);
 
 				//===[Shuttle]===
-				ShuttleRadians += 0.01;
-				offsetMatrixShuttle = cirle(offsetMatrixShuttle, ShuttleRadians, 1.5);
+				ShuttleRadiansMove += 0.03;
+				ShuttleRadiansRotation += 0.01;
+				offsetMatrixShuttle = cirle(offsetMatrixShuttle, ShuttleRadiansMove, 1.5);
+				offsetMatrixShuttle = rotate(offsetMatrixShuttle, ShuttleRadiansRotation);
 
 				shuttleBaseMaterial.setModel(offsetMatrixShuttle);
 				shuttleWingsMaterial.setModel(offsetMatrixShuttle);
