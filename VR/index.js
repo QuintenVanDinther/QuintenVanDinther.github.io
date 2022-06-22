@@ -128,7 +128,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 1.0, 1.0, 1.0
 	]);
 	var ShuttleRadiansMove = 0;
-	var ShuttleRadiansRotation = 0;
+	var ShuttleRadiansRotation = 45;
 	var offsetMatrixShuttle = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
@@ -287,7 +287,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(cubeMesh, cubeMaterial);
 
 				//===[earth]===
-				EarthRadians += 0.01;
+				EarthRadians += 0.001;
 				offsetMatrixEarth = rotate(offsetMatrixEarth, EarthRadians);
 
 				waterMaterial.setModel(offsetMatrixEarth);
@@ -304,8 +304,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(sandMesh, sandMaterial);
 
 				//===[Shuttle]===
-				ShuttleRadiansMove += 0.001;
-				ShuttleRadiansRotation += 0.001;
+				ShuttleRadiansMove += 0.005;
+				ShuttleRadiansRotation += 0.005;
 				offsetMatrixShuttle = cirle(offsetMatrixShuttle, ShuttleRadiansMove, 1.5);
 				offsetMatrixShuttle = rotate(offsetMatrixShuttle, ShuttleRadiansRotation);
 
