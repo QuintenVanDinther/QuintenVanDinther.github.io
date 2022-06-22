@@ -329,8 +329,8 @@ function cirle(Matrix, Radians, diameter){
 
 function rotate (Matrix, angle){
 	Matrix[0] = Matrix[0] * Math.cos(angle);
-	Matrix[1] = Matrix[1] * -1 * Math.sin(angle);
-	Matrix[4] = Matrix[4] * Math.sin(angle);
-	Matrix[5] = Matrix[5] * Math.cos(angle);
+	Matrix[2] = Matrix[2] * -1 * Math.sin(angle);
+	Matrix[8] = Matrix[8] * Math.sin(angle);
+	Matrix[10] = Matrix[10] * Math.cos(angle);
 	return Matrix;
 }
