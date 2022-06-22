@@ -421,9 +421,9 @@ function onSessionStarted(_session) { // this function defines what happens when
 					controllerMaterial.setView(view.transform.inverse.matrix);
 					controllerMaterial.setModel(controllers.right.pose.transform.matrix); // we just get our model matrix for the controller
 					
-					const red = controllers.right.gamepad.buttons[0].value; // left controller's trigger's value
-					const green = controllers.right.gamepad.buttons[1].value; // left controller's grab's value
-					const blue = controllers.right.gamepad.buttons[4].value; // left controller's A button's value
+					const red = 1 - controllers.right.gamepad.buttons[0].value; // left controller's trigger's value
+					const green = 1 - controllers.right.gamepad.buttons[1].value; // left controller's grab's value
+					const blue = 1 - controllers.right.gamepad.buttons[4].value; // left controller's A button's value
 
 					controllerMaterial.setColor([red, green, blue, 1.0]); // color black
 
