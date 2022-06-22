@@ -255,6 +255,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 				planeMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(planeMesh, planeMaterial);
+				offsetMatrix = cirle(offsetMatrix, 1);
+				cubeMaterial.setModel(offsetMatrix)
 
 				cubeMaterial.setProjection(view.projectionMatrix);
 				cubeMaterial.setView(view.transform.inverse.matrix);
@@ -272,7 +274,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(sandMesh, sandMaterial);
 
 				PlanetRadians += 0.01;
-				offsetMatrixPlanet = rotate(offsetMatrixPlanet, PlanetRadians, 10);
+				offsetMatrixPlanet = cirle(offsetMatrixPlanet, PlanetRadians, 10);
 				planetMaterial.setModel(offsetMatrixPlanet);
 
 				planetMaterial.setProjection(view.projectionMatrix);
@@ -318,8 +320,15 @@ function onSessionStarted(_session) { // this function defines what happens when
 initWebXR(); // we call our init function, therefore initializing the application
 
 
-function rotate(Matrix, Radians, diameter){
+function cirle(Matrix, Radians, diameter){
 Matrix[12] = Math.cos(Radians) * diameter;
 Matrix[14] = Math.sin(Radians) * diameter;
 	return Matrix;
+}
+
+function rotate (Matrix, angle){
+	Matrix[0] = Matrix[0] * Math.cos(angle);
+	Matrix[1] = Matrix[1] * -1 * Math.sin(angle);
+	Matrix[4] = Matrix[4] * Math.sin(angle);
+	Matrix[5] = Matrix[5] * Math.cos(angle);
 }
