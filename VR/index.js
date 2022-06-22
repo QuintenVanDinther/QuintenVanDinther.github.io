@@ -135,6 +135,14 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		1.0, 1.0, 1.0, 1.0
 	]);
+	var MoonRadiansMove = 0;
+	var MoonRadiansRotation = 0;
+	var offsetMatrixMoon = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		2.5, 1.0, 2.5, 1.0
+	]);
 	
 	const planeMesh = new ezgfx.Mesh();
 	planeMesh.loadFromOBJ("./plane.obj");
@@ -176,6 +184,27 @@ function onSessionStarted(_session) { // this function defines what happens when
 	shuttleWingsMaterial.setModel(offsetMatrixShuttle);
 
 	shuttleWingsMaterial.setColor([0.1, 0.1, 0.1, 1.0]);
+
+	//===[Moon]===
+	const moonBaseMesh = new ezgfx.Mesh();
+	moonBaseMesh.loadFromOBJ("./MoonBase.obj");
+
+	const MoonBaseMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	MoonBaseMaterial.setProjection(identityMatrix);
+	MoonBaseMaterial.setView(identityMatrix);
+	MoonBaseMaterial.setModel(offsetMatrixMoon);
+
+	MoonBaseMaterial.setColor([0.3, 0.5, 0.3, 1.0]);
+
+	const moonRockMesh = new ezgfx.Mesh();
+	moonRockMesh.loadFromOBJ("./MoonRock.obj");
+
+	const moonRocksMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	moonRocksMaterial.setProjection(identityMatrix);
+	moonRocksMaterial.setView(identityMatrix);
+	moonRocksMaterial.setModel(offsetMatrixMoon);
+
+	moonRocksMaterial.setColor([0.5, 0.7, 0.5, 1.0]);
 
 	//===[Earth]===
 	const waterMesh = new ezgfx.Mesh();
@@ -322,8 +351,27 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(shuttleWingsMesh, shuttleWingsMaterial);
 
+				//===[Moon]===
+				MoonRadiansMove += 0.0001;
+				MoonRadiansRotation += 0.03;
+				offsetMatrixMoon = cirle(offsetMatrixMoon, ShuttleRadiansMove, 3);
+				offsetMatrixMoon = rotate(offsetMatrixMoon, ShuttleRadiansRotation);
+
+				moonBaseMaterial.setModel(offsetMatrixMoon);
+				moonRocksMaterial.setModel(offsetMatrixMoon);
+
+				moonBaseMaterial.setProjection(view.projectionMatrix);
+				moonBaseMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(moonBaseMesh, moonBaseMaterial);
+
+				moonRocksMaterial.setProjection(view.projectionMatrix);
+				moonRocksMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(moonRockMesh, moonRocksMaterial);
+
 				//===[Planet]===
-				PlanetRadians += 0.01;
+				PlanetRadians += 0.0001;
 				offsetMatrixPlanet = cirle(offsetMatrixPlanet, PlanetRadians, 10);
 				planetMaterial.setModel(offsetMatrixPlanet);
 
