@@ -161,7 +161,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	waterMaterial.setView(identityMatrix);
 	waterMaterial.setModel(offsetMatrixWater);
 
-	waterMaterial.setColor([0.0, 0.5, 0.1, 1.0]);
+	waterMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
 
 	const sandMesh = new ezgfx.Mesh();
 	sandMesh.loadFromOBJ("./Sand.obj");
@@ -171,7 +171,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	sandMaterial.setView(identityMatrix);
 	sandMaterial.setModel(offsetMatrixSand);
 
-	sandMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
+	sandMaterial.setColor([0.0, 0.5, 0.1, 1.0]);
 
 	const planetMesh = new ezgfx.Mesh();
 	planetMesh.loadFromOBJ("./planet.obj");
