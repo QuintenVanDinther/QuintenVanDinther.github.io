@@ -372,7 +372,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 				//===[Belt]===
 				for(var i = 0; i < BeltAmount; i++){
-					BeltRadianMoveArray[i] += 0.00007;
+					BeltRadianMoveArray[i] += 0.0007;
 					BeltRotationPositionArray[i] += BeltRadianRotationArray[i];
 					
 					BeltOffsetArray[i] = cirle(BeltOffsetArray[i], BeltRadianMoveArray[i], BeltDiameterArray[i]);
@@ -465,7 +465,7 @@ function rotate (Matrix, angle){
 
 	for(var i = 0; i < BeltAmount; i++){
 		BeltRadianMoveArray[i] = Math.random() * Math.PI * 2;
-		BeltRadianRotationArray[i] = Math.random() * 2 - 1;
+		BeltRadianRotationArray[i] = (Math.random() * 2 - 1) /100;
 		BeltRotationPositionArray[i] = 0;
 		BeltDiameterArray[i] = Math.random() * 5 + 45;
 		var positionHeight = Math.random() * 4 - 2;
