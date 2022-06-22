@@ -372,7 +372,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 				//===[Belt]===
 				for(var i = 0; i < BeltAmount; i++){
-					BeltRadianMoveArray[i] += 0.0007;
+					BeltRadianMoveArray[i] += 0.0002;
 					BeltRotationPositionArray[i] += BeltRadianRotationArray[i];
 					
 					BeltOffsetArray[i] = cirle(BeltOffsetArray[i], BeltRadianMoveArray[i], BeltDiameterArray[i]);
@@ -408,9 +408,9 @@ function onSessionStarted(_session) { // this function defines what happens when
 					controllerMaterial.setView(view.transform.inverse.matrix);
 					controllerMaterial.setModel(controllers.left.pose.transform.matrix); // we just get our model matrix for the controller
 					
-					const red = controllers.left.gamepad.buttons[0].value; // left controller's trigger's value
-					const green = controllers.left.gamepad.buttons[1].value; // left controller's grab's value
-					const blue = controllers.left.gamepad.buttons[4].value; // left controller's X button's value
+					const red = 1 - controllers.left.gamepad.buttons[0].value; // left controller's trigger's value
+					const green = 1 - controllers.left.gamepad.buttons[1].value; // left controller's grab's value
+					const blue = 1 - controllers.left.gamepad.buttons[4].value; // left controller's X button's value
 
 					controllerMaterial.setColor([red, green, blue, 1.0]); // color white
 
@@ -456,7 +456,7 @@ function rotate (Matrix, angle){
 }
 
 //===[Belt]===
-	var BeltAmount = 100;
+	var BeltAmount = 3000;
 	var BeltOffsetArray = [];
 	var BeltRadianMoveArray = [];
 	var BeltRadianRotationArray = [];	
