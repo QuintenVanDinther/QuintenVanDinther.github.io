@@ -352,7 +352,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(shuttleWingsMesh, shuttleWingsMaterial);
 
 				//===[Moon]===
-				MoonRadiansMove += 0.0001;
+				MoonRadiansMove -= 0.001;
 				MoonRadiansRotation += 0.03;
 				offsetMatrixMoon = cirle(offsetMatrixMoon, MoonRadiansMove, 3);
 				offsetMatrixMoon = rotate(offsetMatrixMoon, MoonRadiansRotation);
