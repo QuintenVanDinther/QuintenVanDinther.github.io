@@ -16,7 +16,7 @@ let canvas = null; // we'll keep it as a global object
 let xrButton = document.getElementById("xr-button");
 let xrSession = null;
 let xrRefSpace = null;
- 
+
 const lightShader = {
 	vertex: "\n\
 	out float v_Brightness;\n\
@@ -113,13 +113,13 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, 5.0, 1.0
 	]);
-	var offsetMatrixCilinder = new Float32Array([
+	var offsetMatrixWater = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		-2.0, 1.0, -5.0, 1.0
+		0.0, 1.0, 0.0, 1.0
 	]);
-	var offsetMatrixCone = new Float32Array([
+	var offsetMatrixSand = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
@@ -153,25 +153,25 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 	cubeMaterial.setColor([0.4, 0.3, 1.0, 1.0]);
 
-	const cilinderMesh = new ezgfx.Mesh();
-	cilinderMesh.loadFromOBJ("./cilinder.obj");
+	const waterMesh = new ezgfx.Mesh();
+	waterMesh.loadFromOBJ("./Water.obj");
 
-	const cilinderMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
-	cilinderMaterial.setProjection(identityMatrix);
-	cilinderMaterial.setView(identityMatrix);
-	cilinderMaterial.setModel(offsetMatrixCilinder);
+	const waterMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	waterMaterial.setProjection(identityMatrix);
+	waterMaterial.setView(identityMatrix);
+	waterMaterial.setModel(offsetMatrixWater);
 
-	cilinderMaterial.setColor([0.6, 0.2, 1.0, 1.0]);
+	waterMaterial.setColor([0.6, 0.2, 1.0, 1.0]);
 
-	const coneMesh = new ezgfx.Mesh();
-	coneMesh.loadFromOBJ("./cone.obj");
+	const sandMesh = new ezgfx.Mesh();
+	sandMesh.loadFromOBJ("./Sand.obj");
 
-	const coneMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
-	coneMaterial.setProjection(identityMatrix);
-	coneMaterial.setView(identityMatrix);
-	coneMaterial.setModel(offsetMatrixCone);
+	const sandMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	sandMaterial.setProjection(identityMatrix);
+	sandMaterial.setView(identityMatrix);
+	sandMaterial.setModel(offsetMatrixSand);
 
-	coneMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
+	sandMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
 
 	const planetMesh = new ezgfx.Mesh();
 	planetMesh.loadFromOBJ("./planet.obj");
@@ -261,15 +261,15 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(cubeMesh, cubeMaterial);
 
-				cilinderMaterial.setProjection(view.projectionMatrix);
-				cilinderMaterial.setView(view.transform.inverse.matrix);
+				waterMaterial.setProjection(view.projectionMatrix);
+				waterMaterial.setView(view.transform.inverse.matrix);
 				
-				renderer.draw(cilinderMesh, cilinderMaterial);
+				renderer.draw(waterMesh, waterMaterial);
 
-				coneMaterial.setProjection(view.projectionMatrix);
-				coneMaterial.setView(view.transform.inverse.matrix);
+				sandMaterial.setProjection(view.projectionMatrix);
+				sandMaterial.setView(view.transform.inverse.matrix);
 				
-				renderer.draw(coneMesh, coneMaterial);
+				renderer.draw(sandMesh, sandMaterial);
 
 				PlanetRadians += 0.01;
 				offsetMatrixPlanet = rotate(offsetMatrixPlanet, PlanetRadians, 10);
