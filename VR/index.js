@@ -469,7 +469,7 @@ function rotate (Matrix, angle){
 			1.0, 0.0, 0.0, 0.0,
 			0.0, 1.0, 0.0, 0.0,
 			0.0, 0.0, 1.0, 0.0,
-			Math.cos(BeltRadianMoveArray[i]) * 50, t, Math.sin(BeltRadianMoveArray[i]) * 50, 1.0
+			Math.cos(BeltRadianMoveArray[i]) * 50, positionHeight, Math.sin(BeltRadianMoveArray[i]) * 50, 1.0
 		]);
 	}
 
