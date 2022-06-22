@@ -194,7 +194,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	moonBaseMaterial.setView(identityMatrix);
 	moonBaseMaterial.setModel(offsetMatrixMoon);
 
-	moonBaseMaterial.setColor([0.3, 0.5, 0.3, 1.0]);
+	moonBaseMaterial.setColor([0.3, 0.3, 0.3, 1.0]);
 
 	const moonRockMesh = new ezgfx.Mesh();
 	moonRockMesh.loadFromOBJ("./MoonRock.obj");
@@ -204,7 +204,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	moonRocksMaterial.setView(identityMatrix);
 	moonRocksMaterial.setModel(offsetMatrixMoon);
 
-	moonRocksMaterial.setColor([0.5, 0.7, 0.5, 1.0]);
+	moonRocksMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
 
 	//===[Earth]===
 	const waterMesh = new ezgfx.Mesh();
