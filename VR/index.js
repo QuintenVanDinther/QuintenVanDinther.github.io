@@ -354,8 +354,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 				//===[Moon]===
 				MoonRadiansMove += 0.0001;
 				MoonRadiansRotation += 0.03;
-				offsetMatrixMoon = cirle(offsetMatrixMoon, ShuttleRadiansMove, 3);
-				offsetMatrixMoon = rotate(offsetMatrixMoon, ShuttleRadiansRotation);
+				offsetMatrixMoon = cirle(offsetMatrixMoon, MoonRadiansMove, 3);
+				offsetMatrixMoon = rotate(offsetMatrixMoon, MoonRadiansRotation);
 
 				moonBaseMaterial.setModel(offsetMatrixMoon);
 				moonRocksMaterial.setModel(offsetMatrixMoon);
@@ -371,7 +371,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(moonRockMesh, moonRocksMaterial);
 
 				//===[Planet]===
-				PlanetRadians += 0.0001;
+				PlanetRadians += 0.001;
 				offsetMatrixPlanet = cirle(offsetMatrixPlanet, PlanetRadians, 10);
 				planetMaterial.setModel(offsetMatrixPlanet);
 
