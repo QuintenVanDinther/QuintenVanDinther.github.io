@@ -255,6 +255,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				planeMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(planeMesh, planeMaterial);
+
 				offsetMatrix = rotate(offsetMatrix, 1);
 				cubeMaterial.setModel(offsetMatrix)
 
@@ -321,8 +322,8 @@ initWebXR(); // we call our init function, therefore initializing the applicatio
 
 
 function cirle(Matrix, Radians, diameter){
-Matrix[12] = Math.cos(Radians) * diameter;
-Matrix[14] = Math.sin(Radians) * diameter;
+	Matrix[12] = Math.cos(Radians) * diameter;
+	Matrix[14] = Math.sin(Radians) * diameter;
 	return Matrix;
 }
 
@@ -331,4 +332,5 @@ function rotate (Matrix, angle){
 	Matrix[1] = Matrix[1] * -1 * Math.sin(angle);
 	Matrix[4] = Matrix[4] * Math.sin(angle);
 	Matrix[5] = Matrix[5] * Math.cos(angle);
+	return Matrix;
 }
