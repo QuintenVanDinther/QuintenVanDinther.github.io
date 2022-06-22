@@ -306,18 +306,18 @@ function onSessionStarted(_session) { // this function defines what happens when
 				ShuttleRadians += 0.01;
 				offsetMatrixShuttle = cirle(offsetMatrixShuttle, ShuttleRadians, 1.5);
 
-				waterMaterial.setModel(offsetMatrixShuttle);
-				sandMaterial.setModel(offsetMatrixShuttle);
+				shuttleBaseMaterial.setModel(offsetMatrixShuttle);
+				shuttleWingsMaterial.setModel(offsetMatrixShuttle);
 
-				waterMaterial.setProjection(view.projectionMatrix);
-				waterMaterial.setView(view.transform.inverse.matrix);
+				shuttleBaseMaterial.setProjection(view.projectionMatrix);
+				shuttleBaseMaterial.setView(view.transform.inverse.matrix);
 				
-				renderer.draw(waterMesh, waterMaterial);
+				renderer.draw(shuttleBaseMesh, shuttleBaseMaterial);
 
-				sandMaterial.setProjection(view.projectionMatrix);
-				sandMaterial.setView(view.transform.inverse.matrix);
+				shuttleWingsMaterial.setProjection(view.projectionMatrix);
+				shuttleWingsMaterial.setView(view.transform.inverse.matrix);
 				
-				renderer.draw(sandMesh, sandMaterial);
+				renderer.draw(shuttleWingsMesh, shuttleWingsMaterial);
 
 				//===[Planet]===
 				PlanetRadians += 0.01;
