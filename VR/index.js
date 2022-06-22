@@ -406,7 +406,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				//===[Shuttle 2]===
 				ShuttleRadiansMove += 0.005;
 				ShuttleRadiansRotation += 0.005;
-				offsetMatrixShuttle = cirle(offsetMatrixShuttle, ShuttleRadiansMove, 1.5);
+				offsetMatrixShuttle = cirle(offsetMatrixShuttle, ShuttleRadiansMove, 2.5);
 				offsetMatrixShuttle = moveCenter(offsetMatrixShuttle, offsetMatrixPlanet);				
 				offsetMatrixShuttle = rotate(offsetMatrixShuttle, ShuttleRadiansRotation);
 
