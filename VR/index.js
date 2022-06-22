@@ -372,11 +372,11 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 				//===[Belt]===
 				for(var i = 0; i < BeltAmount; i++){
-					BeltRadianMoveArray[i] += 0.00001;
+					BeltRadianMoveArray[i] += 0.00007;
 					BeltRotationPositionArray[i] += BeltRadianRotationArray[i];
 					
 					BeltOffsetArray[i] = cirle(BeltOffsetArray[i], BeltRadianMoveArray[i], BeltDiameterArray[i]);
-					BeltOffsetArray[i] = rotate(BeltOffsetArray[i], BeltRadianRotationArray[i]);
+					BeltOffsetArray[i] = rotate(BeltOffsetArray[i], BeltRotationPositionArray[i]);
 					moonBaseMaterial.setModel(BeltOffsetArray[i]);
 					moonRocksMaterial.setModel(BeltOffsetArray[i]);
 
