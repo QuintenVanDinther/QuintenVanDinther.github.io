@@ -371,9 +371,12 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(moonRockMesh, moonRocksMaterial);
 
 				//===[Belt]===
-				for(var i = 0; i < BeltAmount; i++){					
-					BeltOffsetArray[i] = cirle(BeltOffsetArray[i], BeltRadianMoveArray, BeltDiameterArray);
-					BeltOffsetArray[i] = rotate(BeltOffsetArray[i], BeltRadianRotationArray);
+				for(var i = 0; i < BeltAmount; i++){
+					BeltRadianMoveArray[i] += 0.00001;
+					BeltRotationPositionArray[i] += BeltRadianRotationArray[i];
+					
+					BeltOffsetArray[i] = cirle(BeltOffsetArray[i], BeltRadianMoveArray[i], BeltDiameterArray[i]);
+					BeltOffsetArray[i] = rotate(BeltOffsetArray[i], BeltRadianRotationArray[i]);
 					moonBaseMaterial.setModel(BeltOffsetArray[i]);
 					moonRocksMaterial.setModel(BeltOffsetArray[i]);
 
@@ -457,11 +460,13 @@ function rotate (Matrix, angle){
 	var BeltOffsetArray = [];
 	var BeltRadianMoveArray = [];
 	var BeltRadianRotationArray = [];	
+	var BeltRotationPositionArray = [];	
 	var BeltDiameterArray = [];
 
 	for(var i = 0; i < BeltAmount; i++){
 		BeltRadianMoveArray[i] = Math.random() * Math.PI * 2;
 		BeltRadianRotationArray[i] = Math.random() * 2 - 1;
+		BeltRotationPositionArray[i] = 0;
 		BeltDiameterArray[i] = Math.random() * 5 + 45;
 		var positionHeight = Math.random() * 4 - 2;
 
