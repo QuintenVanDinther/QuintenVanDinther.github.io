@@ -304,8 +304,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(sandMesh, sandMaterial);
 
 				//===[Shuttle]===
-				ShuttleRadiansMove += 0.03;
-				ShuttleRadiansRotation += 0.01;
+				ShuttleRadiansMove += 0.001;
+				ShuttleRadiansRotation += 0.001;
 				offsetMatrixShuttle = cirle(offsetMatrixShuttle, ShuttleRadiansMove, 1.5);
 				offsetMatrixShuttle = rotate(offsetMatrixShuttle, ShuttleRadiansRotation);
 
