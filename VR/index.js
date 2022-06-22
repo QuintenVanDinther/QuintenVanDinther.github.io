@@ -145,7 +145,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	]);
 	var MonkeyRadiansMove = 0;
 	var MonkeyRadiansRotation = 0;
-	var offsetMatrixMonkeyn = new Float32Array([
+	var offsetMatrixMonkey = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
@@ -457,18 +457,18 @@ function onSessionStarted(_session) { // this function defines what happens when
 				//===[Moon]===
 				//offsetMatrixMoon = 
 
-				MonkeyRocketMaterial.setModel(offsetMatrixMonkeyn);
-				MonkeysMaterial.setModel(offsetMatrixMonkeyn);
+				MonkeyRocketMaterial.setModel(offsetMatrixMonkey);
+				MonkeysMaterial.setModel(offsetMatrixMonkey);
 
 				MonkeyRocketMaterial.setProjection(view.projectionMatrix);
 				MonkeyRocketMaterial.setView(view.transform.inverse.matrix);
 				
-				renderer.draw(offsetMatrixMonkeyn, MonkeyRocketMaterial);
+				renderer.draw(offsetMatrixMonkey, MonkeyRocketMaterial);
 
 				MonkeysMaterial.setProjection(view.projectionMatrix);
 				MonkeysMaterial.setView(view.transform.inverse.matrix);
 				
-				renderer.draw(offsetMatrixMonkeyn, MonkeysMaterial);
+				renderer.draw(offsetMatrixMonkey, MonkeysMaterial);
 
 			
 				if(controllers.left) { // checks if WebXR got our left controller
