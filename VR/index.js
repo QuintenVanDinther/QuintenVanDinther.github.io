@@ -455,17 +455,19 @@ function rotate (Matrix, angle){
 }
 
 //===[Belt]===
-	var BeltAmount = 10;
+	var BeltAmount = 100;
 	var BeltRadiansMove = 0;
 	var BeltRadiansRotation = 0;
 	var BeltMashArray = [];
 
 	for(var i = 0; i < BeltAmount; i++){
+		var Radion = Math.random() * Math.PI * 2;
+
 		BeltMashArray[i] = new Float32Array([
 			1.0, 0.0, 0.0, 0.0,
 			0.0, 1.0, 0.0, 0.0,
 			0.0, 0.0, 1.0, 0.0,
-			i* 2, 1.0, 10, 1.0
+			Math.cos(Radians) * 10, 1.0, Math.sin(Radians) * 10, 1.0
 		]);
 	}
 
