@@ -453,7 +453,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(shuttleWingsMesh, shuttleWingsMaterial);
 
 				//===[Moon]===
-				offsetMatrixMonkey[12] += 0.01
+				offsetMatrixMonkey[12] = (offsetMatrixMonkey[12] + 0.01) % 60;
 				MonkeyRocketMaterial.setModel(offsetMatrixMonkey);
 				MonkeysMaterial.setModel(offsetMatrixMonkey);
 
