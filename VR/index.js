@@ -268,7 +268,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	planetMaterial.setColor([0.9, 0.0, 0.0, 1.0]);
 
 	const controllerMesh = new ezgfx.Mesh();
-	controllerMesh.loadFromOBJ("./Rocket.obj");
+	controllerMesh.loadFromOBJ("./Point.obj");
 
 	const controllerMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	controllerMaterial.setProjection(identityMatrix);
