@@ -256,9 +256,11 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(cubeMesh, cubeMaterial);
 
-				EarthRadians += 1;
+				EarthRadians += 0.01;
 				offsetMatrixEarth = rotate(offsetMatrixEarth, EarthRadians);
-				cubeMaterial.setModel(offsetMatrixEarth)
+				waterMaterial.setModel(offsetMatrixEarth);
+				sandMaterial.setView(view.transform.inverse.matrix);
+				.setModel(offsetMatrixEarth);
 
 				waterMaterial.setProjection(view.projectionMatrix);
 				waterMaterial.setView(view.transform.inverse.matrix);
