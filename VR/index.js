@@ -463,12 +463,12 @@ function onSessionStarted(_session) { // this function defines what happens when
 				MonkeyRocketMaterial.setProjection(view.projectionMatrix);
 				MonkeyRocketMaterial.setView(view.transform.inverse.matrix);
 				
-				renderer.draw(offsetMatrixMonkey, MonkeyRocketMaterial);
+				renderer.draw(MonkeyRocketMesh, MonkeyRocketMaterial);
 
 				MonkeysMaterial.setProjection(view.projectionMatrix);
 				MonkeysMaterial.setView(view.transform.inverse.matrix);
 				
-				renderer.draw(offsetMatrixMonkey, MonkeysMaterial);
+				renderer.draw(MonkeyMesh, MonkeysMaterial);
 
 			
 				if(controllers.left) { // checks if WebXR got our left controller
