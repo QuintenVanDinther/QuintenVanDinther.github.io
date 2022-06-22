@@ -189,12 +189,12 @@ function onSessionStarted(_session) { // this function defines what happens when
 	const moonBaseMesh = new ezgfx.Mesh();
 	moonBaseMesh.loadFromOBJ("./MoonBase.obj");
 
-	const MoonBaseMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
-	MoonBaseMaterial.setProjection(identityMatrix);
-	MoonBaseMaterial.setView(identityMatrix);
-	MoonBaseMaterial.setModel(offsetMatrixMoon);
+	const moonBaseMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	moonBaseMaterial.setProjection(identityMatrix);
+	moonBaseMaterial.setView(identityMatrix);
+	moonBaseMaterial.setModel(offsetMatrixMoon);
 
-	MoonBaseMaterial.setColor([0.3, 0.5, 0.3, 1.0]);
+	moonBaseMaterial.setColor([0.3, 0.5, 0.3, 1.0]);
 
 	const moonRockMesh = new ezgfx.Mesh();
 	moonRockMesh.loadFromOBJ("./MoonRock.obj");
