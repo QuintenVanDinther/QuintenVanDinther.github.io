@@ -377,7 +377,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				//offsetMatrixMoon = rotate(offsetMatrixMoon, MoonRadiansRotation);
 				for(var i = 0; i < BeltAmount; i++){
 					moonBaseMaterial.setModel(BeltMashArray[i]);
-					moonRocksMaterial.setModel(BeltMashArray);
+					moonRocksMaterial.setModel(BeltMashArray[i]);
 
 					moonBaseMaterial.setProjection(view.projectionMatrix);
 					moonBaseMaterial.setView(view.transform.inverse.matrix);
