@@ -108,7 +108,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 0.0, 1.0
 	]);
 	var offsetMatrix = new Float32Array([
-		1.0, 0.0, 0.0, 0.0,
+		0.9, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, 5.0, 1.0
@@ -256,8 +256,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(planeMesh, planeMaterial);
 
-				offsetMatrix = rotate(offsetMatrix, 1);
-				cubeMaterial.setModel(offsetMatrix)
+				// offsetMatrix = rotate(offsetMatrix, 1);
+				// cubeMaterial.setModel(offsetMatrix)
 
 				cubeMaterial.setProjection(view.projectionMatrix);
 				cubeMaterial.setView(view.transform.inverse.matrix);
