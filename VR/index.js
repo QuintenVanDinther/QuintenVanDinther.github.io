@@ -15,7 +15,7 @@ let canvas = null; // we'll keep it as a global object
 // XR globals.
 let xrButton = document.getElementById("xr-button");
 let xrSession = null;
-let xrRefSpace = null; 
+let xrRefSpace = null;
 
 const lightShader = {
 	vertex: "\n\
