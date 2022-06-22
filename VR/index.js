@@ -371,13 +371,11 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(moonRockMesh, moonRocksMaterial);
 
 				//===[Belt]===
-				//MoonRadiansMove -= 0.001;
-				//MoonRadiansRotation += 0.03;
-				//offsetMatrixMoon = cirle(offsetMatrixMoon, MoonRadiansMove, 3);
-				//offsetMatrixMoon = rotate(offsetMatrixMoon, MoonRadiansRotation);
-				for(var i = 0; i < BeltAmount; i++){
-					moonBaseMaterial.setModel(BeltMashArray[i]);
-					moonRocksMaterial.setModel(BeltMashArray[i]);
+				for(var i = 0; i < BeltAmount; i++){					
+					BeltOffsetArray[i] = cirle(BeltOffsetArray[i], BeltRadianMoveArray, BeltDiameterArray);
+					BeltOffsetArray[i] = rotate(BeltOffsetArray[i], BeltRadianRotationArray);
+					moonBaseMaterial.setModel(BeltOffsetArray[i]);
+					moonRocksMaterial.setModel(BeltOffsetArray[i]);
 
 					moonBaseMaterial.setProjection(view.projectionMatrix);
 					moonBaseMaterial.setView(view.transform.inverse.matrix);
@@ -456,7 +454,7 @@ function rotate (Matrix, angle){
 
 //===[Belt]===
 	var BeltAmount = 100;
-	var BeltMashArray = [];
+	var BeltOffsetArray = [];
 	var BeltRadianMoveArray = [];
 	var BeltRadianRotationArray = [];	
 	var BeltDiameterArray = [];
@@ -467,7 +465,7 @@ function rotate (Matrix, angle){
 		BeltDiameterArray[i] = Math.random() * 5 + 45;
 		var positionHeight = Math.random() * 4 - 2;
 
-		BeltMashArray[i] = new Float32Array([
+		BeltOffsetArray[i] = new Float32Array([
 			1.0, 0.0, 0.0, 0.0,
 			0.0, 1.0, 0.0, 0.0,
 			0.0, 0.0, 1.0, 0.0,
