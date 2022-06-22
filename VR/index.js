@@ -110,12 +110,12 @@ function onSessionStarted(_session) { // this function defines what happens when
 	var offsetMatrix = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 0.0, -1.0, 0.0,
-		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, 5.0, 1.0
 	]);
 	var offsetMatrixWater = new Float32Array([
-		1.0, 0.0, 0.0, 0.0,
-		0.0, 1.0, 0.0, 0.0,
+		1.0, -1.0, 0.0, 0.0,
+		1.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
 		0.0, 1.0, 0.0, 1.0
 	]);
@@ -144,7 +144,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	planeMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
 
 	const cubeMesh = new ezgfx.Mesh();
-	cubeMesh.loadFromOBJ("./cone.obj");
+	cubeMesh.loadFromOBJ("./cube.obj");
 
 	const cubeMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	cubeMaterial.setProjection(identityMatrix);
