@@ -143,6 +143,14 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		2.5, 1.0, 2.5, 1.0
 	]);
+	var MonkeyRadiansMove = 0;
+	var MonkeyRadiansRotation = 0;
+	var offsetMatrixMonkeyn = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		3.0, 1.0, 3.0, 1.0
+	]);
 	
 	const planeMesh = new ezgfx.Mesh();
 	planeMesh.loadFromOBJ("./plane.obj");
@@ -205,6 +213,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	moonRocksMaterial.setModel(offsetMatrixMoon);
 
 	moonRocksMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
+	
 
 	//===[Earth]===
 	const waterMesh = new ezgfx.Mesh();
@@ -227,6 +236,28 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 	sandMaterial.setColor([0.0, 0.5, 0.1, 1.0]);
 
+	//===[Monkey]===
+	const MonkeyRocketMesh = new ezgfx.Mesh();
+	MonkeyRocketMesh.loadFromOBJ("./Rocket.obj");
+
+	const MonkeyRocketMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	MonkeyRocketMaterial.setProjection(identityMatrix);
+	MonkeyRocketMaterial.setView(identityMatrix);
+	MonkeyRocketMaterial.setModel(offsetMatrixMonkey);
+
+	MonkeyRocketMaterial.setColor([0.3, 0.3, 0.3, 1.0]);
+
+	const MonkeyMesh = new ezgfx.Mesh();
+	MonkeyMesh.loadFromOBJ("./Monkey.obj");
+
+	const MonkeysMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	MonkeysMaterial.setProjection(identityMatrix);
+	MonkeysMaterial.setView(identityMatrix);
+	MonkeysMaterial.setModel(offsetMatrixMonkey);
+
+	MonkeysMaterial.setColor([0.5, 0.2, 0.0, 1.0]);
+
+	//===[Planet]===
 	const planetMesh = new ezgfx.Mesh();
 	planetMesh.loadFromOBJ("./planet.obj");
 
@@ -422,6 +453,22 @@ function onSessionStarted(_session) { // this function defines what happens when
 				shuttleWingsMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(shuttleWingsMesh, shuttleWingsMaterial);
+
+				//===[Moon]===
+				//offsetMatrixMoon = 
+
+				MonkeyRocketMaterial.setModel(offsetMatrixMonkeyn);
+				MonkeysMaterial.setModel(offsetMatrixMonkeyn);
+
+				MonkeyRocketMaterial.setProjection(view.projectionMatrix);
+				MonkeyRocketMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(offsetMatrixMonkeyn, MonkeyRocketMaterial);
+
+				MonkeysMaterial.setProjection(view.projectionMatrix);
+				MonkeysMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(offsetMatrixMonkeyn, MonkeysMaterial);
 
 			
 				if(controllers.left) { // checks if WebXR got our left controller
