@@ -402,6 +402,27 @@ function onSessionStarted(_session) { // this function defines what happens when
 				planetMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(planetMesh, planetMaterial);
+
+				//===[Shuttle 2]===
+				ShuttleRadiansMove += 0.005;
+				ShuttleRadiansRotation += 0.005;
+				offsetMatrixShuttle = cirle(offsetMatrixShuttle, ShuttleRadiansMove, 1.5);
+				offsetMatrixShuttle = moveCenter(offsetMatrixShuttle, offsetMatrixPlanet);				
+				offsetMatrixShuttle = rotate(offsetMatrixShuttle, ShuttleRadiansRotation);
+
+				shuttleBaseMaterial.setModel(offsetMatrixShuttle);
+				shuttleWingsMaterial.setModel(offsetMatrixShuttle);
+
+				shuttleBaseMaterial.setProjection(view.projectionMatrix);
+				shuttleBaseMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(shuttleBaseMesh, shuttleBaseMaterial);
+
+				shuttleWingsMaterial.setProjection(view.projectionMatrix);
+				shuttleWingsMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(shuttleWingsMesh, shuttleWingsMaterial);
+
 			
 				if(controllers.left) { // checks if WebXR got our left controller
 					controllerMaterial.setProjection(view.projectionMatrix);
@@ -452,6 +473,12 @@ function rotate (Matrix, angle){
 	Matrix[2] = Math.sin(angle);
 	Matrix[8] = -1 * Math.sin(angle);
 	Matrix[10] = Math.cos(angle);
+	return Matrix;
+}
+
+function moveCenter(Matrix, CenterMatrix){
+	Matrix[12] += CenterMatrix[12];
+	Matrix[14] += CenterMatrix[14];
 	return Matrix;
 }
 
