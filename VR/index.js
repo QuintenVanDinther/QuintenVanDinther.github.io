@@ -130,7 +130,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		1.0, 3.0, 1.0, 1.0
+		1.0, 1.0, 1.0, 1.0
 	]);
 	
 	const planeMesh = new ezgfx.Mesh();
@@ -161,7 +161,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	waterMaterial.setView(identityMatrix);
 	waterMaterial.setModel(offsetMatrixWater);
 
-	waterMaterial.setColor([0.6, 0.2, 1.0, 1.0]);
+	waterMaterial.setColor([0.0, 0.5, 0.1, 1.0]);
 
 	const sandMesh = new ezgfx.Mesh();
 	sandMesh.loadFromOBJ("./Sand.obj");
@@ -185,7 +185,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	planetMaterial.setColor([0.9, 0.0, 0.0, 1.0]);
 
 	const controllerMesh = new ezgfx.Mesh();
-	controllerMesh.loadFromOBJ("./controller.obj");
+	controllerMesh.loadFromOBJ("./Rocket.obj");
 
 	const controllerMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	controllerMaterial.setProjection(identityMatrix);
