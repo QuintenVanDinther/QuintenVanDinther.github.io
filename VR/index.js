@@ -370,6 +370,28 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(moonRockMesh, moonRocksMaterial);
 
+				//===[Belt]===
+				//MoonRadiansMove -= 0.001;
+				//MoonRadiansRotation += 0.03;
+				//offsetMatrixMoon = cirle(offsetMatrixMoon, MoonRadiansMove, 3);
+				//offsetMatrixMoon = rotate(offsetMatrixMoon, MoonRadiansRotation);
+				for(var i = 0; i < BeltAmount; i++){
+					moonBaseMaterial.setModel(BeltMashArray[i]);
+					moonRocksMaterial.setModel(BeltMashArray);
+
+					moonBaseMaterial.setProjection(view.projectionMatrix);
+					moonBaseMaterial.setView(view.transform.inverse.matrix);
+					
+					renderer.draw(moonBaseMesh, moonBaseMaterial);
+
+					moonRocksMaterial.setProjection(view.projectionMatrix);
+					moonRocksMaterial.setView(view.transform.inverse.matrix);
+					
+					renderer.draw(moonRockMesh, moonRocksMaterial);
+				}
+
+				
+
 				//===[Planet]===
 				PlanetRadians += 0.001;
 				offsetMatrixPlanet = cirle(offsetMatrixPlanet, PlanetRadians, 10);
@@ -431,3 +453,20 @@ function rotate (Matrix, angle){
 	Matrix[10] = Math.cos(angle);
 	return Matrix;
 }
+
+//===[Belt]===
+	var BeltAmount = 10;
+	var BeltRadiansMove = 0;
+	var BeltRadiansRotation = 0;
+	var BeltMashArray = [];
+
+	for(var i = 0; i < BeltAmount; i++){
+		BeltMashArray[i] = new Float32Array([
+			1.0, 0.0, 0.0, 0.0,
+			0.0, 1.0, 0.0, 0.0,
+			0.0, 0.0, 1.0, 0.0,
+			i* 2, 1.0, 10, 1.0
+		]);
+	}
+
+	
