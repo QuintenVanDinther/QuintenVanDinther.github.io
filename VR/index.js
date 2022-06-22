@@ -143,13 +143,11 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		2.5, 1.0, 2.5, 1.0
 	]);
-	var MonkeyRadiansMove = 0;
-	var MonkeyRadiansRotation = 0;
 	var offsetMatrixMonkey = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		3.0, 1.0, 3.0, 1.0
+		0.0, 1.0, 0.0, 1.0
 	]);
 	
 	const planeMesh = new ezgfx.Mesh();
@@ -245,7 +243,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	MonkeyRocketMaterial.setView(identityMatrix);
 	MonkeyRocketMaterial.setModel(offsetMatrixMonkey);
 
-	MonkeyRocketMaterial.setColor([0.3, 0.3, 0.3, 1.0]);
+	MonkeyRocketMaterial.setColor([0.9, 0.9, 0.9, 1.0]);
 
 	const MonkeyMesh = new ezgfx.Mesh();
 	MonkeyMesh.loadFromOBJ("./Monkey.obj");
@@ -455,8 +453,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(shuttleWingsMesh, shuttleWingsMaterial);
 
 				//===[Moon]===
-				//offsetMatrixMoon = 
-
+				offsetMatrixMonkey[12] += 0.01
 				MonkeyRocketMaterial.setModel(offsetMatrixMonkey);
 				MonkeysMaterial.setModel(offsetMatrixMonkey);
 
