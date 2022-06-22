@@ -108,9 +108,9 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 0.0, 1.0
 	]);
 	var offsetMatrix = new Float32Array([
-		0.7, -0.7, 0.0, 0.0,
-		0.7, 0.7, 0.0, 0.0,
-		0.0, 0.0, 1.0, 0.0,
+		0.7, 0.0, 0.7, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		-0.7, 0.0, 0.7, 0.0,
 		-2.0, 1.0, 5.0, 1.0
 	]);
 	var offsetMatrixWater = new Float32Array([
