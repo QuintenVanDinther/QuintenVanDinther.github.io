@@ -467,7 +467,7 @@ function rotate (Matrix, angle){
 			1.0, 0.0, 0.0, 0.0,
 			0.0, 1.0, 0.0, 0.0,
 			0.0, 0.0, 1.0, 0.0,
-			Math.cos(Radians) * 10, 1.0, Math.sin(Radians) * 10, 1.0
+			Math.cos(Radians) * 50, 1.0, Math.sin(Radians) * 50, 1.0
 		]);
 	}
 
