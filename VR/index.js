@@ -259,8 +259,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				EarthRadians += 0.01;
 				offsetMatrixEarth = rotate(offsetMatrixEarth, EarthRadians);
 				waterMaterial.setModel(offsetMatrixEarth);
-				sandMaterial.setView(view.transform.inverse.matrix);
-				.setModel(offsetMatrixEarth);
+				sandMaterial.setModel(offsetMatrixEarth);
 
 				waterMaterial.setProjection(view.projectionMatrix);
 				waterMaterial.setView(view.transform.inverse.matrix);
