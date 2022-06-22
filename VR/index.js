@@ -127,6 +127,13 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		1.0, 1.0, 1.0, 1.0
 	]);
+	var ShuttleRadians = 0;
+	var offsetMatrixShuttle = new Float32Array([
+		1.0, 0.0, 0.0, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0, 0.0,
+		1.0, 1.0, 1.0, 1.0
+	]);
 	
 	const planeMesh = new ezgfx.Mesh();
 	planeMesh.loadFromOBJ("./plane.obj");
@@ -148,6 +155,28 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 	cubeMaterial.setColor([0.4, 0.3, 1.0, 1.0]);
 
+	//===[Shuttle]===
+	const shuttleBaseMesh = new ezgfx.Mesh();
+	shuttleBaseMesh.loadFromOBJ("./SuttleBase.obj");
+
+	const shuttleBaseMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	shuttleBaseMaterial.setProjection(identityMatrix);
+	shuttleBaseMaterial.setView(identityMatrix);
+	shuttleBaseMaterial.setModel(offsetMatrixShuttle);
+
+	shuttleBaseMaterial.setColor([1.0, 1.0, 1.0, 1.0]);
+
+	const shuttleWingsMesh = new ezgfx.Mesh();
+	shuttleWingsMesh.loadFromOBJ("./SuttleWings.obj");
+
+	const shuttleWingsMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
+	shuttleWingsMaterial.setProjection(identityMatrix);
+	shuttleWingsMaterial.setView(identityMatrix);
+	shuttleWingsMaterial.setModel(offsetMatrixShuttle);
+
+	shuttleWingsMaterial.setColor([0.1, 0.1, 0.1, 1.0]);
+
+	//===[Earth]===
 	const waterMesh = new ezgfx.Mesh();
 	waterMesh.loadFromOBJ("./Water.obj");
 
@@ -256,8 +285,10 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(cubeMesh, cubeMaterial);
 
+				//===[earth]===
 				EarthRadians += 0.01;
 				offsetMatrixEarth = rotate(offsetMatrixEarth, EarthRadians);
+
 				waterMaterial.setModel(offsetMatrixEarth);
 				sandMaterial.setModel(offsetMatrixEarth);
 
@@ -271,6 +302,24 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(sandMesh, sandMaterial);
 
+				//===[Shuttle]===
+				ShuttleRadians += 0.01;
+				offsetMatrixShuttle = cirle(offsetMatrixShuttle, ShuttleRadians, 1.5);
+
+				waterMaterial.setModel(offsetMatrixShuttle);
+				sandMaterial.setModel(offsetMatrixShuttle);
+
+				waterMaterial.setProjection(view.projectionMatrix);
+				waterMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(waterMesh, waterMaterial);
+
+				sandMaterial.setProjection(view.projectionMatrix);
+				sandMaterial.setView(view.transform.inverse.matrix);
+				
+				renderer.draw(sandMesh, sandMaterial);
+
+				//===[Planet]===
 				PlanetRadians += 0.01;
 				offsetMatrixPlanet = cirle(offsetMatrixPlanet, PlanetRadians, 10);
 				planetMaterial.setModel(offsetMatrixPlanet);
