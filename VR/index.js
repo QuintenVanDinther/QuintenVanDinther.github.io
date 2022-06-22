@@ -113,8 +113,13 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		-2.0, 1.0, 5.0, 1.0
 	]);
-	var EarthRadians = 0;
-	var offsetMatrixEarth = new Float32Array([
+	var offsetMatrixWater = new Float32Array([
+		0.7, 0.0, 0.7, 0.0,
+		0.0, 1.0, 0.0, 0.0,
+		-0.7, 0.0, 0.7, 0.0,
+		0.0, 1.0, 0.0, 1.0
+	]);
+	var offsetMatrixSand = new Float32Array([
 		0.7, 0.0, 0.7, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		-0.7, 0.0, 0.7, 0.0,
@@ -154,7 +159,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	const waterMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	waterMaterial.setProjection(identityMatrix);
 	waterMaterial.setView(identityMatrix);
-	waterMaterial.setModel(offsetMatrixEarth);
+	waterMaterial.setModel(offsetMatrixWater);
 
 	waterMaterial.setColor([0.1, 0.8, 1.0, 1.0]);
 
@@ -164,7 +169,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	const sandMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
 	sandMaterial.setProjection(identityMatrix);
 	sandMaterial.setView(identityMatrix);
-	sandMaterial.setModel(offsetMatrixEarth);
+	sandMaterial.setModel(offsetMatrixSand);
 
 	sandMaterial.setColor([0.0, 0.5, 0.1, 1.0]);
 
@@ -251,14 +256,13 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(planeMesh, planeMaterial);
 
+				// offsetMatrix = rotate(offsetMatrix, 1);
+				// cubeMaterial.setModel(offsetMatrix)
+
 				cubeMaterial.setProjection(view.projectionMatrix);
 				cubeMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(cubeMesh, cubeMaterial);
-
-				EarthRadians += 1;
-				offsetMatrixEarth = rotate(offsetMatrixEarth, EarthRadians);
-				cubeMaterial.setModel(offsetMatrixEarth)
 
 				waterMaterial.setProjection(view.projectionMatrix);
 				waterMaterial.setView(view.transform.inverse.matrix);
@@ -324,9 +328,9 @@ function cirle(Matrix, Radians, diameter){
 }
 
 function rotate (Matrix, angle){
-	Matrix[0] = Math.cos(angle);
-	Matrix[2] = Math.sin(angle);
-	Matrix[8] = -1 * Math.sin(angle);
-	Matrix[10] = Math.cos(angle);
+	Matrix[0] = Matrix[0] * Math.cos(angle);
+	Matrix[2] = Matrix[2] * -1 * Math.sin(angle);
+	Matrix[8] = Matrix[8] * Math.sin(angle);
+	Matrix[10] = Matrix[10] * Math.cos(angle);
 	return Matrix;
 }
