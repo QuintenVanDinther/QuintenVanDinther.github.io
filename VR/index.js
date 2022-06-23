@@ -130,7 +130,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 	var ShuttleRadiansMove = 0;
 	var Shuttle2RadiansMove = 0;
 	var ShuttleRadiansRotation = 90;
-	var Shuttle2RadiansRotation = 90;
+	var Shuttle2RadiansRotation = -90;
 	
 	var offsetMatrixShuttle = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
@@ -459,8 +459,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(planetMesh, planetMaterial);
 
 				//===[Shuttle 2]===
-				Shuttle2RadiansMove += 0.005;
-				Shuttle2RadiansRotation += 0.005;
+				Shuttle2RadiansMove -= 0.008;
+				Shuttle2RadiansRotation -= 0.008;
 				offsetMatrixShuttle = cirle(offsetMatrixShuttle, Shuttle2RadiansMove, 3.5);
 				offsetMatrixShuttle = moveCenter(offsetMatrixShuttle, offsetMatrixPlanet);				
 				offsetMatrixShuttle = rotate(offsetMatrixShuttle, Shuttle2RadiansRotation);
