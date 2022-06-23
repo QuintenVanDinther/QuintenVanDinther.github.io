@@ -1,174 +1,174 @@
-let ezgfxGlobals = {}; // not for use by the user - it's just some global constants that are needed by our shaders 
-const ezgfx = {
-	Mesh: class {
+let  gl = null; // a global  variable, we will assign our WebGL2 context to it
+const ezgl = { // inside of this object there will be all the basic abstraction
+	VertexBuffer: class { // both vertex buffer and vertex array, whereas the vertex array is here only to store the vertex layout
 		constructor() {
-			this.vertexbuffer = new ezgl.VertexBuffer();
-			this.vertexbuffer.vertexLayout([3, 2, 3]);
-		}
-		free() {
-			this.vertexbuffer.free();
-		}
+			this.va = gl.createVertexArray();
+			gl.bindVertexArray(this.va);
 
-		loadFromData(data) {
-			this.vertexbuffer.vertexData(data);
-		}
-		loadFromOBJ(url) {
-			this.vertexbuffer.vertexData(ezgfxGlobals.triangle);
-			fetch(url).then(response => {
-				response.text().then(text => {
-					const verticesLoaded = ezobj.load(text);
-					this.vertexbuffer.vertexData(verticesLoaded);
-				});
-			});
-		}
-	},
-	Texture: class {
-		constructor() {
-			this.texture = new ezgl.Texture();
-		}
-		free() {
-			this.texture.free();
-		}
+			this.vb = gl.createBuffer();
+			gl.bindBuffer(gl.ARRAY_BUFFER, this.vb);
 
-		loadFromFile(url, options = {wrap: gl.REPEAT, filter: gl.NEAREST}) {
-			this.texture.fromFile(url, options);
-		}
-		loadFromData(data, options = {wrap: gl.REPEAT, filter: gl.NEAREST}) {
-			this.texture.fromData(data, options);
-		}
-	},
-	Material: class {
-		constructor(customShader = null) {
-			this.shader = new ezgl.Shader();
-			this.shader.join(ezgfxGlobals.vSS);
-			if(!customShader) {
-				this.shader.join(ezgfxGlobals.fSS);
-				this.shader.link();
-			}
-			else {
-				let fSS = new ezgl.SubShader(gl.FRAGMENT_SHADER, ezgfxGlobals.fSSC0 + customShader + ezgfxGlobals.fSSC1); 
-				this.shader.join(fSS);
-				this.shader.link();
-				fSS.free();
-			}
-
-			this.shader.bind();
-			this.textures = [];
-			this.shader.set4f("u_Color", 1.0, 1.0, 1.0, 1.0);
-			for(let i = 0; i < 16; i++) {
-				this.shader.set1i("u_TexID[" + i + "]", i);
-			}
-			this.shader.unbind();
-		}
-		free() {
-			this.shader.free();
-		}
-
-		setProjection(mat) {
-			this.shader.bind();
-			this.shader.set4x4f("u_Projection", mat);
-			this.shader.unbind();
-		}
-		setView(mat) {
-			this.shader.bind();
-			this.shader.set4x4f("u_View", mat);
-			this.shader.unbind();
-		}
-		setModel(mat) {
-			this.shader.bind();
-			this.shader.set4x4f("u_Model", mat);
-			this.shader.unbind();
-		}
-
-		setColor(rgba = [1.0, 1.0, 1.0, 1.0]) {
-			this.shader.bind();
-			this.shader.set4f("u_Color", rgba[0], rgba[1], rgba[2], rgba[3], rgba[4]);
-			this.shader.unbind();
-		}
-		setTexture(texture, slot = 0) {
-			this.textures[slot] = texture.texture;
-		}
-	},
-	Renderer: class {
-		constructor() {
-			this.color = [0.0, 0.0, 0.0, 1.0];
-			gl.clearColor(0.0, 0.0, 0.0, 1.0);
+			this.stride = 0;
+			this.length = 0;
+			this.vertices = 0;
 			
-			this.masks = gl.COLOR_BUFFER_BIT;
-			this.depthTest = false;
-
-			ezgfxGlobals.fSSC0 = "#version 300 es\n\
-			precision mediump float;\n\
-			\n\
-			out vec4 o_Color;\n\
-			\n\
-			in vec2 v_TexCoord;\n\
-			\n\
-			uniform vec4 u_Color;\n\
-			uniform sampler2D u_TexID[16];\n";
-			ezgfxGlobals.fSSC1 = "\nvoid main() {\n\
-				o_Color = shader();\n\
-			}";
-			ezgfxGlobals.vSS = new ezgl.SubShader(gl.VERTEX_SHADER, "#version 300 es\n\
-			precision mediump float;\n\
-			\n\
-			layout(location = 0) in vec3 a_Position;\n\
-			layout(location = 1) in vec2 a_TexCoord;\n\
-			layout(location = 2) in vec3 a_Normal;\n\
-			\n\
-			uniform mat4 u_Projection;\n\
-			uniform mat4 u_View;\n\
-			uniform mat4 u_Model;\n\
-			\n\
-			out vec2 v_TexCoord;\n\
-			\n\
-			void main() {\n\
-			gl_Position = u_Projection * u_View * u_Model * vec4(a_Position, 1.0);\n\
-				v_TexCoord = a_TexCoord;\n\
-				v_TexCoord.y = 1.0 - v_TexCoord.y;\n\
-			}");
-			ezgfxGlobals.fSS = new ezgl.SubShader(gl.FRAGMENT_SHADER, ezgfxGlobals.fSSC0 + "\nvec4 shader() { return u_Color; }\n" + ezgfxGlobals.fSSC1),
-				
-			ezgfxGlobals.triangle = [
-					-0.5, -0.5, 0.0,
-						0.0, 0.0,
-							0.0, 0.0, 1.0,
-					0.0, 0.5, 0.0,
-						0.5, 1.0,
-							0.0, 0.0, 1.0,
-					0.5, -0.5, 0.0,
-						1.0, 0.0,
-							0.0, 0.0, 1.0 
-			];
+			gl.bindBuffer(gl.ARRAY_BUFFER, null);
+			gl.bindVertexArray(null);
 		}
-		depthTesting(enable) {
-			if(enable && !this.depthTest) {
-				this.masks = gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT;
-				gl.enable(gl.DEPTH_TEST);
+		free() { // free functions - they just delete all the WebGL2 objects created with the object
+			gl.deleteBuffer(this.vb);
+			gl.deleteVertexArray(this.va);
+		}
 
-				this.depthTest = true;
+		vertexLayout(layout = [3, 2, 3]) { // this function supplies the vertex layout - it says how many elements there are per vertex, and how much floats they take up. we will mostly use the [3, 2, 3] combination, because it's the one used by OBJ models
+			for(let i = 0; i < layout.length; i++) {
+				this.stride += layout[i] * 4;
 			}
-			else if(!enable && this.depthTest) {
-				this.masks = gl.COLOR_BUFFER_BIT;
-				gl.disable(gl.DEPTH_TEST);
+			
+			gl.bindVertexArray(this.va);
+			gl.bindBuffer(gl.ARRAY_BUFFER, this.vb);
 
-				this.depthTest = false;
+			let istride = 0;
+			for(let i = 0; i < layout.length; i++) {
+				gl.vertexAttribPointer(i, layout[i], gl.FLOAT, false, this.stride, istride);
+				gl.enableVertexAttribArray(i);
+
+				istride += layout[i] * 4;
+			}
+			
+			gl.bindBuffer(gl.ARRAY_BUFFER, null);
+			gl.bindVertexArray(null);
+
+			this.stride = this.stride / 4;
+			this.vertices = this.length / this.stride;
+		}
+		vertexData(data) { // simply takes in a Float32Array and supplies it to the buffer
+			this.length = data.length;
+			gl.bindVertexArray(this.va);
+			gl.bindBuffer(gl.ARRAY_BUFFER, this.vb);
+			gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
+			gl.bindBuffer(gl.ARRAY_BUFFER, null);
+			gl.bindVertexArray(null);
+			this.vertices = this.length / this.stride;
+		}
+		draw() { // draws our mesh
+			gl.bindVertexArray(this.va);
+			gl.bindBuffer(gl.ARRAY_BUFFER, this.vb);
+
+			gl.drawArrays(gl.TRIANGLES, 0, this.vertices);
+
+			gl.bindBuffer(gl.ARRAY_BUFFER, null);
+			gl.bindVertexArray(null);
+		}
+		
+	},
+	SubShader: class { // known as shader in WebGL2, simply contains shader code and type
+		constructor(type, str) {
+			this.shader = gl.createShader(type);
+			gl.shaderSource(this.shader, str);
+			gl.compileShader(this.shader);
+			
+			const message = gl.getShaderInfoLog(this.shader);
+			if(message.length > 0) {
+				alert(message);
+				throw message;
 			}
 		}
-		clear(color = [0.0, 0.0, 0.0, 1.0]) {
-			if(color != this.color) {
-				gl.clearColor(color[0], color[1], color[2], color[3]);
-				this.color = color;
-			}
-			gl.clear(this.masks);
+		free() {
+			gl.deleteShader(this.shader);
 		}
-		draw(mesh, material) {
-			material.shader.bind();
-			for(let i = 0; i < material.textures.size; i++) {
-				material.textures[i].bind(i);
-			}
-			mesh.vertexbuffer.draw();
-			material.shader.unbind();
+	},
+	Shader: class { // known as a program in WebGL2, just joins and links shaders
+		constructor() {
+			this.program = gl.createProgram();
+		}
+		free() {
+			gl.deleteProgram(this.program);
+		}
+
+		join(subshader) {
+			gl.attachShader(this.program, subshader.shader);
+			return this;
+		}
+		link() {
+			gl.linkProgram(this.program);
+			gl.useProgram(this.program);
+			gl.useProgram(null);
+			return this;
+		}
+
+		bind() {
+			gl.useProgram(this.program);
+			return this;
+		}
+		unbind() {
+			gl.useProgram(null);
+			return this;
+		}
+
+		// these are used for setting uniforms in shaders
+		set1i(name, val) { // mostly for texture IDs
+			gl.uniform1i(gl.getUniformLocation(this.program, name), val);
+			return this;
+		}
+		set1f(name, val) { // maybe will find some kind of a use
+			gl.uniform1f(gl.getUniformLocation(this.program, name), val);
+			return this;
+		}
+		set2f(name, x, y) { // maybe will find some kind of a use 
+			gl.uniform2f(gl.getUniformLocation(this.program, name), x, y);
+			return this;
+		}
+		set3f(name, x, y, z) { // maybe will find some kind of a use 
+			gl.uniform3f(gl.getUniformLocation(this.program, name), x, y, z);
+			return this;
+		}
+		set4f(name, x, y, z, w) { // maybe will find some kind of a use (most likely colors)
+			gl.uniform4f(gl.getUniformLocation(this.program, name), x, y, z, w);
+			return this;
+		}
+		set4x4f(name, mat) { // for matrices (projection, view, model)
+			gl.uniformMatrix4fv(gl.getUniformLocation(this.program, name), false, mat);
+			return this;
+		}
+	},
+	Texture: class { // Just a simple texture, and it can be loaded from a file
+		constructor() {
+			this.texture = gl.createTexture();
+			gl.bindTexture(gl.TEXTURE_2D, this.texture);
+			gl.bindTexture(gl.TEXTURE_2D, null);
+		}
+		free() {
+			gl.deleteTexture(this.texture);
+		}
+
+		fromFile(url, options = {wrap: gl.REPEAT, filter: gl.NEAREST}) {
+			gl.bindTexture(gl.TEXTURE_2D, this.texture);
+			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 0, 255, 255]));
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, options.wrap);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, options.wrap);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, options.filter);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, options.filter);
+			let that = this;
+			const img = new Image();
+			img.onload = function() {
+				gl.bindTexture(gl.TEXTURE_2D, that.texture);
+				gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+			};
+			img.src = url;
+		}
+		fromData(data, options = {wrap: gl.REPEAT, filter: gl.NEAREST}) {
+			gl.bindTexture(gl.TEXTURE_2D, this.texture);
+			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(data));
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, options.wrap);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, options.wrap);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, options.filter);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, options.filter);
+		}
+
+		bind(slot = 0) {
+			gl.activeTexture(gl.TEXTURE0 + slot);
+			gl.bindTexture(gl.TEXTURE_2D, this.texture);
 		}
 	}
-};
+}; 
