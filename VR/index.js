@@ -120,7 +120,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 		-0.7, 0.0, 0.7, 0.0,
 		0.0, 1.0, 0.0, 1.0
 	]);
-	var PlanetRadians = 0;
+	var PlanetRadiansMove = 0;
+	var PlanetRadiansRotation = 0;
 	var offsetMatrixPlanet = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
@@ -449,8 +450,10 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 
 				//===[Planet]===
-				PlanetRadians += 0.001;
-				offsetMatrixPlanet = cirle(offsetMatrixPlanet, PlanetRadians, 10);
+				PlanetRadiansRotation += 0.01;
+				PlanetRadiansMove += 0.001
+				offsetMatrixPlanet = cirle(offsetMatrixPlanet, PlanetRadiansMove, 10);
+				offsetMatrixPlanet = rotate(offsetMatrixPlanet, PlanetRadiansRotation);
 				planetMaterial.setModel(offsetMatrixPlanet);
 
 				planetMaterial.setProjection(view.projectionMatrix);
