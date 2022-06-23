@@ -107,12 +107,6 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		0.0, 0.0, 0.0, 1.0
 	]);
-	var offsetMatrix = new Float32Array([
-		1.0, 0.0, 0.0, 0.0,
-		0.0, 1.0, 0.0, 0.0,
-		0.0, 0.0, 1.0, 0.0,
-		-2.0, 1.0, 5.0, 1.0
-	]);
 	var EarthRadians = 0;
 	var offsetMatrixEarth = new Float32Array([
 		0.7, 0.0, 0.7, 0.0,
@@ -185,16 +179,6 @@ function onSessionStarted(_session) { // this function defines what happens when
 	planeMaterial.setModel(identityMatrix);
 
 	planeMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
-
-	const cubeMesh = new ezgfx.Mesh();
-	cubeMesh.loadFromOBJ("./cube.obj");
-
-	const cubeMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
-	cubeMaterial.setProjection(identityMatrix);
-	cubeMaterial.setView(identityMatrix);
-	cubeMaterial.setModel(offsetMatrix);
-
-	cubeMaterial.setColor([0.4, 0.3, 1.0, 1.0]);
 
 	//===[Shuttle]===
 	const shuttleBaseMesh = new ezgfx.Mesh();
@@ -365,11 +349,6 @@ function onSessionStarted(_session) { // this function defines what happens when
 				planeMaterial.setView(view.transform.inverse.matrix);
 				
 				renderer.draw(planeMesh, planeMaterial);
-
-				cubeMaterial.setProjection(view.projectionMatrix);
-				cubeMaterial.setView(view.transform.inverse.matrix);
-				
-				renderer.draw(cubeMesh, cubeMaterial);
 
 				//===[earth]===
 				EarthRadians += 0.001;
