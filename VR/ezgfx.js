@@ -22,21 +22,6 @@ const ezgfx = {
 			});
 		}
 	},
-	Texture: class {
-		constructor() {
-			this.texture = new ezgl.Texture();
-		}
-		free() {
-			this.texture.free();
-		}
-
-		loadFromFile(url, options = {wrap: gl.REPEAT, filter: gl.NEAREST}) {
-			this.texture.fromFile(url, options);
-		}
-		loadFromData(data, options = {wrap: gl.REPEAT, filter: gl.NEAREST}) {
-			this.texture.fromData(data, options);
-		}
-	},
 	Material: class {
 		constructor(customVertex = null, customTexCoord = null, customShader = null) {
 			this.shader = new ezgl.Shader();
