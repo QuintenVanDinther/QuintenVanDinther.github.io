@@ -128,7 +128,10 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 1.0, 1.0, 1.0
 	]);
 	var ShuttleRadiansMove = 0;
+	var Shuttle2RadiansMove = 0;
 	var ShuttleRadiansRotation = 90;
+	var Shuttle2RadiansRotation = 90;
+	
 	var offsetMatrixShuttle = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
@@ -149,6 +152,28 @@ function onSessionStarted(_session) { // this function defines what happens when
 		0.0, 0.0, 1.0, 0.0,
 		0.0, 1.0, 0.0, 1.0
 	]);
+	//===[Belt]===
+	var BeltAmount = 800;
+	var BeltOffsetArray = [];
+	var BeltRadianMoveArray = [];
+	var BeltRadianRotationArray = [];	
+	var BeltRotationPositionArray = [];	
+	var BeltDiameterArray = [];
+
+	for(var i = 0; i < BeltAmount; i++){
+		BeltRadianMoveArray[i] = Math.random() * Math.PI * 2;
+		BeltRadianRotationArray[i] = (Math.random() * 2 - 1) /100;
+		BeltRotationPositionArray[i] = 0;
+		BeltDiameterArray[i] = Math.random() * 5 + 45;
+		var positionHeight = Math.random() * 4 - 2;
+
+		BeltOffsetArray[i] = new Float32Array([
+			1.0, 0.0, 0.0, 0.0,
+			0.0, 1.0, 0.0, 0.0,
+			0.0, 0.0, 1.0, 0.0,
+			Math.cos(BeltRadianMoveArray[i]) * BeltDiameterArray[i], positionHeight, Math.sin(BeltRadianMoveArray[i]) * BeltDiameterArray[i], 1.0
+		]);
+	}
 	
 	const planeMesh = new ezgfx.Mesh();
 	planeMesh.loadFromOBJ("./plane.obj");
@@ -266,7 +291,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 	
 
 	planetMaterial.setColor([0.9, 0.0, 0.0, 1.0]);
-
+	
+	//===[Controller]===
 	const controllerMesh = new ezgfx.Mesh();
 	controllerMesh.loadFromOBJ("./Point.obj");
 
@@ -433,11 +459,11 @@ function onSessionStarted(_session) { // this function defines what happens when
 				renderer.draw(planetMesh, planetMaterial);
 
 				//===[Shuttle 2]===
-				ShuttleRadiansMove += 0.005;
-				ShuttleRadiansRotation += 0.005;
-				offsetMatrixShuttle = cirle(offsetMatrixShuttle, ShuttleRadiansMove, 3.5);
+				Shuttle2RadiansMove += 0.005;
+				Shuttle2RadiansRotation += 0.005;
+				offsetMatrixShuttle = cirle(offsetMatrixShuttle, Shuttle2RadiansMove, 3.5);
 				offsetMatrixShuttle = moveCenter(offsetMatrixShuttle, offsetMatrixPlanet);				
-				offsetMatrixShuttle = rotate(offsetMatrixShuttle, ShuttleRadiansRotation);
+				offsetMatrixShuttle = rotate(offsetMatrixShuttle, Shuttle2RadiansRotation);
 
 				shuttleBaseMaterial.setModel(offsetMatrixShuttle);
 				shuttleWingsMaterial.setModel(offsetMatrixShuttle);
@@ -526,27 +552,6 @@ function moveCenter(Matrix, CenterMatrix){
 	return Matrix;
 }
 
-//===[Belt]===
-	var BeltAmount = 800;
-	var BeltOffsetArray = [];
-	var BeltRadianMoveArray = [];
-	var BeltRadianRotationArray = [];	
-	var BeltRotationPositionArray = [];	
-	var BeltDiameterArray = [];
 
-	for(var i = 0; i < BeltAmount; i++){
-		BeltRadianMoveArray[i] = Math.random() * Math.PI * 2;
-		BeltRadianRotationArray[i] = (Math.random() * 2 - 1) /100;
-		BeltRotationPositionArray[i] = 0;
-		BeltDiameterArray[i] = Math.random() * 5 + 45;
-		var positionHeight = Math.random() * 4 - 2;
-
-		BeltOffsetArray[i] = new Float32Array([
-			1.0, 0.0, 0.0, 0.0,
-			0.0, 1.0, 0.0, 0.0,
-			0.0, 0.0, 1.0, 0.0,
-			Math.cos(BeltRadianMoveArray[i]) * BeltDiameterArray[i], positionHeight, Math.sin(BeltRadianMoveArray[i]) * BeltDiameterArray[i], 1.0
-		]);
-	}
 
 	
