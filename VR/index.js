@@ -140,7 +140,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		0.0, 1.0, 0.0, 1.0
+		-1.0, 1.0, 0.0, 1.0
 	]);
 	//===[Belt]===
 	var BeltAmount = 800;
@@ -436,7 +436,7 @@ function onSessionStarted(_session) { // this function defines what happens when
 				
 				renderer.draw(shuttleWingsMesh, shuttleWingsMaterial);
 
-				//===[Moon]===
+				//===[Monkey]===
 				offsetMatrixMonkey[12] = (offsetMatrixMonkey[12] + 0.01) % 60;
 				MonkeyRocketMaterial.setModel(offsetMatrixMonkey);
 				MonkeysMaterial.setModel(offsetMatrixMonkey);
