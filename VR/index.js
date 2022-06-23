@@ -345,10 +345,10 @@ function onSessionStarted(_session) { // this function defines what happens when
 				gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height); // we set our viewport appropriately
 	
 				
-				planeMaterial.setProjection(view.projectionMatrix);
-				planeMaterial.setView(view.transform.inverse.matrix);
+				// planeMaterial.setProjection(view.projectionMatrix);
+				// planeMaterial.setView(view.transform.inverse.matrix);
 				
-				renderer.draw(planeMesh, planeMaterial);
+				// renderer.draw(planeMesh, planeMaterial);
 
 				//===[earth]===
 				EarthRadians += 0.001;
