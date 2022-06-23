@@ -11,7 +11,7 @@ const ezgfx = {
 
 		loadFromData(data) {
 			this.vertexbuffer.vertexData(data);
-		}
+		} 
 		loadFromOBJ(url) {
 			this.vertexbuffer.vertexData(ezgfxGlobals.triangle);
 			fetch(url).then(response => {
