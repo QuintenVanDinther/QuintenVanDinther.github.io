@@ -1,7 +1,3 @@
-// Polyfill makes it possible to run WebXR on devices that support only WebVR.
-//import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
-//const polyfill = new WebXRPolyfill();
-
 // this function multiplies a 4d vector by a 4x4 matrix (it applies all the matrix operations to the vector)
 function mulVecByMat(out, m, v) {
 	out[0] = m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3] * v[3];
@@ -97,9 +93,8 @@ function onSessionStarted(_session) { // this function defines what happens when
 	initWebGL2({xrCompatible: true}); // we initialize WebGL2, in a way that makes it compatible with WebXR
 	xrSession.updateRenderState({baseLayer: new XRWebGLLayer(xrSession, gl)}); // this line simply sets our session's WebGL context to our WebGL2 context
 	
-	
 	const renderer = new ezgfx.Renderer();
-	renderer.depthTesting(true); // if you don't know what that means - it means that our meshes will be rendered properly ¯\_(ツ)_/¯
+	renderer.depthTesting(true); //it means that our meshes will be rendered properly 
 
 	const identityMatrix = new Float32Array([
 		1.0, 0.0, 0.0, 0.0,
@@ -169,16 +164,6 @@ function onSessionStarted(_session) { // this function defines what happens when
 			Math.cos(BeltRadianMoveArray[i]) * BeltDiameterArray[i], positionHeight, Math.sin(BeltRadianMoveArray[i]) * BeltDiameterArray[i], 1.0
 		]);
 	}
-	
-	const planeMesh = new ezgfx.Mesh();
-	planeMesh.loadFromOBJ("./plane.obj");
-
-	const planeMaterial = new ezgfx.Material(lightShader.vertex, null, lightShader.shader);
-	planeMaterial.setProjection(identityMatrix);
-	planeMaterial.setView(identityMatrix);
-	planeMaterial.setModel(identityMatrix);
-
-	planeMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
 
 	//===[Shuttle]===
 	const shuttleBaseMesh = new ezgfx.Mesh();
@@ -222,7 +207,6 @@ function onSessionStarted(_session) { // this function defines what happens when
 
 	moonRocksMaterial.setColor([0.5, 0.5, 0.5, 1.0]);
 	
-
 	//===[Earth]===
 	const waterMesh = new ezgfx.Mesh();
 	waterMesh.loadFromOBJ("./Water.obj");
@@ -344,12 +328,6 @@ function onSessionStarted(_session) { // this function defines what happens when
 				let viewport = glLayer.getViewport(view); // we get the viewport of our view (the place on the screen where things will be drawn)
 				gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height); // we set our viewport appropriately
 	
-				
-				// planeMaterial.setProjection(view.projectionMatrix);
-				// planeMaterial.setView(view.transform.inverse.matrix);
-				
-				// renderer.draw(planeMesh, planeMaterial);
-
 				//===[earth]===
 				EarthRadians += 0.001;
 				offsetMatrixEarth = rotate(offsetMatrixEarth, EarthRadians);
@@ -425,8 +403,6 @@ function onSessionStarted(_session) { // this function defines what happens when
 					
 					renderer.draw(moonRockMesh, moonRocksMaterial);
 				}
-
-				
 
 				//===[Planet]===
 				PlanetRadiansRotation += 0.01;
