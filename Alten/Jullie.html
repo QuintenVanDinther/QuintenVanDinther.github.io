@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Kerst kaart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <style>
+        html {
+            height: 120%;
+            overflow: scroll;
+        }
+        
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: scroll;
+            background-image: url('DB-Snow.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+        
+         ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        h1 {
+            position: absolute;
+            margin: auto;
+            top: 30%;
+            left: 50%;
+            color: rgb(255, 255, 255);
+            text-shadow: 2px 2px #5c0505;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font: 18vmin "Codystar", sans-serif;
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        @-webkit-keyframes glow {
+            from {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+            }
+            to {
+                text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+            }
+        }
+        
+        .snowflake {
+            position: absolute;
+            display: block;
+            position: absolute;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            background-image: -webkit-radial-gradient( center, circle farthest-corner, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 0) 100%);
+            background-image: -moz-radial-gradient( center, circle farthest-corner, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 0) 100%);
+            background-image: -ms-radial-gradient( center, circle farthest-corner, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 0) 100%);
+            background-image: radial-gradient( center, circle farthest-corner, rgba(255, 255, 255, 1) 40%, rgba(255, 255, 255, 0) 100%);
+        }
+        
+        #snow {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        #middlebox {
+            position: absolute;
+            left: 20%;
+            top: 55%;
+            background: url('kerstpapier.JPG');
+            border-style: outset;
+            width: 60%;
+            min-width: 250;
+            margin-bottom: 100px;
+        }
+        #show {
+            position: absolute;
+            left: 20%;
+            top: 55%;
+            font-size: 2.5em;
+            font-family: "Lucida Handwriting", Cursive;
+            background: url('kerstpapier.JPG');
+            border-style: outset;
+            width: 60%;
+            min-width: 250;
+            margin-bottom: 100px;
+        }
+        
+        .letterType {
+            margin: 5%;
+            color: black;
+            text-align: center;
+            font-size: 1.8em;
+            font-family: "Lucida Handwriting", Cursive;
+        }
+        
+        .maxWidth {
+            max-width: 90%;
+        }
+    </style>
+</head>
+
+<body>  
+    <audio controls autoplay id="myAudio" style= "visibility: hidden;">
+        <source src="ScottHolmesMusic-JingleBells.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+      </audio>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Codystar">
+    <h1>HAPPY XMAS</h1>
+    <div id="snow"></div>
+    
+     <button id="show">Open mijn Kerstkaart</button>
+
+    <div id="middlebox">
+        <h2 class="letterType">Jullie</h2>
+        <p class="letterType">
+            Ik wens je hele Fijne Kerstdagen <br> en een heel gelukkig,<br> gezond en voorspoedig Nieuwjaar!<br>
+          <br>Ik hoop voor je dat je het heel <br>leuk gaat vinden om voor ASML<br> in C te programmeren en dat je<br> komend jaar veel gezellige avond <br>met je vrienden gaat hebben. <br>
+        </p>
+        <h4 class="letterType"> Quinten</h4>
+    </div>
+   
+
+</body>
+
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#middlebox").hide();
+      $("#show").click(function(){
+        $("#middlebox").slideDown();
+        $("#show").hide();
+        var x = document.getElementById("myAudio");
+        x.play();
+      });
+    });
+    
+    // Happy Xmas! by @neave
+
+    var Snowflake = (function() {
+
+        var flakes;
+        var flakesTotal = 75;
+        var wind = 0;
+        var mouseX;
+        var mouseY;
+
+        function Snowflake(size, x, y, vx, vy) {
+            this.size = size;
+            this.x = x;
+            this.y = y;
+            this.vx = vx;
+            this.vy = vy;
+            this.hit = false;
+            this.melt = false;
+            this.div = document.createElement('div');
+            this.div.classList.add('snowflake');
+            this.div.style.width = this.size + 'px';
+            this.div.style.height = this.size + 'px';
+        }
+
+        Snowflake.prototype.move = function() {
+            if (this.hit) {
+                if (Math.random() > 0.995) this.melt = true;
+            } else {
+                this.x += this.vx + Math.min(Math.max(wind, -5), 5);
+                this.y += this.vy;
+            }
+
+            // Wrap the snowflake to within the bounds of the page
+            if (this.x > window.innerWidth + this.size) {
+                this.x -= window.innerWidth + this.size;
+            }
+
+            if (this.x < -this.size) {
+                this.x += window.innerWidth + this.size;
+            }
+
+            if (this.y > window.innerHeight + this.size) {
+                this.x = Math.random() * window.innerWidth;
+                this.y -= window.innerHeight + this.size * 2;
+                this.melt = false;
+            }
+
+            var dx = mouseX - this.x;
+            var dy = mouseY - this.y;
+            this.hit = !this.melt && this.y < mouseY && dx * dx + dy * dy < 2400;
+        };
+
+        Snowflake.prototype.draw = function() {
+            this.div.style.transform =
+                this.div.style.MozTransform =
+                this.div.style.webkitTransform =
+                'translate3d(' + this.x + 'px' + ',' + this.y + 'px,0)';
+        };
+
+        function update() {
+            for (var i = flakes.length; i--;) {
+                var flake = flakes[i];
+                flake.move();
+                flake.draw();
+            }
+            requestAnimationFrame(update);
+        }
+
+        Snowflake.init = function(container) {
+            flakes = [];
+
+            for (var i = flakesTotal; i--;) {
+                var size = (Math.random() + 0.2) * 12 + 1;
+                var flake = new Snowflake(
+                    size,
+                    Math.random() * window.innerWidth,
+                    Math.random() * window.innerHeight,
+                    Math.random() - 0.5,
+                    size * 0.3
+                );
+                container.appendChild(flake.div);
+                flakes.push(flake);
+            }
+
+            container.onmousemove = function(event) {
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+                wind = (mouseX - window.innerWidth / 2) / window.innerWidth * 6;
+            };
+
+            container.ontouchstart = function(event) {
+                mouseX = event.targetTouches[0].clientX;
+                mouseY = event.targetTouches[0].clientY;
+                event.preventDefault();
+            };
+
+            window.ondeviceorientation = function(event) {
+                if (event) {
+                    wind = event.gamma / 10;
+                }
+            };
+
+            update();
+        };
+
+        return Snowflake;
+
+    }());
+
+    window.onload = function() {
+        setTimeout(function() {
+            Snowflake.init(document.getElementById('snow'));
+        }, 500);
+    }
+</script>
