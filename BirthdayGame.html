@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The Birthday Adventure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            color: #333;
+        }
+        
+        h1,
+        h2,
+        p {
+            margin: 0 0 1em;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1em;
+        }
+        
+        button {
+            display: inline-block;
+            padding: 0.5em 1em;
+            margin: 1em 0.5em;
+            background-color: #3f51b5;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: #303f9f;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>The Birthday Adventure</h1>
+        <p>It's your birthday, and you're feeling adventurous! You decide to go on a hike in the nearby woods, where you hear there's a secret waterfall that's only accessible by a hidden trail.</p>
+        <p>You pack a backpack with some essentials and set out on your journey. As you approach the entrance to the woods, you see two paths: one is well-trodden and wide, while the other is narrow and overgrown. Which path do you take?</p>
+        <button onclick="choosePath('wide')">Take the wide path</button>
+        <button onclick="choosePath('narrow')">Take the narrow path</button>
+    </div>
+
+    <script>
+        // Define the variables for the story
+        let path = '';
+
+        // Function to handle the player's choice of path
+        function choosePath(choice) {
+            path = choice;
+            if (path === 'wide') {
+                document.body.innerHTML = `
+					<div class="container">
+						<h1>The Birthday Adventure</h1>
+						<p>You decide to take the well-trodden path, which seems safe and easy to follow. You walk for about half an hour, enjoying the scenery and listening to the birds chirping.</p>
+						<p>As you round a bend in the trail, you suddenly hear a loud growling sound coming from the bushes. You freeze, not sure what to do. What do you do?</p>
+						<button onclick="chooseAction('run')">Run away as fast as you can</button>
+						<button onclick="chooseAction('hide')">Hide behind a nearby tree</button>
+					</div>
+				`;
+            } else if (path === 'narrow') {
+                document.body.innerHTML = `
+					<div class="container">
+						<h1>The Birthday Adventure</h1>
+						<p>You decide to take the narrow path, which looks more challenging and adventurous. You push your way through the overgrown bushes and climb over fallen logs, feeling like a true explorer.</p>
+						<p>As you reach a steep incline, you realize that you're not sure how to proceed. What do you do?</p>
+						<button onclick="chooseAction('climb')">Try to climb the steep incline</button>
+<button onclick="chooseAction('turn')">Turn back and take the wide path instead</button>
+</div>
+`;
+            }
+        }
+        // Function to handle the player's choice of action
+        function chooseAction(choice) {
+            if (path === 'wide') {
+                if (choice === 'run') {
+                    document.body.innerHTML = `
+					<div class="container">
+						<h1>The Birthday Adventure</h1>
+						<p>You start running as fast as you can, trying to get away from whatever is making the growling sound. You hear footsteps behind you and realize that something is chasing you!</p>
+						<p>You run for a few more minutes, but eventually you get tired and have to stop to catch your breath. When you turn around, you see a big brown bear standing in front of you, looking angry and hungry.</p>
+						<p>What do you do?</p>
+						<button onclick="endGame('lose')">Try to fight the bear</button>
+						<button onclick="endGame('win')">Play dead and hope the bear leaves you alone</button>
+					</div>
+				`;
+                } else if (choice === 'hide') {
+                    document.body.innerHTML = `
+					<div class="container">
+						<h1>The Birthday Adventure</h1>
+						<p>You quickly hide behind a nearby tree, trying to stay quiet and still. You hear the growling sound getting closer, and you start to panic.</p>
+						<p>After a few moments, you see a cute little squirrel pop out of the bushes, looking curious and friendly. You realize that you were just scared of a harmless animal!</p>
+						<p>You continue on your hike, feeling a bit embarrassed but also relieved that you're safe. You eventually reach the secret waterfall and enjoy a peaceful moment of solitude.</p>
+						<button onclick="endGame('win')">Congratulations! You've completed The Birthday Adventure!</button>
+					</div>
+				`;
+                }
+            } else if (path === 'narrow') {
+                if (choice === 'climb') {
+                    document.body.innerHTML = `
+					<div class="container">
+						<h1>The Birthday Adventure</h1>
+						<p>You try to climb the steep incline, but you quickly realize that it's too slippery and dangerous. You start to lose your footing and slide down the slope, getting scratched by branches and rocks.</p>
+						<p>You finally reach the bottom, feeling sore and defeated. You decide to turn back and take the wide path instead, feeling a bit disappointed but also grateful that you're safe.</p>
+						<button onclick="endGame('lose')">Game over. Better luck next time!</button>
+					</div>
+				`;
+                } else if (choice === 'turn') {
+                    document.body.innerHTML = `
+					<div class="container">
+						<h1>The Birthday Adventure</h1>
+						<p>You decide to turn back and take the wide path instead, feeling a bit disappointed but also relieved that you're not taking unnecessary risks.</p>
+						<p>You eventually reach the secret waterfall and enjoy a peaceful moment of solitude. You realize that sometimes the journey is just as important as the destination.</p>
+						<button onclick="endGame('win')">Congratulations! You've completed The Birthday Adventure!</button>
+					</div>
+				`;
+                }
+            }
+        }
+
+        // Function to handle the end of the game
+        function endGame(outcome) {
+            if (outcome === 'win') {
+                alert('Congratulations! You\'ve completed The Birthday Adventure!');
+            } else if (outcome === 'lose') {
+                alert('Game over. Better luck next time!');
+            }
+            // Reload the page to start a new game
+            location.reload();
+        }
+
+        // Start the game by displaying the first scenario
+        displayScenario();
+    </script>
+</body>
+
+</html>

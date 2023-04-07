@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Harry Potter Birthday Adventure</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Harry Potter Birthday Adventure</h1>
+    <div class="container">
+        <button class="button" onclick="scenario1()">Start Adventure</button>
+    </div>
+    <script>
+        function scenario1() {
+            alert("It's Harry's birthday and he's decided to go on an adventure!");
+            document.querySelector(".container").innerHTML = `
+				<p>Harry finds himself in the Forbidden Forest. Suddenly, he hears a noise behind him. What does he do?</p>
+				<button class="button" onclick="scenario2()">Investigate noise</button>
+				<button class="button" onclick="scenario3()">Ignore noise and keep walking</button>
+			`;
+        }
+
+        function scenario2() {
+            alert("Harry investigates the noise and finds a group of hostile wizards. What does he do?");
+            document.querySelector(".container").innerHTML = `
+				<p>Harry finds himself facing a group of hostile wizards. What does he do?</p>
+				<button class="button" onclick="scenario4()">Confront wizards</button>
+				<button class="button" onclick="scenario5()">Sneak past wizards</button>
+			`;
+        }
+
+        function scenario3() {
+            alert("Harry ignores the noise and continues on his journey.");
+            document.querySelector(".container").innerHTML = `
+				<p>Harry finds himself at the foot of a mountain. What does he do?</p>
+				<button class="button" onclick="scenario6()">Climb mountain</button>
+				<button class="button" onclick="scenario7()">Go around mountain</button>
+			`;
+        }
+
+        function scenario4() {
+            alert("Harry confronts the wizards and manages to defeat them with a powerful spell. However, he is injured in the process and must find a way to heal himself.");
+            document.querySelector(".container").innerHTML = `
+				<p>Harry is injured and must find a way to heal himself. What does he do?</p>
+				<button class="button" onclick="scenario20()">Use healing potion</button>
+				<button class="button" onclick="scenario21()">Find a healer</button>
+			`;
+        }
+
+        function scenario5() {
+            alert("Harry manages to sneak past the wizards undetected and continues on his journey.");
+            document.querySelector(".container").innerHTML = `
+				<p>Harry finds himself at the foot of a mountain. What does he do?</p>
+				<button class="button" onclick="scenario6()">Climb mountain</button>
+				<button class="button" onclick=("scenario7()">Go around mountain</button>
+            `;
+        }
+
+        function scenario6() {
+            alert("Harry begins to climb the mountain. It's a difficult climb, but he eventually reaches the top.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself at the entrance to a cave. What does he do?</p>
+			<button class="button" onclick="scenario8()">Enter cave</button>
+			<button class="button" onclick="scenario9()">Keep walking</button>
+		`;
+        }
+
+        function scenario7() {
+            alert("Harry goes around the mountain and continues on his journey.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself in a dark forest. What does he do?</p>
+			<button class="button" onclick="scenario10()">Keep walking</button>
+			<button class="button" onclick="scenario11()">Build a shelter for the night</button>
+		`;
+        }
+
+        function scenario8() {
+            alert("Harry enters the cave and finds a group of trolls guarding a treasure. What does he do?");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself facing a group of trolls guarding a treasure. What does he do?</p>
+			<button class="button" onclick="scenario12()">Fight the trolls</button>
+			<button class="button" onclick="scenario13()">Sneak past the trolls</button>
+		`;
+        }
+
+        function scenario9() {
+            alert("Harry keeps walking and eventually finds himself at the edge of a lake. What does he do?");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself at the edge of a lake. What does he do?</p>
+			<button class="button" onclick="scenario14()">Swim across the lake</button>
+			<button class="button" onclick="scenario15()">Build a raft and cross the lake</button>
+		`;
+        }
+
+        function scenario10() {
+            alert("Harry keeps walking and eventually finds himself at a dead end. He must turn back.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself back at the foot of the mountain. What does he do?</p>
+			<button class="button" onclick="scenario6()">Climb mountain</button>
+			<button class="button" onclick="scenario7()">Go around mountain</button>
+		`;
+        }
+
+        function scenario11() {
+            alert("Harry builds a shelter for the night and manages to get some rest.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry wakes up and continues on his journey. He eventually finds himself at the edge of a lake. What does he do?</p>
+			<button class="button" onclick="scenario14()">Swim across the lake</button>
+			<button class="button" onclick="scenario15()">Build a raft and cross the lake</button>
+		`;
+        }
+
+        function scenario12() {
+            alert("Harry fights the trolls and manages to defeat them, but he is injured in the process and must find a way to heal himself.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry is injured and must find a way to heal himself. What does he do?</p>
+			<button class="button" onclick="scenario20()">Use healing potion</button>
+			<button class="button" onclick="scenario21()">Find a healer</button>
+		`;
+        }
+
+        function scenario13() {
+            alert("Harry manages to sneak past the trolls undetected and finds himself with a treasure. What does he do?");
+            document.querySelector(".container").innerHTML = `
+        <p>Harry finds himself with a treasure. What does he do?</p>
+         <button class="button" onclick="scenario22()">Take the treasure and continue on his journey</button>
+         <button class="button" onclick="scenario23()">Leave the treasure and continue on his journey</button> `;
+        }
+
+        function scenario14() {
+            alert("Harry decides to swim across the lake, but he encounters a giant squid. What does he do?");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry encounters a giant squid while swimming across the lake. What does he do?</p>
+			<button class="button" onclick="scenario16()">Fight the squid</button>
+			<button class="button" onclick="scenario17()">Try to reason with the squid</button>
+		`;
+        }
+
+        function scenario15() {
+            alert("Harry builds a raft and successfully crosses the lake.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself in a beautiful meadow. What does he do?</p>
+			<button class="button" onclick="scenario18()">Keep walking</button>
+			<button class="button" onclick="scenario19()">Rest and enjoy the scenery</button>
+		`;
+        }
+
+        function scenario16() {
+            alert("Harry fights the giant squid and manages to defeat it, but he is exhausted and must find a way to rest.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry is exhausted and must find a way to rest. What does he do?</p>
+			<button class="button" onclick="scenario20()">Use healing potion</button>
+			<button class="button" onclick="scenario21()">Find a place to rest</button>
+		`;
+        }
+
+        function scenario17() {
+            alert("Harry tries to reason with the squid, but it doesn't understand him and attacks. Harry must find a way to defend himself.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry must find a way to defend himself from the giant squid. What does he do?</p>
+			<button class="button" onclick="scenario16()">Fight the squid</button>
+			<button class="button" onclick="scenario21()">Find a place to rest</button>
+		`;
+        }
+
+        function scenario18() {
+            alert("Harry keeps walking and eventually finds himself at the entrance to a cave. What does he do?");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself at the entrance to a cave. What does he do?</p>
+			<button class="button" onclick="scenario8()">Enter cave</button>
+			<button class="button" onclick="scenario9()">Keep walking</button>
+		`;
+        }
+
+        function scenario19() {
+            alert("Harry rests and enjoys the scenery. He eventually continues on his journey and finds himself at the entrance to a cave. What does he do?");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself at the entrance to a cave. What does he do?</p>
+			<button class="button" onclick="scenario8()">Enter cave</button>
+			<button class="button" onclick="scenario9()">Keep walking</button>
+		`;
+        }
+
+        function scenario20() {
+            alert("Harry uses the healing potion and feels much better. He can now continue on his journey.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself at the entrance to a dark forest. What does he do?</p>
+			<button class="button" onclick="scenario24()">Enter the dark forest</button>
+            <button class="button" onclick="scenario25()">Find a different route</button>
+        `;
+        }
+
+        function scenario21() {
+            alert("Harry finds a safe place to rest and wakes up feeling much better. He can now continue on his journey.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself at the entrance to a dark forest. What does he do?</p>
+			<button class="button" onclick="scenario24()">Enter the dark forest</button>
+			<button class="button" onclick="scenario25()">Find a different route</button>
+		`;
+        }
+
+        function scenario22() {
+            alert("Harry takes the treasure and continues on his journey. He eventually finds himself at the entrance to a dark forest. What does he do?");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself at the entrance to a dark forest. What does he do?</p>
+			<button class="button" onclick="scenario24()">Enter the dark forest</button>
+			<button class="button" onclick="scenario25()">Find a different route</button>
+		`;
+        }
+
+        function scenario23() {
+            alert("Harry decides to leave the treasure and continue on his journey. He eventually finds himself at the entrance to a dark forest. What does he do?");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself at the entrance to a dark forest. What does he do?</p>
+			<button class="button" onclick="scenario24()">Enter the dark forest</button>
+			<button class="button" onclick="scenario25()">Find a different route</button>
+		`;
+        }
+
+        function scenario24() {
+            alert("Harry enters the dark forest and encounters a pack of werewolves. What does he do?");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry encounters a pack of werewolves. What does he do?</p>
+			<button class="button" onclick="scenario26()">Fight the werewolves</button>
+			<button class="button" onclick="scenario27()">Try to reason with the werewolves</button>
+		`;
+        }
+
+        function scenario25() {
+            alert("Harry finds a different route and eventually reaches Hogwarts. He enjoys a great birthday celebration with his friends.");
+            document.querySelector(".container").innerHTML = `
+			<h1>Congratulations, you have completed the game!</h1>
+			<p>Harry has successfully reached Hogwarts and enjoyed a great birthday celebration with his friends.</p>
+		`;
+        }
+
+        function scenario26() {
+            alert("Harry fights the werewolves and defeats them. He can now continue on his journey.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry finds himself at the entrance to Hogwarts. What does he do?</p>
+			<button class="button" onclick="scenario28()">Enter Hogwarts</button>
+			<button class="button" onclick="scenario29()">Wait outside</button>
+		`;
+        }
+
+        function scenario27() {
+            alert("Harry tries to reason with the werewolves, but they don't understand him and attack. Harry must find a way to defend himself.");
+            document.querySelector(".container").innerHTML = `
+			<p>Harry must find a way to defend himself from the werewolves. What does he do?</p>
+			<button class="button" onclick="scenario26()">Fight the werewolves</button>
+			<button class="button" onclick="scenario21()">Find a place to rest</button>
+		`;
+        }
+
+        function scenario28() {
+            alert("Harry enters Hogwarts and is greeted by his friends. They wish him a happy birthday and the celebration begins!");
+            document.querySelector(".container").innerHTML = `
+			<h1>Congratulations, you have completed the game!</h1>
+			<p>Harry has successfully reached Hogwarts and enjoyed a great birthday celebration with his friends.</p>
+		`;
+        }
+
+        function scenario29() {
+            alert("Harry waits outside for too long and eventually falls asleep. He wakes up the next morning to find that the celebration is over.");
+            document.querySelector(".container").innerHTML = `
+			<h1>Game over</h1>
+			<p>Harry missed out on his own birthday celebration because he waited outside Hogwarts for too long.</p>
+		`;
+        }
+
+        // Initial scenario
+        //scenario1();
+    </script>
+</body>
+
+</html>
