@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Memory Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        #board {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            background-color: gray;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        .card.flip {
+            transform: rotateY(180deg);
+        }
+        
+        #timer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Memory Game</h1>
+    <div id="board"></div>
+    <div id="message"></div>
+    <div id="timer">0:00</div>
+    <script>
+        const board = document.getElementById('board');
+        const message = document.getElementById('message');
+        const timer = document.getElementById('timer');
+        const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'cyan', 'magenta', 'lime', 'navy', 'teal'];
+        const cards = [...colors, ...colors];
+        let firstCard = null;
+        let secondCard = null;
+        let matches = 0;
+        let intervalId = null;
+        let seconds = 0;
+
+        // Shuffle the cards using Fisher-Yates shuffle algorithm
+        for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cards[i], cards[j]] = [cards[j], cards[i]];
+        }
+
+        // Create the cards and add them to the board
+        cards.forEach((color) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.color = color;
+            card.addEventListener('click', handleCardClick);
+            board.appendChild(card);
+        });
+
+        // Handle card click event
+        function handleCardClick() {
+            if (this === firstCard) return;
+            startTimer();
+            this.classList.add('flip');
+            this.style.backgroundColor = this.dataset.color;
+            if (!firstCard) {
+                firstCard = this;
+            } else {
+                secondCard = this;
+                checkForMatch();
+            }
+        }
+
+        // Check if the two flipped cards match
+        function checkForMatch() {
+            const match = firstCard.dataset.color === secondCard.dataset.color;
+            match ? disableCards() : unflipCards();
+        }
+
+        // Disable matched cards
+        function disableCards() {
+            firstCard.removeEventListener('click', handleCardClick);
+            secondCard.removeEventListener('click', handleCardClick);
+            matches++;
+            resetCards();
+            checkForWin();
+        }
+
+        // Unflip unmatched cards
+        function unflipCards() {
+            setTimeout(() => {
+                firstCard.classList.remove('flip');
+                secondCard.classList.remove('flip');
+                firstCard.style.backgroundColor = 'gray';
+                secondCard.style.backgroundColor = 'gray';
+                resetCards();
+            }, 1000);
+        }
+
+        // Reset firstCard and secondCard variables
+        function resetCards() {
+            firstCard = null;
+            secondCard = null;
+        }
+
+        // Check if the game is won
+        function checkForWin() {
+            if (matches === colors.length) {
+                clearInterval(intervalId);
+                message.textContent = "Congratulations! You won!";
+            }
+        }
+
+        // Start the timer
+        function startTimer() {
+            if (intervalId === null) {
+                intervalId = setInterval(() => {
+                    seconds++;
+                    const minutes = Math.floor(seconds / 60);
+                    const remainingSeconds = seconds % 60;
+                    timer.textContent = `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+
+</html>
