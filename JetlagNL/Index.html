@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/Falke-Design/L.Donut@latest/src/L.Donut.js"></script>
+    <title>JetLag NL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script src="cities.js"></script>
+<script src="airports.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+<body>
+    <div id="map"> </div>
+    <div class="container">
+        <h2>In welke plaats ben je?</h2>
+        <select id="location">
+            <option value="">-- Kies een stad --</option>
+        </select>
+        <button id="GuesseButton">Raad de stad</button>
+    </div>
+    <div class="container">
+        <h2>Kies een vraag</h2>
+
+        <select id="questionSelect">
+            <option value="">-- Kies een vraag --</option>
+            <option value="name">Wat is de stadsnaam?</option>
+            <option value="establish">In welke eeuw is de plaats opgericht?</option>
+            <option value="longitude">Ben je westerlijker of oosterlijker dan ik?</option>
+            <option value="latitude">Ben je noordelijker of zuidelijker dan ik?</option>
+            <option value="Radius10">Ben je in een radius van 10km?</option>
+            <option value="Radius25">Ben je in een radius van 25km?</option>
+            <option value="Radius50">Ben je in een radius van 50km?</option>
+            <option value="Radius75">Ben je in een radius van 75km?</option>
+            <option value="Radius100">Ben je in een radius van 100km?</option>
+            <option value="Altitude">Ben je hoger gelegen dan ik?</option>
+            <option value="Province">Ben je in dezelfde provincie als ik?</option>
+            <option value="Airport">Zijn onze dichtstbijzijnde vliegveld hetzelfde?</option>
+            <option value="Hanze">Ben je in stad dat onderdeel was van de Hanze steden?</option>
+            <option value="GlazenHuis">Ben je in stad waar het 3FM Glazen huis is geweest?</option>
+            <option value="Landskampioen">Ben je in stad dat Landskampioen is geweest?</option>
+        </select>
+
+        <button id="askButton">Vraag</button>
+
+        <div id="answer"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
