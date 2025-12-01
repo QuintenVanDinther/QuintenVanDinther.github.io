@@ -8,7 +8,8 @@ const City = [
     "establish": 1198,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Breda",
@@ -19,7 +20,8 @@ const City = [
     "establish": 1125,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "Y"
   },
   {
     "name": "Eindhoven",
@@ -30,7 +32,8 @@ const City = [
     "establish": 1232,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "N"
   },
   {
     "name": "Helmond",
@@ -41,7 +44,8 @@ const City = [
     "establish": 1179,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "s-Hertogenbosch",
@@ -52,7 +56,8 @@ const City = [
     "establish": 1185,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "N"
   },
   {
     "name": "Oss",
@@ -63,7 +68,8 @@ const City = [
     "establish": 1161,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Roosendaal",
@@ -74,7 +80,8 @@ const City = [
     "establish": 1266,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Tilburg",
@@ -85,7 +92,8 @@ const City = [
     "establish": 1191,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "Y"
   },
   {
     "name": "Goes",
@@ -96,7 +104,8 @@ const City = [
     "establish": 900,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Middelburg",
@@ -107,7 +116,8 @@ const City = [
     "establish": 850,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Vlissingen",
@@ -118,7 +128,8 @@ const City = [
     "establish": 1247,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "Y"
   },
   {
     "name": "Heerlen",
@@ -129,7 +140,8 @@ const City = [
     "establish": 0,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Maastricht",
@@ -140,7 +152,8 @@ const City = [
     "establish": -10,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Roermond",
@@ -151,7 +164,8 @@ const City = [
     "establish": 250,
     "glazenHuis": "N",
     "hanze": "Y",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Sittard",
@@ -162,7 +176,8 @@ const City = [
     "establish": 650,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Venlo",
@@ -173,7 +188,8 @@ const City = [
     "establish": 890,
     "glazenHuis": "N",
     "hanze": "Y",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Weert",
@@ -184,7 +200,8 @@ const City = [
     "establish": 1062,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Arnhem",
@@ -195,7 +212,8 @@ const City = [
     "establish": 893,
     "glazenHuis": "N",
     "hanze": "Y",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "Y"
   },
   {
     "name": "Apeldoorn",
@@ -206,7 +224,8 @@ const City = [
     "establish": 792,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "Y"
   },
   {
     "name": "Ede",
@@ -217,7 +236,8 @@ const City = [
     "establish": 1216,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Harderwijk",
@@ -228,7 +248,8 @@ const City = [
     "establish": 1231,
     "glazenHuis": "N",
     "hanze": "Y",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "Y"
   },
   {
     "name": "Nijmegen",
@@ -239,7 +260,8 @@ const City = [
     "establish": -10,
     "glazenHuis": "Y",
     "hanze": "Y",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Zutphen",
@@ -250,7 +272,8 @@ const City = [
     "establish": 325,
     "glazenHuis": "N",
     "hanze": "Y",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "Y"
   },
   {
     "name": "Amersfoort",
@@ -261,7 +284,8 @@ const City = [
     "establish": 1028,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "Y"
   },
   {
     "name": "Utrecht",
@@ -272,7 +296,8 @@ const City = [
     "establish": 50,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "N"
   },
   {
     "name": "Woerden",
@@ -283,7 +308,8 @@ const City = [
     "establish": 41,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Alkmaar",
@@ -294,7 +320,8 @@ const City = [
     "establish": 850,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "N"
   },
   {
     "name": "Amsterdam",
@@ -305,7 +332,8 @@ const City = [
     "establish": 1275,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "Y"
   },
   {
     "name": "Den Helder",
@@ -316,7 +344,8 @@ const City = [
     "establish": 1500,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "Y"
   },
   {
     "name": "Enkhuizen",
@@ -327,7 +356,8 @@ const City = [
     "establish": 1356,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Haarlem",
@@ -338,7 +368,8 @@ const City = [
     "establish": 948,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "Y"
   },
   {
     "name": "Hilversum",
@@ -349,7 +380,8 @@ const City = [
     "establish": 900,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Hoorn",
@@ -360,7 +392,8 @@ const City = [
     "establish": 716,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Schiphol",
@@ -371,7 +404,8 @@ const City = [
     "establish": 1848,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Delft",
@@ -382,7 +416,8 @@ const City = [
     "establish": 1150,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Den Haag",
@@ -393,7 +428,8 @@ const City = [
     "establish": 1230,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "Y"
   },
   {
     "name": "Dordrecht",
@@ -404,7 +440,8 @@ const City = [
     "establish": 1120,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Gouda",
@@ -415,7 +452,8 @@ const City = [
     "establish": 1143,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Leiden",
@@ -426,7 +464,8 @@ const City = [
     "establish": 860,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Rotterdam",
@@ -437,7 +476,8 @@ const City = [
     "establish": 1270,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "Y"
   },
   {
     "name": "Almere",
@@ -448,7 +488,8 @@ const City = [
     "establish": 1976,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "Y"
   },
   {
     "name": "Lelystad",
@@ -459,7 +500,8 @@ const City = [
     "establish": 1967,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "Y"
   },
   {
     "name": "Almelo",
@@ -470,7 +512,8 @@ const City = [
     "establish": 1050,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "N"
   },
   {
     "name": "Deventer",
@@ -481,7 +524,8 @@ const City = [
     "establish": 768,
     "glazenHuis": "N",
     "hanze": "Y",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "N"
   },
   {
     "name": "Enschede",
@@ -492,7 +536,8 @@ const City = [
     "establish": 1119,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "N"
   },
   {
     "name": "Hengelo",
@@ -503,7 +548,8 @@ const City = [
     "establish": 1188,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Zwolle",
@@ -514,7 +560,8 @@ const City = [
     "establish": 1040,
     "glazenHuis": "Y",
     "hanze": "Y",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Assen",
@@ -525,7 +572,8 @@ const City = [
     "establish": 1259,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Meppel",
@@ -536,7 +584,8 @@ const City = [
     "establish": 1141,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Groningen",
@@ -547,7 +596,8 @@ const City = [
     "establish": 1040,
     "glazenHuis": "Y",
     "hanze": "Y",
-    "landskampioen": "Y"
+    "landskampioen": "Y",
+    "dierentuin": "N"
   },
   {
     "name": "Heerenveen",
@@ -558,7 +608,8 @@ const City = [
     "establish": 1551,
     "glazenHuis": "N",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "N"
   },
   {
     "name": "Leeuwarden",
@@ -569,6 +620,7 @@ const City = [
     "establish": 750,
     "glazenHuis": "Y",
     "hanze": "N",
-    "landskampioen": "N"
+    "landskampioen": "N",
+    "dierentuin": "Y"
   }
 ]

@@ -13,6 +13,12 @@ const StationPin = L.icon({
     iconAnchor: [16, 32],    // punt dat exact op de locatie staat
     popupAnchor: [0, -32]    // positie van popup t.o.v. icon
 }); 
+const ThemeparkPin = L.icon({
+    iconUrl: 'Themepark.png',
+    iconSize: [32, 32],      // grootte van de icon
+    iconAnchor: [16, 32],    // punt dat exact op de locatie staat
+    popupAnchor: [0, -32]    // positie van popup t.o.v. icon
+}); 
 
 //create Map
 const key = 'hONND70ZnmXTTP4XOnck';
@@ -43,9 +49,12 @@ City.forEach((City, index) => {
     dropdown.appendChild(optionElement);
 
     //Pin toevoegen per station
-    const marker = L.marker([City.latitude, City.longitude], {icon:StationPin}).addTo(map);
+    const marker = L.marker([City.latitude, City.longitude], {icon: StationPin}).addTo(map);
     marker.bindPopup(City.name);
     cityMarkers[City.name] = marker;
+
+    // Klik op marker → selecteert automatisch die stad in dropdown
+    marker.on("click", () => { dropdown.value = index;});
 });
 
 Airports.forEach((Airport) => {
@@ -53,6 +62,42 @@ Airports.forEach((Airport) => {
     const marker = L.marker([Airport.latitude, Airport.longitude], {icon:AirportPin}).addTo(map);
     marker.bindPopup(Airport.name);
 });
+Themeparks.forEach((Themepark) => {
+    //Pin toevoegen per station
+    const marker = L.marker([Themepark.latitude, Themepark.longitude], {icon:ThemeparkPin}).addTo(map);
+    marker.bindPopup(Themepark.name);
+});
+
+function closestThemeparkForCities() {
+    let result = {};
+
+    City.forEach(city => {
+        let closestThemepark = null;
+        let shortestDistance = Infinity;
+
+        Themeparks.forEach(Themepark => {
+            const dist = distanceBetweenPoints(
+                city.latitude,
+                city.longitude,
+                Themepark.latitude,
+                Themepark.longitude
+            );
+
+            if (dist < shortestDistance) {
+                shortestDistance = dist;
+                closestThemepark = Themepark;
+            }
+        });
+
+        result[city.name] = {
+            Themepark: closestThemepark.name,
+            distanceKm: shortestDistance
+        };
+    });
+
+    return result;
+}
+var closestThemeparks = closestThemeparkForCities();
 
 function closestAirportForCities() {
     let result = {};
@@ -251,6 +296,29 @@ function questionAirport(hidePlace, location){
     else
         return "Oeps er ging iets fout met je Airport"
 }
+function questionThemepark(hidePlace, location){
+    var ThemeparkGuesse = closestThemeparks[location.name].Themepark;
+    if(ThemeparkGuesse == closestThemeparks[hidePlace.name].Themepark){
+        for (const cityName in cityMarkers) {
+            index = City.findIndex(c => c.name === cityName);
+            if(ThemeparkGuesse != closestThemeparks[cityName].Themepark){
+                RemoveCityMarker(cityName);
+            }    
+        }
+        return "De dichsbijzijnde attractiepark is hetzelfde als die van jou"
+    }
+    else if (ThemeparkGuesse != closestThemeparks[hidePlace.name].Themepark) {
+        for (const cityName in cityMarkers) {
+            index = City.findIndex(c => c.name === cityName);
+            if(ThemeparkGuesse == closestThemeparks[cityName].Themepark){
+                RemoveCityMarker(cityName);
+            }     
+        }
+        return "De dichsbijzijnde attractiepark is NIET hetzelfde als die van jou"
+    }
+    else
+        return "Oeps er ging iets fout met je Airport"
+}
 function questionHanze(hidePlace){
     if(hidePlace.hanze == "Y"){
         for (const cityName in cityMarkers) {
@@ -293,7 +361,7 @@ function questionGlazenhuis(hidePlace){
         return "Het Glazen huis is hier niet geweest";
     }
     else
-        return "Oeps er ging iets fout met je HanzeStad"
+        return "Oeps er ging iets fout met je Glazenhuis"
 }
 function questionLandskampioen(hidePlace){
     if(hidePlace.landskampioen == "Y"){
@@ -315,7 +383,29 @@ function questionLandskampioen(hidePlace){
         return "De stad heeft nog nooit een landskampioenen gehad";
     }
     else
-        return "Oeps er ging iets fout met je HanzeStad"
+        return "Oeps er ging iets fout met je landskampioenen"
+}
+function questionDierentuin(hidePlace){
+    if(hidePlace.dierentuin == "Y"){
+        for (const cityName in cityMarkers) {
+            index = City.findIndex(c => c.name === cityName);
+            if(City[index].dierentuin != "Y"){
+                RemoveCityMarker(cityName);
+            }    
+        }
+        return "De plaats heeft inderdaad een dierentuin!";
+    }
+    else if(hidePlace.dierentuin == "N"){
+        for (const cityName in cityMarkers) {
+            index = City.findIndex(c => c.name === cityName);
+            if(City[index].dierentuin != "N"){
+                RemoveCityMarker(cityName);
+            }    
+        }
+        return "De plaats heeft helaas geen dierentuin!";
+    }
+    else
+        return "Oeps er ging iets fout met je dierntuin"
 }
 
 function answerQuestion() {
@@ -367,6 +457,9 @@ function answerQuestion() {
             case "Airport":
                 answerBox.textContent = questionAirport(City[HidePlace], City[location]);           
                 break;
+            case "Themepark":
+                answerBox.textContent = questionThemepark(City[HidePlace], City[location]);           
+                break;
             case "Hanze":
                 answerBox.textContent = questionHanze(City[HidePlace]);           
                 break;
@@ -376,7 +469,9 @@ function answerQuestion() {
             case "Landskampioen":
                 answerBox.textContent = questionLandskampioen(City[HidePlace]);           
                 break;
-        
+            case "Dierentuin":
+                answerBox.textContent = questionDierentuin(City[HidePlace]);           
+                break;
             default:
                 answerBox.textContent = answers[question] || "Geen antwoord gevonden.";
                 break;
