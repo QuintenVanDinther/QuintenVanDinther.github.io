@@ -135,7 +135,13 @@ function RemoveCityMarker(name){
     cityMarkers.splice(cityMarkers[name], 1);
 }
 
-const HidePlace = Math.round(Math.random()*City.length -1);
+function getRandomInt(min, max) {
+  const range = max - min + 1;
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return min + (array[0] % range);
+}
+const HidePlace = getRandomInt (0, City.length);
 
 function distanceBetweenPoints(lat1, lon1, lat2, lon2) {
     R = 6371; // Aarde straal in km
@@ -499,4 +505,5 @@ function GuesseCity(){
 
 //L.rectangle([[53.55,3.3],[50.72,7.2964464]] ).addTo(map);
 //L.circle([51.692195,5.2964464], {radius: 50000}).addTo(map) // Draw cicrle
+
 //var donut = new L.Donut([51.692195,5.2964464],{radius: 99999999,innerRadius: 10000,innerRadiusAsPercent: false,}).addTo(map);
