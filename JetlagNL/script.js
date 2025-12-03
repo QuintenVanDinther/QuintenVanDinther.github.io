@@ -167,7 +167,7 @@ function questionLongitude(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De locatie is ten westen van je";
+        return "De locatie is ten westen van " + location.name
     }
     else if (hidePlace.longitude >= location.longitude) {        
         L.rectangle([[-180,location.longitude],[180,-180]] ).addTo(map);
@@ -177,7 +177,7 @@ function questionLongitude(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De locatie is ten oosten van je";
+        return "De locatie is ten oosten van " + location.name
     }
     else
         return "Oeps er ging iets fout met je Longitude";
@@ -191,7 +191,7 @@ function questionLatitude(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De locatie is ten zuiden van je"
+        return "De locatie is ten zuiden van " + location.name
     }
     else if (hidePlace.latitude >= location.latitude) {
         L.rectangle([[-180,-180],[location.latitude,180]] ).addTo(map);
@@ -201,7 +201,7 @@ function questionLatitude(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De locatie is ten Noorden van je"
+        return "De locatie is ten Noorden van " + location.name
     }
     else
         return "Oeps er ging iets fout met je Latitude"
@@ -219,7 +219,7 @@ function questionRadius(hidePlace, location, radius){
             }    
         }
 
-        return "De locatie is in een radius van " + radius;
+        return "De locatie is in een radius van " + radius + "met als middelpunt: " + location.name;
     }
     else if (distance >= radius) {
         L.circle([location.latitude,location.longitude], {radius: (radius * 1000)}).addTo(map)
@@ -230,7 +230,7 @@ function questionRadius(hidePlace, location, radius){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De locatie is NIET in een radius van " + radius;
+        return "De locatie is NIET in een radius van " + radius + "met als middelpunt: " + location.name;;
     }
     else
         return "Oeps er ging iets fout met je radius";
@@ -243,7 +243,7 @@ function questionAltitude(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De locatie is Lager gelegen dan jij"
+        return "De locatie is Lager gelegen dan " + location.name
     }
     else if (hidePlace.altitude >= location.altitude) {
         for (const cityName in cityMarkers) {
@@ -252,7 +252,7 @@ function questionAltitude(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De locatie is Hoger gelegen dan jij"
+        return "De locatie is Hoger gelegen dan  " + location.name
     }
     else
         return "Oeps er ging iets fout met je Altitude"
@@ -265,7 +265,7 @@ function questionProvince(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De locatie is in dezelfde Provincie als jij"
+        return "De locatie is in ook in " + location.province
     }
     else if (hidePlace.province != location.province) {
         for (const cityName in cityMarkers) {
@@ -274,7 +274,7 @@ function questionProvince(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De locatie is NIET in dezelfde Provincie als jij"
+        return "De locatie is NIET in " + location.province
     }
     else
         return "Oeps er ging iets fout met je provincie"
@@ -288,7 +288,7 @@ function questionAirport(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De dichsbijzijnde luchthaven is hetzelfde als die van jou"
+        return "De dichsbijzijnde luchthaven (" + closestAirport[hidePlace.name].airport +") is hetzelfde als die van jou"
     }
     else if (AirportGuesse != closestAirport[hidePlace.name].airport) {
         for (const cityName in cityMarkers) {
@@ -297,7 +297,7 @@ function questionAirport(hidePlace, location){
                 RemoveCityMarker(cityName);
             }     
         }
-        return "De dichsbijzijnde luchthaven is NIET hetzelfde als die van jou"
+        return "De dichsbijzijnde luchthaven (" + closestAirport[hidePlace.name].airport +") is NIET hetzelfde als die van jou"
     }
     else
         return "Oeps er ging iets fout met je Airport"
@@ -311,7 +311,7 @@ function questionThemepark(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De dichsbijzijnde attractiepark is hetzelfde als die van jou"
+        return "De dichsbijzijnde attractiepark ("+ ThemeparkGuesse +") is hetzelfde als die van jou"
     }
     else if (ThemeparkGuesse != closestThemeparks[hidePlace.name].Themepark) {
         for (const cityName in cityMarkers) {
@@ -320,7 +320,7 @@ function questionThemepark(hidePlace, location){
                 RemoveCityMarker(cityName);
             }     
         }
-        return "De dichsbijzijnde attractiepark is NIET hetzelfde als die van jou"
+        return "De dichsbijzijnde attractiepark ("+ ThemeparkGuesse +") is NIET hetzelfde als die van jou"
     }
     else
         return "Oeps er ging iets fout met je Airport"
@@ -413,75 +413,96 @@ function questionDierentuin(hidePlace){
     else
         return "Oeps er ging iets fout met je dierntuin"
 }
+function questionInwoners(hidePlace){
+    if (hidePlace.inwoners > 200000) {
+        return "De stad heeft meer dan 200.000 inwoners";
+    } else if (hidePlace.inwoners > 100000){
+        return "De stad heeft tussen de 100.000 en 200.000 inwoners";
+    }else if (hidePlace.inwoners > 75000){
+        return "De stad heeft tussen de 75.000 en 100.000 inwoners";
+    }else if (hidePlace.inwoners > 50000){
+        return "De stad heeft tussen de 50.000 en 75.000 inwoners";
+    }else if (hidePlace.inwoners > 0){
+        return "De stad heeft minder dan 50.000 inwoners";
+    }
+    else {
+        return "Oeps er ging iets mis met de inwoners aantal";
+    }
+}
 
 function answerQuestion() {
     const question = document.getElementById("questionSelect").value;
     const location = document.getElementById("location").value;
     const answerBox = document.getElementById("answer");
+    answerBox.textContent += '- ';
     if(location == ""){
-        answerBox.textContent = "Kies eerst een stad uit het menu.";
+        alert("Kies eerst een stad uit het menu.");
     }
     else{
         
         switch (question) {
             case "":
-                answerBox.textContent = "Kies eerst een vraag uit het menu.";            
+                alert("Kies eerst een vraag uit het menu.");            
                 break;
             case "name":
-                answerBox.textContent = "Je stad is: " + City[HidePlace].name;           
+                answerBox.textContent += "Je stad is: " + City[HidePlace].name;           
                 break;
             case "establish":
-                answerBox.textContent = "Je stad is opgericht in de " + (Math.floor(City[HidePlace].establish / 100) +1)  + "e eeuw";           
+                answerBox.textContent += "De stad is opgericht in de " + (Math.floor(City[HidePlace].establish / 100) +1)  + "e eeuw";           
+                break;
+            case "inwoners":
+                answerBox.textContent += questionInwoners(City[HidePlace]);           
                 break;
             case "longitude":
-                answerBox.textContent = questionLongitude(City[HidePlace], City[location]);           
+                answerBox.textContent += questionLongitude(City[HidePlace], City[location]);           
                 break;
             case "latitude":
-                answerBox.textContent = questionLatitude(City[HidePlace], City[location]);           
+                answerBox.textContent += questionLatitude(City[HidePlace], City[location]);           
                 break;
             case "Radius10":
-                answerBox.textContent = questionRadius(City[HidePlace], City[location], 10);           
+                answerBox.textContent += questionRadius(City[HidePlace], City[location], 10);           
                 break;
             case "Radius25":
-                answerBox.textContent = questionRadius(City[HidePlace], City[location], 25);           
+                answerBox.textContent += questionRadius(City[HidePlace], City[location], 25);           
                 break;
             case "Radius50":
-                answerBox.textContent = questionRadius(City[HidePlace], City[location], 50);           
+                answerBox.textContent += questionRadius(City[HidePlace], City[location], 50);           
                 break;
             case "Radius75":
-                answerBox.textContent = questionRadius(City[HidePlace], City[location], 75);           
+                answerBox.textContent += questionRadius(City[HidePlace], City[location], 75);           
                 break;
             case "Radius100":
-                answerBox.textContent = questionRadius(City[HidePlace], City[location], 100);           
+                answerBox.textContent += questionRadius(City[HidePlace], City[location], 100);           
                 break;
             case "Altitude":
-                answerBox.textContent = questionAltitude(City[HidePlace], City[location]);           
+                answerBox.textContent += questionAltitude(City[HidePlace], City[location]);           
                 break;
             case "Province":
-                answerBox.textContent = questionProvince(City[HidePlace], City[location]);           
+                answerBox.textContent += questionProvince(City[HidePlace], City[location]);           
                 break;
             case "Airport":
-                answerBox.textContent = questionAirport(City[HidePlace], City[location]);           
+                answerBox.textContent += questionAirport(City[HidePlace], City[location]);           
                 break;
             case "Themepark":
-                answerBox.textContent = questionThemepark(City[HidePlace], City[location]);           
+                answerBox.textContent += questionThemepark(City[HidePlace], City[location]);           
                 break;
             case "Hanze":
-                answerBox.textContent = questionHanze(City[HidePlace]);           
+                answerBox.textContent += questionHanze(City[HidePlace]);           
                 break;
             case "GlazenHuis":
-                answerBox.textContent = questionGlazenhuis(City[HidePlace]);           
+                answerBox.textContent += questionGlazenhuis(City[HidePlace]);           
                 break;
             case "Landskampioen":
-                answerBox.textContent = questionLandskampioen(City[HidePlace]);           
+                answerBox.textContent += questionLandskampioen(City[HidePlace]);           
                 break;
             case "Dierentuin":
-                answerBox.textContent = questionDierentuin(City[HidePlace]);           
+                answerBox.textContent += questionDierentuin(City[HidePlace]);           
                 break;
             default:
-                answerBox.textContent = answers[question] || "Geen antwoord gevonden.";
+                answerBox.textContent += answers[question] || "Geen antwoord gevonden.";
                 break;
         }    
+        answerBox.textContent += '\n';
         const usedOption = document.getElementById("questionSelect").querySelector(`option[value="${question}"]`);
         usedOption.disabled = true;          // maakt de vraag niet meer kiesbaar
 
@@ -505,6 +526,4 @@ function GuesseCity(){
 
 //L.rectangle([[53.55,3.3],[50.72,7.2964464]] ).addTo(map);
 //L.circle([51.692195,5.2964464], {radius: 50000}).addTo(map) // Draw cicrle
-
 //var donut = new L.Donut([51.692195,5.2964464],{radius: 99999999,innerRadius: 10000,innerRadiusAsPercent: false,}).addTo(map);
-

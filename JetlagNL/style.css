@@ -44,6 +44,8 @@ optgroup {
     padding: 10px;
     background: #eef3ff;
     border-radius: 5px;
+    white-space: pre-line;
+    
     min-height: 40px;
 }
 #map {position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 50%;}
