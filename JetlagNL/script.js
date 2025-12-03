@@ -141,7 +141,7 @@ function getRandomInt(min, max) {
   crypto.getRandomValues(array);
   return min + (array[0] % range);
 }
-const HidePlace = getRandomInt (0, City.length);
+const HidePlace = getRandomInt (0, City.length - 1);
 
 function distanceBetweenPoints(lat1, lon1, lat2, lon2) {
     R = 6371; // Aarde straal in km
@@ -507,3 +507,4 @@ function GuesseCity(){
 //L.circle([51.692195,5.2964464], {radius: 50000}).addTo(map) // Draw cicrle
 
 //var donut = new L.Donut([51.692195,5.2964464],{radius: 99999999,innerRadius: 10000,innerRadiusAsPercent: false,}).addTo(map);
+
