@@ -48,8 +48,47 @@ optgroup {
     
     min-height: 40px;
 }
-#map {position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 50%;}
+#map {
+    position: absolute; 
+    width: 50%;
+}
 #questionSelect option:disabled {
     background-color: #ddd;
     color: #666;
+}
+h2{
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    font-size: clamp(10px, 26px, 3vh);
+}
+
+@media (orientation: portrait) {
+    #map {
+        position: absolute; 
+        width: 90%;
+        top: 0; 
+        right: 5%;  
+        bottom: 0;  
+        left: 5%; 
+        height: 60%;
+    }
+    #spacer{
+        height: 60%;;
+    }
+    .container {        
+        margin-left: 5%;
+        width: 85%;
+    }
+}
+
+/* Landscape mode */
+@media (orientation: landscape) {
+    #map {
+        position: absolute; 
+        top: 0; 
+        right: 0; 
+        bottom: 0; 
+        left: 0; 
+        width: 50%;
+    }
 }
