@@ -65,19 +65,20 @@ h2{
 @media (orientation: portrait) {
     #map {
         position: absolute; 
-        width: 90%;
-        top: 0; 
-        right: 5%;  
+        width: 90vw;
+        top: 5px; 
+        right: 5vw;  
         bottom: 0;  
-        left: 5%; 
-        height: 60%;
+        left: 5vw; 
+        height: 60vh;
     }
     #spacer{
-        height: 60%;;
+        height: 60vh;
     }
     .container {        
-        margin-left: 5%;
-        width: 85%;
+        margin-left: 5vw;
+        margin-right: 5vw;
+        width: 85vw;
     }
 }
 
