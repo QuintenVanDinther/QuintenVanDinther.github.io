@@ -26,7 +26,7 @@ const map = L.map('map',{
         maxBounds: [[53.66, 3], [50.66, 7.1]],
         maxBoundsViscosity: 1.0, 
     }).setView([52.2018052, 5.4360145,8.21], 8); //starting position
-L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${key}`,{ tileSize: 512, zoomOffset: -1, minZoom: 8,maxzoom: 19, crossOrigin: true}).addTo(map);
+L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${key}`,{ tileSize: 512, zoomOffset: -1, minZoom: 7,maxzoom: 19, crossOrigin: true}).addTo(map);
 
 
 //Fill in the Location field
@@ -569,4 +569,5 @@ function GuesseCity(){
 
 //L.rectangle([[53.55,3.3],[50.72,7.2964464]] ).addTo(map);
 //L.circle([51.692195,5.2964464], {radius: 50000}).addTo(map) // Draw cicrle
+
 //var donut = new L.Donut([51.692195,5.2964464],{radius: 99999999,innerRadius: 10000,innerRadiusAsPercent: false,}).addTo(map);
