@@ -429,17 +429,54 @@ function questionInwoners(hidePlace){
         return "Oeps er ging iets mis met de inwoners aantal";
     }
 }
+function questionReizigers(hidePlace){
+    if (hidePlace.reizigers > 50000) {
+        return "Het hoofd station heeft meer dan 50.000 NS-reizigers per dag";
+    } else if (hidePlace.reizigers > 25000){
+        return "Het hoofd station heeft tussen de 25.000 en 50.000 NS-reizigers per dag";
+    }else if (hidePlace.reizigers > 10000){
+        return "Het hoofd station heeft tussen de 10.000 en 25.000 NS-reizigers per dag";
+    }else if (hidePlace.reizigers > 5000){
+        return "Het hoofd station heeft tussen de 5.000 en 10.000 NS-reizigers per dag";
+    }else if (hidePlace.reizigers > 0){
+        return "Het hoofd station heeft minder dan 5.000 NS-reizigers per dag";
+    }
+    else {
+        return "Oeps er ging iets mis met het reizigers aantal";
+    }
+}
+function questionPerron(hidePlace, location){
+    if(hidePlace.perrons <= location.perrons){
+        for (const cityName in cityMarkers) {
+            index = City.findIndex(c => c.name === cityName);
+            if(City[index].perrons > location.perrons){
+                RemoveCityMarker(cityName);
+            }    
+        }
+        return "Het station heeft evenveel of minder perrons dan " + location.name
+    }
+    else if (hidePlace.perrons >= location.perrons) {
+        for (const cityName in cityMarkers) {
+            index = City.findIndex(c => c.name === cityName);
+            if(City[index].perrons < location.perrons){
+                RemoveCityMarker(cityName);
+            }    
+        }
+        return "Het station heeft evenveel of meer perrons dan  " + location.name
+    }
+    else
+        return "Oeps er ging iets fout met je perrons"
+}
 
 function answerQuestion() {
     const question = document.getElementById("questionSelect").value;
     const location = document.getElementById("location").value;
     const answerBox = document.getElementById("answer");
-    answerBox.textContent += '- ';
     if(location == ""){
         alert("Kies eerst een stad uit het menu.");
     }
     else{
-        
+        answerBox.textContent += '- ['+ City[location].name + "] ";
         switch (question) {
             case "":
                 alert("Kies eerst een vraag uit het menu.");            
@@ -497,6 +534,12 @@ function answerQuestion() {
                 break;
             case "Dierentuin":
                 answerBox.textContent += questionDierentuin(City[HidePlace]);           
+                break;
+            case "reizigers":
+                answerBox.textContent += questionReizigers(City[HidePlace]);           
+                break;
+            case "perrons":
+                answerBox.textContent += questionPerron(City[HidePlace], City[location]);              
                 break;
             default:
                 answerBox.textContent += answers[question] || "Geen antwoord gevonden.";
