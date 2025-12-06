@@ -569,5 +569,4 @@ function GuesseCity(){
 
 //L.rectangle([[53.55,3.3],[50.72,7.2964464]] ).addTo(map);
 //L.circle([51.692195,5.2964464], {radius: 50000}).addTo(map) // Draw cicrle
-
 //var donut = new L.Donut([51.692195,5.2964464],{radius: 99999999,innerRadius: 10000,innerRadiusAsPercent: false,}).addTo(map);

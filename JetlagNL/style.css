@@ -40,12 +40,10 @@ optgroup {
 }
 
 #answer {
-    margin-top: 20px;
     padding: 10px;
     background: #eef3ff;
     border-radius: 5px;
     white-space: pre-line;
-    
     min-height: 40px;
 }
 #map {
@@ -57,9 +55,12 @@ optgroup {
     color: #666;
 }
 h2{
-    margin-top: 1vh;
-    margin-bottom: 1vh;
-    font-size: clamp(10px, 26px, 3vh);
+    margin-top: 0.7vh;
+    margin-bottom: 0.7vh;
+    font-size: clamp(10px, 26px, 2vh);
+}
+select{
+    padding: 0.5vh;
 }
 
 @media (orientation: portrait) {
@@ -70,16 +71,19 @@ h2{
         right: 5vw;  
         bottom: 0;  
         left: 5vw; 
-        height: 60vh;
+        height: 55vh;
     }
     #spacer{
-        height: 60vh;
+        height: 55vh;
+    }
+    select{
+        margin: 0.5vh;
     }
     .container {        
         margin-left: 5vw;
         margin-right: 5vw;
-        padding: 1%;
-        width: 85vw;
+        padding: 1vw;
+        width: 88vw;
     }
 }
 
@@ -93,5 +97,4 @@ h2{
         left: 0; 
         width: 50%;
     }
-
 }
