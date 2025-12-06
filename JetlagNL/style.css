@@ -78,6 +78,7 @@ h2{
     .container {        
         margin-left: 5vw;
         margin-right: 5vw;
+        padding: 1%;
         width: 85vw;
     }
 }
@@ -92,4 +93,5 @@ h2{
         left: 0; 
         width: 50%;
     }
+
 }
