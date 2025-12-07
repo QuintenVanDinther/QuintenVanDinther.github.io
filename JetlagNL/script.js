@@ -27,7 +27,7 @@ const map = L.map('map',{
         maxBounds: [[53.66, 3], [50.66, 7.1]],
         maxBoundsViscosity: 1.0, 
     }).setView([52.2018052, 5.4360145,8.21], 8); //starting position
-L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${key}`,{ tileSize: 512, zoomOffset: -1, minZoom: 7,maxzoom: 19, crossOrigin: true}).addTo(map);
+L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${key}`,{ tileSize: 1024, zoomOffset: -1, minZoom: 7,maxzoom: 19, crossOrigin: true}).addTo(map);
 
 
 //Fill in the Location field

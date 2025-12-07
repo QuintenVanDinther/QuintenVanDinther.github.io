@@ -31,6 +31,7 @@ select, .FormButton {
 .QuestionButton{
     border: none;
     background-color: white;
+    padding: 0.9vw;
 }
 .QuestionButton:hover img {
     filter: grayscale(50%); 
