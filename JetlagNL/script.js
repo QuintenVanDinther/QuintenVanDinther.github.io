@@ -1,5 +1,6 @@
-document.getElementById("askButton").addEventListener("click", answerQuestion);
+document.getElementById("askButton").addEventListener("click", answerQuestionMenu);
 document.getElementById("GuesseButton").addEventListener("click", GuesseCity);
+document.getElementById("NewGame").addEventListener("click", NewGame);
 
 const AirportPin = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/9922/9922064.png',
@@ -34,6 +35,8 @@ const dropdown = document.getElementById("location");
 var cityMarkers = [];
 let currentProvince = "";
 let optgroup;
+let HidePlace = Number(localStorage.getItem("HidePlace")) || getRandomInt (0, City.length - 1);
+localStorage.setItem("HidePlace", HidePlace);
 
 City.forEach((City, index) => {
     if (City.province !== currentProvince) {
@@ -67,6 +70,14 @@ Themeparks.forEach((Themepark) => {
     const marker = L.marker([Themepark.latitude, Themepark.longitude], {icon:ThemeparkPin}).addTo(map);
     marker.bindPopup(Themepark.name);
 });
+
+function OnReload(){
+        let questionsList = JSON.parse(localStorage.getItem("JetlagQuestions")) || [];
+        questionsList.forEach((Question) =>{
+            answerQuestion(Question[0],Question[1]);
+        });
+}
+OnReload();
 
 function closestThemeparkForCities() {
     let result = {};
@@ -141,7 +152,6 @@ function getRandomInt(min, max) {
   crypto.getRandomValues(array);
   return min + (array[0] % range);
 }
-const HidePlace = getRandomInt (0, City.length - 1);
 
 function distanceBetweenPoints(lat1, lon1, lat2, lon2) {
     R = 6371; // Aarde straal in km
@@ -219,7 +229,7 @@ function questionRadius(hidePlace, location, radius){
             }    
         }
 
-        return "De locatie is in een radius van " + radius + "met als middelpunt: " + location.name;
+        return "De locatie is in een radius van " + radius + " met als middelpunt: " + location.name;
     }
     else if (distance >= radius) {
         L.circle([location.latitude,location.longitude], {radius: (radius * 1000)}).addTo(map)
@@ -230,7 +240,7 @@ function questionRadius(hidePlace, location, radius){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De locatie is NIET in een radius van " + radius + "met als middelpunt: " + location.name;;
+        return "De locatie is NIET in een radius van " + radius + " met als middelpunt: " + location.name;;
     }
     else
         return "Oeps er ging iets fout met je radius";
@@ -288,7 +298,7 @@ function questionAirport(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "De dichsbijzijnde luchthaven (" + closestAirport[hidePlace.name].airport +") is hetzelfde als die van jou"
+        return "De dichsbijzijnde luchthaven (" + closestAirport[location.name].airport +") is hetzelfde als die van jou"
     }
     else if (AirportGuesse != closestAirport[hidePlace.name].airport) {
         for (const cityName in cityMarkers) {
@@ -297,7 +307,7 @@ function questionAirport(hidePlace, location){
                 RemoveCityMarker(cityName);
             }     
         }
-        return "De dichsbijzijnde luchthaven (" + closestAirport[hidePlace.name].airport +") is NIET hetzelfde als die van jou"
+        return "De dichsbijzijnde luchthaven (" + closestAirport[location.name].airport +") is NIET hetzelfde als die van jou"
     }
     else
         return "Oeps er ging iets fout met je Airport"
@@ -453,7 +463,7 @@ function questionPerron(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "Het station heeft evenveel of minder perrons dan " + location.name
+        return "Het station heeft evenveel of minder perrons ["+location.perrons+"] dan " + location.name
     }
     else if (hidePlace.perrons >= location.perrons) {
         for (const cityName in cityMarkers) {
@@ -462,107 +472,123 @@ function questionPerron(hidePlace, location){
                 RemoveCityMarker(cityName);
             }    
         }
-        return "Het station heeft evenveel of meer perrons dan  " + location.name
+        return "Het station heeft meer perrons ["+location.perrons+"] dan  " + location.name
     }
     else
         return "Oeps er ging iets fout met je perrons"
 }
+function answerQuestion(question, location){
+const answerBox = document.getElementById("answer");
+    answerBox.textContent += '- ['+ City[location].name + "] ";
+    switch (question) {
+        case "name":
+            answerBox.textContent += "Je stad is: " + City[HidePlace].name;           
+            break;
+        case "establish":
+            answerBox.textContent += "De stad is opgericht in de " + (Math.floor(City[HidePlace].establish / 100) +1)  + "e eeuw";           
+            break;
+        case "inwoners":
+            answerBox.textContent += questionInwoners(City[HidePlace]);           
+            break;
+        case "longitude":
+            answerBox.textContent += questionLongitude(City[HidePlace], City[location]);           
+            break;
+        case "latitude":
+            answerBox.textContent += questionLatitude(City[HidePlace], City[location]);           
+            break;
+        case "Radius10":
+            answerBox.textContent += questionRadius(City[HidePlace], City[location], 10);           
+            break;
+        case "Radius25":
+            answerBox.textContent += questionRadius(City[HidePlace], City[location], 25);           
+            break;
+        case "Radius50":
+            answerBox.textContent += questionRadius(City[HidePlace], City[location], 50);           
+            break;
+        case "Radius75":
+            answerBox.textContent += questionRadius(City[HidePlace], City[location], 75);           
+            break;
+        case "Radius100":
+            answerBox.textContent += questionRadius(City[HidePlace], City[location], 100);           
+            break;
+        case "Altitude":
+            answerBox.textContent += questionAltitude(City[HidePlace], City[location]);           
+            break;
+        case "Province":
+            answerBox.textContent += questionProvince(City[HidePlace], City[location]);           
+            break;
+        case "Airport":
+            answerBox.textContent += questionAirport(City[HidePlace], City[location]);           
+            break;
+        case "Themepark":
+            answerBox.textContent += questionThemepark(City[HidePlace], City[location]);           
+            break;
+        case "Hanze":
+            answerBox.textContent += questionHanze(City[HidePlace]);           
+            break;
+        case "GlazenHuis":
+            answerBox.textContent += questionGlazenhuis(City[HidePlace]);           
+            break;
+        case "Landskampioen":
+            answerBox.textContent += questionLandskampioen(City[HidePlace]);           
+            break;
+        case "Dierentuin":
+            answerBox.textContent += questionDierentuin(City[HidePlace]);           
+            break;
+        case "reizigers":
+            answerBox.textContent += questionReizigers(City[HidePlace]);           
+            break;
+        case "perrons":
+            answerBox.textContent += questionPerron(City[HidePlace], City[location]);              
+            break;
+        default:
+            answerBox.textContent += answers[question] || "Geen antwoord gevonden.";
+            break;
+    }    
+    answerBox.textContent += '\n';
+    const usedOption = document.getElementById("questionSelect").querySelector(`option[value="${question}"]`);
+    usedOption.disabled = true;          // maakt de vraag niet meer kiesbaar
 
-function answerQuestion() {
+    // reset of inputs
+    document.getElementById("questionSelect").value = "";
+    document.getElementById("location").value = "";
+}
+function answerQuestionMenu() {
     const question = document.getElementById("questionSelect").value;
     const location = document.getElementById("location").value;
-    const answerBox = document.getElementById("answer");
     if(location == ""){
         alert("Kies eerst een stad uit het menu.");
     }
-    else{
-        answerBox.textContent += '- ['+ City[location].name + "] ";
-        switch (question) {
-            case "":
-                alert("Kies eerst een vraag uit het menu.");            
-                break;
-            case "name":
-                answerBox.textContent += "Je stad is: " + City[HidePlace].name;           
-                break;
-            case "establish":
-                answerBox.textContent += "De stad is opgericht in de " + (Math.floor(City[HidePlace].establish / 100) +1)  + "e eeuw";           
-                break;
-            case "inwoners":
-                answerBox.textContent += questionInwoners(City[HidePlace]);           
-                break;
-            case "longitude":
-                answerBox.textContent += questionLongitude(City[HidePlace], City[location]);           
-                break;
-            case "latitude":
-                answerBox.textContent += questionLatitude(City[HidePlace], City[location]);           
-                break;
-            case "Radius10":
-                answerBox.textContent += questionRadius(City[HidePlace], City[location], 10);           
-                break;
-            case "Radius25":
-                answerBox.textContent += questionRadius(City[HidePlace], City[location], 25);           
-                break;
-            case "Radius50":
-                answerBox.textContent += questionRadius(City[HidePlace], City[location], 50);           
-                break;
-            case "Radius75":
-                answerBox.textContent += questionRadius(City[HidePlace], City[location], 75);           
-                break;
-            case "Radius100":
-                answerBox.textContent += questionRadius(City[HidePlace], City[location], 100);           
-                break;
-            case "Altitude":
-                answerBox.textContent += questionAltitude(City[HidePlace], City[location]);           
-                break;
-            case "Province":
-                answerBox.textContent += questionProvince(City[HidePlace], City[location]);           
-                break;
-            case "Airport":
-                answerBox.textContent += questionAirport(City[HidePlace], City[location]);           
-                break;
-            case "Themepark":
-                answerBox.textContent += questionThemepark(City[HidePlace], City[location]);           
-                break;
-            case "Hanze":
-                answerBox.textContent += questionHanze(City[HidePlace]);           
-                break;
-            case "GlazenHuis":
-                answerBox.textContent += questionGlazenhuis(City[HidePlace]);           
-                break;
-            case "Landskampioen":
-                answerBox.textContent += questionLandskampioen(City[HidePlace]);           
-                break;
-            case "Dierentuin":
-                answerBox.textContent += questionDierentuin(City[HidePlace]);           
-                break;
-            case "reizigers":
-                answerBox.textContent += questionReizigers(City[HidePlace]);           
-                break;
-            case "perrons":
-                answerBox.textContent += questionPerron(City[HidePlace], City[location]);              
-                break;
-            default:
-                answerBox.textContent += answers[question] || "Geen antwoord gevonden.";
-                break;
-        }    
-        answerBox.textContent += '\n';
-        const usedOption = document.getElementById("questionSelect").querySelector(`option[value="${question}"]`);
-        usedOption.disabled = true;          // maakt de vraag niet meer kiesbaar
-
-        // reset of inputs
-        document.getElementById("questionSelect").value = "";
-        document.getElementById("location").value = "";
+    else if(question == ""){
+        alert("Kies eerst een vraag uit het menu."); 
+        
+    }
+    else{        
+        answerQuestion(question,location);
+        let lijst = JSON.parse(localStorage.getItem("JetlagQuestions")) || [];
+        lijst.push([question,location]);
+        localStorage.setItem("JetlagQuestions", JSON.stringify(lijst));
     }
 }
 function GuesseCity(){
     const location = document.getElementById("location").value;
+    const answerBox = document.getElementById("answer");
     if (HidePlace == location){
             alert("Gefeliciteerd het was: "+ City[location].name );
+            answerBox.textContent += "===[Gefeliciteerd het was: "+ City[location].name + "]===\n" ;
+            localStorage.removeItem("HidePlace");
+            localStorage.removeItem("JetlagQuestions");
         }
     else{
         alert("Helaas het was niet: "+ City[location].name );
+        answerBox.textContent += "===[Helaas het was niet: "+ City[location].name + "]===\n" ;
         RemoveCityMarker(City[location].name);
     }
+}
+function NewGame(){
+    localStorage.removeItem("HidePlace");
+    localStorage.removeItem("JetlagQuestions");
+    location.reload();
 }
 
 
