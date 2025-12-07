@@ -16,22 +16,29 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-select, button {
+select, .FormButton {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+.QuestionButton{
+    border: none;
+    background-color: white;
+}
+.QuestionButton:hover img {
+    filter: grayscale(50%); 
+}
 
-button {
+.FormButton{
     background-color: #0066ff;
     color: white;
     cursor: pointer;
     border: none;
 }
 
-button:hover {
+.FormButton:hover {
     background-color: #004bcc;
 }
 optgroup {

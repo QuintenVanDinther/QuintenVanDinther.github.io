@@ -21,7 +21,7 @@
         <select id="location">
             <option value="">-- Kies een stad --</option>
         </select>
-        <button id="GuesseButton">Raad de stad</button>
+        <button class="FormButton"  id="GuesseButton">Raad de stad</button>
     </div>
     <div class="container">
         <h2>Kies een vraag</h2>
@@ -50,15 +50,56 @@
             <option value="Dierentuin">Heeft je plaats een dierntuin?</option>
         </select>
 
-        <button id="askButton">Vraag</button>
+        <button class="FormButton" id="askButton">Vraag</button>
 
+        
+    </div>
+     <div class="container">
+        <button class="QuestionButton" id="Radius10" onclick="answerQuestionMenu(1,'Radius10')">
+            <img src="Buttons/Radar10km.png" alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="Radius25" onclick="answerQuestionMenu(1,'Radius25')">
+            <img src="Buttons/Radar25km.png" alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="Radius50" onclick="answerQuestionMenu(1,'Radius50')">
+            <img src="Buttons/Radar50km.png" alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="Radius75" onclick="answerQuestionMenu(1,'Radius75')">
+            <img src="Buttons/Radar75km.png" id="Radius75" alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="Radius100" onclick="answerQuestionMenu(1,'Radius100')">
+            <img src="Buttons/Radar100km.png"alt="Knop" width="75"></button>
+        <button class="QuestionButton"  id="latitude"  onclick="answerQuestionMenu(1,'latitude')">
+            <img src="Buttons/Latitude.png"alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="longitude"  onclick="answerQuestionMenu(1,'longitude')">
+            <img src="Buttons/Longitude.png" alt="Knop" width="75"></button>
+        <button class="QuestionButton"  id="Altitude"  onclick="answerQuestionMenu(1,'Altitude')">
+            <img src="Buttons/Altitude.png"alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="Province" onclick="answerQuestionMenu(1,'Province')">
+            <img src="Buttons/Province.png"alt="Knop" width="75"></button>
+        <button class="QuestionButton"  id="Airport" onclick="answerQuestionMenu(1,'Airport')">
+            <img src="Buttons/Airport.png"alt="Knop" width="75"></button>
+        <button class="QuestionButton"  id="Themepark"  onclick="answerQuestionMenu(1,'Themepark')">
+            <img src="Buttons/Attractiepark.png"alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="perrons" onclick="answerQuestionMenu(1,'perrons')">
+            <img src="Buttons/Perrons.png" alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="Dierentuin" onclick="answerQuestionMenu(1,'Dierentuin')">
+            <img src="Buttons/Dierentuin.png"alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="Hanze" onclick="answerQuestionMenu(1,'Hanze')">
+            <img src="Buttons/Hanze.png" alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="GlazenHuis" onclick="answerQuestionMenu(1,'GlazenHuis')">
+            <img src="Buttons/Glazenhuis.png"alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="Landskampioen" onclick="answerQuestionMenu(1,'Landskampioen')">
+            <img src="Buttons/Kampioen.png" alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="inwoners" onclick="answerQuestionMenu(1,'inwoners')">
+            <img src="Buttons/Inwoners.png" alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="establish" onclick="answerQuestionMenu(1,'establish')">
+            <img src="Buttons/Eeuw.png" alt="Knop" width="75"></button>
+        <button class="QuestionButton" id="reizigers" onclick="answerQuestionMenu(1,'reizigers')">
+            <img src="Buttons/Reizigers.png" alt="Knop" width="75"></button>
         
     </div>
     <div class="container">
         <div id="answer"></div>
     </div>
     <div class="container">
-        <button id="NewGame">Nieuw Spel</button>
+        <button class="FormButton"  id="NewGame">Nieuw Spel</button>
     </div>
 
     <script src="script.js"></script>

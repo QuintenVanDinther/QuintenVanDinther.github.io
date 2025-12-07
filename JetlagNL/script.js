@@ -1,4 +1,4 @@
-document.getElementById("askButton").addEventListener("click", answerQuestionMenu);
+document.getElementById("askButton").addEventListener("click", answerQuestionMenu,"");
 document.getElementById("GuesseButton").addEventListener("click", GuesseCity);
 document.getElementById("NewGame").addEventListener("click", NewGame);
 
@@ -71,14 +71,6 @@ Themeparks.forEach((Themepark) => {
     marker.bindPopup(Themepark.name);
 });
 
-function OnReload(){
-        let questionsList = JSON.parse(localStorage.getItem("JetlagQuestions")) || [];
-        questionsList.forEach((Question) =>{
-            answerQuestion(Question[0],Question[1]);
-        });
-}
-OnReload();
-
 function closestThemeparkForCities() {
     let result = {};
 
@@ -145,7 +137,13 @@ function RemoveCityMarker(name){
     map.removeLayer(cityMarkers[name]);
     cityMarkers.splice(cityMarkers[name], 1);
 }
-
+function OnReload(){
+        let questionsList = JSON.parse(localStorage.getItem("JetlagQuestions")) || [];
+        questionsList.forEach((Question) =>{
+            answerQuestion(Question[0],Question[1]);
+        });
+}
+OnReload();
 function getRandomInt(min, max) {
   const range = max - min + 1;
   const array = new Uint32Array(1);
@@ -549,12 +547,20 @@ const answerBox = document.getElementById("answer");
     const usedOption = document.getElementById("questionSelect").querySelector(`option[value="${question}"]`);
     usedOption.disabled = true;          // maakt de vraag niet meer kiesbaar
 
+   document.getElementById(question).remove();
+
     // reset of inputs
     document.getElementById("questionSelect").value = "";
     document.getElementById("location").value = "";
 }
-function answerQuestionMenu() {
-    const question = document.getElementById("questionSelect").value;
+function answerQuestionMenu(ParameterGiven, QuestionButton) {
+    let question ;
+    if(ParameterGiven == 1){
+        question = QuestionButton
+    }
+    else{
+        question = document.getElementById("questionSelect").value;
+    }
     const location = document.getElementById("location").value;
     if(location == ""){
         alert("Kies eerst een stad uit het menu.");
