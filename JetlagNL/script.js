@@ -1,4 +1,4 @@
-document.getElementById("askButton").addEventListener("click", answerQuestionMenu,"");
+//document.getElementById("askButton").addEventListener("click", answerQuestionMenu,"");
 document.getElementById("GuesseButton").addEventListener("click", GuesseCity);
 document.getElementById("NewGame").addEventListener("click", NewGame);
 
@@ -463,10 +463,10 @@ function questionPerron(hidePlace, location){
         }
         return "Het station heeft evenveel of minder perrons ["+location.perrons+"] dan " + location.name
     }
-    else if (hidePlace.perrons >= location.perrons) {
+    else if (hidePlace.perrons > location.perrons) {
         for (const cityName in cityMarkers) {
             index = City.findIndex(c => c.name === cityName);
-            if(City[index].perrons < location.perrons){
+            if(City[index].perrons <= location.perrons){
                 RemoveCityMarker(cityName);
             }    
         }
@@ -544,13 +544,13 @@ const answerBox = document.getElementById("answer");
             break;
     }    
     answerBox.textContent += '\n';
-    const usedOption = document.getElementById("questionSelect").querySelector(`option[value="${question}"]`);
-    usedOption.disabled = true;          // maakt de vraag niet meer kiesbaar
+    // const usedOption = document.getElementById("questionSelect").querySelector(`option[value="${question}"]`);
+    // usedOption.disabled = true;          // maakt de vraag niet meer kiesbaar
 
    document.getElementById(question).remove();
 
     // reset of inputs
-    document.getElementById("questionSelect").value = "";
+    //document.getElementById("questionSelect").value = "";
     document.getElementById("location").value = "";
 }
 function answerQuestionMenu(ParameterGiven, QuestionButton) {

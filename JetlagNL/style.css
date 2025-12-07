@@ -15,6 +15,11 @@ body {
     width: 40%;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
+#button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
 select, .FormButton {
     width: 100%;
@@ -30,7 +35,6 @@ select, .FormButton {
 .QuestionButton:hover img {
     filter: grayscale(50%); 
 }
-
 .FormButton{
     background-color: #0066ff;
     color: white;
