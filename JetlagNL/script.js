@@ -9,7 +9,7 @@ const AirportPin = L.icon({
     popupAnchor: [0, -32]    // positie van popup t.o.v. icon
 });
 const StationPin = L.icon({
-    iconUrl: 'https://www.bordenstift.nl/wp-content/uploads/2018/11/NS-logo-rond.png',
+    iconUrl: 'NS-logo-rond.png',
     iconSize: [32, 32],      // grootte van de icon
     iconAnchor: [16, 32],    // punt dat exact op de locatie staat
     popupAnchor: [0, -32]    // positie van popup t.o.v. icon
@@ -601,4 +601,5 @@ function NewGame(){
 
 //L.rectangle([[53.55,3.3],[50.72,7.2964464]] ).addTo(map);
 //L.circle([51.692195,5.2964464], {radius: 50000}).addTo(map) // Draw cicrle
+
 //var donut = new L.Donut([51.692195,5.2964464],{radius: 99999999,innerRadius: 10000,innerRadiusAsPercent: false,}).addTo(map);
