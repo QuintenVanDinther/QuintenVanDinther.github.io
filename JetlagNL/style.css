@@ -98,6 +98,11 @@ select{
     height: 40vh;
     display: none; 
   }
+  #LocationBlocker{
+    text-align: center;
+    height: 12vh;
+    display: none; 
+  }
 
 @media (orientation: portrait) {
     #map {

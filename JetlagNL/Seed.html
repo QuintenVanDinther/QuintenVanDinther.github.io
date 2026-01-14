@@ -20,6 +20,7 @@
             <option value="">-- Kies een stad --</option>
         </select>
         <button class="FormButton" id="CreateSeed">Make Seed</button>
+        <button class="FormButton" id="RandomSeed">Random Seed</button>
         <div id="NewSeed"></div>
     </div>
     <div class="container">
@@ -36,6 +37,7 @@
 <script>
     document.getElementById("CreateSeed").addEventListener("click", MakeSeed);
     document.getElementById("UnpackSeed").addEventListener("click", UnpackSeed);
+    document.getElementById("RandomSeed").addEventListener("click", MakeRandomSeed);
    const StationPin = L.icon({
         iconUrl: 'NS-logo-rond.png',
         iconSize: [32, 32],      // grootte van de icon
@@ -79,7 +81,26 @@
         // Klik op marker → selecteert automatisch die stad in dropdown
         marker.on("click", () => { dropdown.value = index;});
     });
+    function getRandomInt(min, max) {
+        const range = max - min + 1;
+        const array = new Uint32Array(1);
+        crypto.getRandomValues(array);
+        return min + (array[0] % range);
+    }
+    function MakeRandomSeed(){
+        const answerBox = document.getElementById("NewSeed");
+        
+        Today = new Date();
+        day = (Today.getDay() + 1) * 7;
+        date = Today.getDate();
 
+        val = (parseInt(City[getRandomInt (0, City.length - 1)].reizigers) * date) + day;
+
+        answerBox.textContent = val;
+    }
+
+    
+    
     function MakeSeed(){
         const location = document.getElementById("location").value;
         const answerBox = document.getElementById("NewSeed");

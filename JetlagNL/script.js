@@ -589,7 +589,11 @@ function GuesseCity(){
             localStorage.removeItem("HidePlace");
             localStorage.removeItem("JetlagQuestions");
         }
-    else{
+    else{        
+        document.getElementById("LocationBlocker").style.display = "grid";
+        SetTimeBlocker(30);
+        localStorage.setItem("JetlagLocationBlocker", 1);
+
         alert("Helaas het was niet: "+ City[location].name );
         answerBox.textContent += "===[Helaas het was niet: "+ City[location].name + "]===\n" ;
         RemoveCityMarker(City[location].name);
@@ -598,32 +602,34 @@ function GuesseCity(){
 function NewGame(){
     localStorage.removeItem("HidePlace");
     localStorage.removeItem("JetlagQuestions");    
-    localStorage.removeItem("JetlagBlockTime");
+    localStorage.removeItem("JetlagBlockTime");   
+    localStorage.removeItem("JetlagLocationBlocker");
     
     location.reload();
 }
-
 function formatMMSS(totalSeconds){
       const m = Math.floor(totalSeconds / 60);
       const s = totalSeconds % 60;
       return `${String(m)}:${String(s).padStart(2, '0')}`;
 }
-
 function TimeBlocker(){
     var TimeBlock = document.getElementById("TimeBlocker");
     var locationContainer = document.getElementById("Location-container");
     var mapContainer = document.getElementById("map");
-    const styles = window.getComputedStyle(locationContainer);
+    var LocationBlock = document.getElementById("LocationBlocker");
     var buttonContainer = document.getElementById("button-container");
+    const styles = window.getComputedStyle(locationContainer);
     
     if (window.matchMedia("(orientation: portrait)").matches) {
         TimeBlock.style.top = locationContainer.clientHeight + mapContainer.clientHeight   + parseInt(styles.marginTop, 10)  + "px";
+        LocationBlock.style.top = mapContainer.clientHeight   + parseInt(styles.marginTop, 10)  + "px";
      }
      else{
         TimeBlock.style.top = locationContainer.clientHeight  + parseInt(styles.marginTop, 10)  + "px";
 
      }
-    TimeBlock.style.height = buttonContainer.clientHeight   + "px";    
+    TimeBlock.style.height = buttonContainer.clientHeight   + "px";
+    LocationBlock.style.height =  locationContainer.clientHeight   + "px";   
     
     const resterendMs = Math.max(0, BlockTime - Date.now());
     const resterendSec = Math.ceil(resterendMs / 1000); // rond omhoog zodat tekst niet te vroeg 0 wordt
@@ -632,13 +638,21 @@ function TimeBlocker(){
     if (resterendMs <= 0) {
         clearInterval(tick);
         BlockTime= 0;
-        localStorage.setItem("JetlagBlockTime", BlockTime);
+        //localStorage.setItem("JetlagBlockTime", BlockTime);
+        localStorage.removeItem("JetlagLocationBlocker");
+        localStorage.removeItem("JetlagBlockTime");
         TimeBlock.style.display = "none";
+        LocationBlock.style.display = "none";
     }
 }
 
 var tick;
 var BlockTime= localStorage.getItem("JetlagBlockTime") || 0;
+var JetlagLocationBlocker= localStorage.getItem("JetlagLocationBlocker") || 0;
+if (JetlagLocationBlocker) {   
+    var locationContainer = document.getElementById("LocationBlocker"); 
+    locationContainer.style.display = "grid";
+}
 if(BlockTime){
     TimeBlock = document.getElementById("TimeBlocker");
     TimeBlock.style.display = "grid";
@@ -656,11 +670,10 @@ function SetTimeBlocker(secondes){
     TimeBlocker(); // meteen updaten
     tick = setInterval(TimeBlocker, 100); // elke seconde bijwerken
 }
+
 document.getElementById("UnpackSeed").addEventListener("click", UnpackSeed);
 function UnpackSeed(){
-    const Seed = document.getElementById("SeedInput").value;
-    const answerBox = document.getElementById("answer");
-        
+    const Seed = document.getElementById("SeedInput").value;        
     Today = new Date();
     day = (Today.getDay() + 1) * 7;
     date = Today.getDate();
