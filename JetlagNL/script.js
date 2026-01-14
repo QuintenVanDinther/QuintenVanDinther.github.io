@@ -476,7 +476,7 @@ function questionPerron(hidePlace, location){
         return "Oeps er ging iets fout met je perrons"
 }
 function answerQuestion(question, location){
-const answerBox = document.getElementById("answer");
+    const answerBox = document.getElementById("answer");
     answerBox.textContent += '- ['+ City[location].name + "] ";
     switch (question) {
         case "name":
@@ -552,6 +552,7 @@ const answerBox = document.getElementById("answer");
     // reset of inputs
     //document.getElementById("questionSelect").value = "";
     document.getElementById("location").value = "";
+
 }
 function answerQuestionMenu(ParameterGiven, QuestionButton) {
     let question ;
@@ -574,6 +575,9 @@ function answerQuestionMenu(ParameterGiven, QuestionButton) {
         let lijst = JSON.parse(localStorage.getItem("JetlagQuestions")) || [];
         lijst.push([question,location]);
         localStorage.setItem("JetlagQuestions", JSON.stringify(lijst));
+            
+        //Set timeBlocker
+        SetTimeBlocker(20);
     }
 }
 function GuesseCity(){
@@ -593,11 +597,91 @@ function GuesseCity(){
 }
 function NewGame(){
     localStorage.removeItem("HidePlace");
-    localStorage.removeItem("JetlagQuestions");
+    localStorage.removeItem("JetlagQuestions");    
+    localStorage.removeItem("JetlagBlockTime");
+    
     location.reload();
 }
 
+function formatMMSS(totalSeconds){
+      const m = Math.floor(totalSeconds / 60);
+      const s = totalSeconds % 60;
+      return `${String(m)}:${String(s).padStart(2, '0')}`;
+}
 
+function TimeBlocker(){
+    var TimeBlock = document.getElementById("TimeBlocker");
+    var locationContainer = document.getElementById("Location-container");
+    var mapContainer = document.getElementById("map");
+    const styles = window.getComputedStyle(locationContainer);
+    var buttonContainer = document.getElementById("button-container");
+    
+    if (window.matchMedia("(orientation: portrait)").matches) {
+        TimeBlock.style.top = locationContainer.clientHeight + mapContainer.clientHeight   + parseInt(styles.marginTop, 10)  + "px";
+     }
+     else{
+        TimeBlock.style.top = locationContainer.clientHeight  + parseInt(styles.marginTop, 10)  + "px";
+
+     }
+    TimeBlock.style.height = buttonContainer.clientHeight   + "px";    
+    
+    const resterendMs = Math.max(0, BlockTime - Date.now());
+    const resterendSec = Math.ceil(resterendMs / 1000); // rond omhoog zodat tekst niet te vroeg 0 wordt
+    TimeBlock.textContent = `Nog ${formatMMSS(resterendSec)} minuten over`;
+
+    if (resterendMs <= 0) {
+        clearInterval(tick);
+        BlockTime= 0;
+        localStorage.setItem("JetlagBlockTime", BlockTime);
+        TimeBlock.style.display = "none";
+    }
+}
+
+var tick;
+var BlockTime= localStorage.getItem("JetlagBlockTime") || 0;
+if(BlockTime){
+    TimeBlock = document.getElementById("TimeBlocker");
+    TimeBlock.style.display = "grid";
+    TimeBlocker(); // meteen updaten
+    tick = setInterval(TimeBlocker, 100); // elke seconde bijwerken
+}
+
+function SetTimeBlocker(secondes){    
+    TimeBlock = document.getElementById("TimeBlocker");
+    duurMs = secondes * 1000;
+    BlockTime = Date.now() + duurMs;
+    localStorage.setItem("JetlagBlockTime", BlockTime);
+    TimeBlock.style.display = "grid";
+
+    TimeBlocker(); // meteen updaten
+    tick = setInterval(TimeBlocker, 100); // elke seconde bijwerken
+}
+document.getElementById("UnpackSeed").addEventListener("click", UnpackSeed);
+function UnpackSeed(){
+    const Seed = document.getElementById("SeedInput").value;
+    const answerBox = document.getElementById("answer");
+        
+    Today = new Date();
+    day = (Today.getDay() + 1) * 7;
+    date = Today.getDate();
+    val = (parseInt(Seed) - day) / date; 
+    check = 1;
+
+    City.forEach((City, index) => {
+        if (City.reizigers == val) {
+            check = 0;            
+            localStorage.setItem("HidePlace", index);
+            localStorage.removeItem("JetlagQuestions");    
+            //localStorage.removeItem("JetlagBlockTime");
+            
+            location.reload();
+        }
+    }); 
+    if(check){
+    alert("Incorrect Seed");   
+
+    }   
+}
 
 //L.rectangle([[53.55,3.3],[50.72,7.2964464]] ).addTo(map);
 //L.circle([51.692195,5.2964464], {radius: 50000}).addTo(map) // Draw cicrle

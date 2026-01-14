@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<style>
+/* Standaard styling (optioneel) */
+body {
+    background: lightgray;
+    font-family: sans-serif;
+}
+
+/* Portrait mode */
+@media (orientation: portrait) {
+    body {
+        background: lightblue;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+}
+
+/* Landscape mode */
+@media (orientation: landscape) {
+    body {
+        background: lightgreen;
+    }
+
+    .container {
+        flex-direction: row;
+    }
+}
+</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <div class="box">Blok 1</div>
+        <div class="box">Blok 2</div>
+    </div>
+</body>
+</html>

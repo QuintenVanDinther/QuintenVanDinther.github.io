@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Mini Wordle</title>
+<style>
+  body { font-family: sans-serif; text-align: center; margin: 20px; }
+  #board { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; justify-content: center; margin-bottom: 10px; }
+  .tile { width: 50px; height: 50px; border: 2px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 24px; text-transform: uppercase; }
+  .correct { background: #6aaa64; color: white; }
+  .present { background: #c9b458; color: white; }
+  .absent { background: #787c7e; color: white; }
+</style>
+</head>
+<body>
+<h1>Mini Wordle</h1>
+<div id="board"></div>
+<input id="guess" maxlength="5" placeholder="Raad het woord">
+<button onclick="submitGuess()">OK</button>
+<p id="message"></p>
+
+<script>
+const solution = "appel"; // Kies een vast woord
+const maxGuesses = 6;
+let guesses = 0;
+
+const board = document.getElementById('board');
+for (let i = 0; i < maxGuesses * 5; i++) {
+  const div = document.createElement('div');
+  div.className = 'tile';
+  board.appendChild(div);
+}
+
+function submitGuess() {
+  if (guesses >= maxGuesses) return;
+  const input = document.getElementById('guess');
+  const guess = input.value.toLowerCase();
+  if (guess.length !== 5) return alert("5 letters!");
+  const tiles = board.querySelectorAll('.tile');
+  for (let i = 0; i < 5; i++) {
+    const tile = tiles[guesses * 5 + i];
+    tile.textContent = guess[i];
+    if (guess[i] === solution[i]) {
+      tile.classList.add('correct');
+    } else if (solution.includes(guess[i])) {
+      tile.classList.add('present');
+    } else {
+      tile.classList.add('absent');
+    }
+  }
+  guesses++;
+  input.value = '';
+  if (guess === solution) {
+    document.getElementById('message').textContent = "Gewonnen!";
+  } else if (guesses === maxGuesses) {
+    document.getElementById('message').textContent = "Verloren! Het woord was: " + solution;
+  }
+}
+</script>
+</body>
+</html>

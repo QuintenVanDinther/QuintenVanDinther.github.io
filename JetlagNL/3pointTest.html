@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Middelpunt van 3 punten</title>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  #map { height: 90vh; width: 100%; }
+</style>
+</head>
+<body>
+
+<h2>Middelpunt van 3 punten</h2>
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// Voorbeeldpunten: 3 locaties in Nederland
+const Airports = [
+  {
+    "name": "Schiphol Amsterdam Airport",
+    "longitude": 4.767904,
+    "latitude": 52.307079,
+  },
+  {
+    "name": "Eindhoven Airport",
+    "longitude": 5.375490,
+    "latitude": 51.450923,
+  },
+{
+    "name": "Rotterdam The Hague Airport",
+    "longitude": 4.433264,
+    "latitude": 51.952382,
+  },
+  {
+    "name": "Maastricht Aachen Airport",
+    "longitude": 5.770113,
+    "latitude": 50.911971,
+  },
+  {
+    "name": "Groningen Airport Eelde",
+    "longitude": 6.580127,
+    "latitude": 53.122797,
+  }
+]
+
+// Maak de map
+const map = L.map('map').setView([52.2, 5], 8);
+
+// Voeg tiles toe
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// Toon de 3 punten als markers
+Airports.forEach(p => {
+    L.marker([p.latitude, p.longitude])
+      .addTo(map)
+      .bindPopup(p.name)
+      .openPopup();
+});
+
+// Functie om het middenpunt te berekenen (platte aarde benadering)
+function midpoint3Points(p1, p2, p3) {
+    const lat = (p1.latitude + p2.latitude + p3.latitude) / 3;
+    const lon = (p1.longitude + p2.longitude + p3.longitude) / 3;
+    return { lat, lon };
+}
+
+// Bereken middelpunt
+const center = midpoint3Points(Airports[0], Airports[1], Airports[2]);
+
+// Voeg marker voor het middelpunt toe
+L.marker([center.lat, center.lon], { 
+    icon: L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+        iconSize: [32,32],
+        iconAnchor: [16,32],
+        popupAnchor: [0,-32]
+    })
+}).addTo(map).bindPopup("Middelpunt").openPopup();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/Falke-Design/L.Donut@latest/src/L.Donut.js"></script>
+    <title>JetLag NL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script src="cities.js"></script>
+<script src="airports.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+<body>
+    <div id="map"> </div>
+    <div class="container">
+        <h2>In welke plaats ben je?</h2>
+        <select id="location">
+            <option value="">-- Kies een stad --</option>
+        </select>
+        <button class="FormButton" id="CreateSeed">Make Seed</button>
+        <div id="NewSeed"></div>
+    </div>
+    <div class="container">
+        <h2>De Seed is</h2>
+
+        <input type="text" id="SeedInput">
+
+        <button class="FormButton" id="UnpackSeed">Set Seed</button>
+
+        <div id="answer"></div>
+    </div>
+
+</body>
+<script>
+    document.getElementById("CreateSeed").addEventListener("click", MakeSeed);
+    document.getElementById("UnpackSeed").addEventListener("click", UnpackSeed);
+   const StationPin = L.icon({
+        iconUrl: 'NS-logo-rond.png',
+        iconSize: [32, 32],      // grootte van de icon
+        iconAnchor: [16, 32],    // punt dat exact op de locatie staat
+        popupAnchor: [0, -32]    // positie van popup t.o.v. icon
+    }); 
+   
+    //create Map
+    const key = 'hONND70ZnmXTTP4XOnck';
+    const map = L.map('map',{
+            maxBounds: [[53.66, 3], [50.66, 7.1]],
+            maxBoundsViscosity: 1.0, 
+        }).setView([52.2018052, 5.4360145,8.21], 8); //starting position
+    L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${key}`,{ tileSize: 512, zoomOffset: -1, minZoom: 7,maxzoom: 19, crossOrigin: true}).addTo(map);
+
+
+    //Fill in the Location field
+    const dropdown = document.getElementById("location");
+    var cityMarkers = [];
+    let currentProvince = "";
+    let optgroup;
+
+    City.forEach((City, index) => {
+        if (City.province !== currentProvince) {
+            currentProvince = City.province;
+            optgroup = document.createElement("optgroup");
+            optgroup.label = currentProvince;
+            dropdown.appendChild(optgroup);
+        }
+
+        const optionElement = document.createElement("option");
+        optionElement.value = index; 
+        optionElement.textContent = City.name;
+        dropdown.appendChild(optionElement);
+
+        //Pin toevoegen per station
+        const marker = L.marker([City.latitude, City.longitude], {icon: StationPin}).addTo(map);
+        marker.bindPopup(City.name);
+        cityMarkers[City.name] = marker;
+
+        // Klik op marker → selecteert automatisch die stad in dropdown
+        marker.on("click", () => { dropdown.value = index;});
+    });
+
+    function MakeSeed(){
+        const location = document.getElementById("location").value;
+        const answerBox = document.getElementById("NewSeed");
+        
+        Today = new Date();
+        day = (Today.getDay() + 1) * 7;
+        date = Today.getDate();
+
+        val = (parseInt(City[location].reizigers) * date) + day;
+
+        answerBox.textContent = val;
+    }
+
+    function UnpackSeed(){
+        const Seed = document.getElementById("SeedInput").value;
+        const answerBox = document.getElementById("answer");
+        
+        Today = new Date();
+        day = (Today.getDay() + 1) * 7;
+        date = Today.getDate();
+
+        val = (parseInt(Seed) - day) / date; 
+
+        City.forEach((City, index) => {
+            if (City.reizigers == val) {
+                answerBox.textContent = City.name;
+            }
+        });
+        
+        
+    }
+
+</script>
+</html>

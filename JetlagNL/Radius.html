@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Afstand tussen twee punten</title>
+  <style>
+    #map { height: 600px; width: 100%; margin-top: 20px; }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Klik twee punten op de kaart om afstand te meten</h2>
+  <div id="map"></div>
+  <script>
+   
+function haversineDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Aardstraal in kilometers
+  const toRad = angle => angle * Math.PI / 180;
+
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+
+  const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon / 2) ** 2;
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return R * c; // Afstand in kilometers
+}
+
+// Voorbeeld: afstand tussen Eindhoven en Amsterdam
+//const afstand = haversineDistance(51.4416, 5.4697, 51.690518, 5.295353);
+const afstand = haversineDistance(51.9849839, 5.9003038, 51.690518, 5.295353);
+console.log(`Afstand: ${afstand.toFixed(2)} km`);
+
+  </script>
+</body>
+</html>

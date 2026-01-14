@@ -54,7 +54,7 @@ optgroup {
     color: #ffffff;
 }
 
-#answer {
+#answer, #NewSeed{
     padding: 10px;
     background: #eef3ff;
     border-radius: 5px;
@@ -78,6 +78,27 @@ select{
     padding: 0.5vh;
 }
 
+  /* Deze moet erbóven komen */
+  .overlay {
+    position: absolute;            /* z-index werkt alleen op gepositioneerde elementen */
+    top: 1%;
+    background: rgba(228, 134, 134, 0.95);
+    z-index: 9999;                 /* hoger = bovenaan (binnen dezelfde stacking context) */
+    color: white;
+    display: grid;
+    place-items: center;
+    
+    margin-left: 55%;
+    padding: 20px;
+    width: 40%;
+  }
+
+  #TimeBlocker{
+    top: 20vh;
+    height: 40vh;
+    display: none; 
+  }
+
 @media (orientation: portrait) {
     #map {
         position: absolute; 
@@ -95,6 +116,12 @@ select{
         margin: 0.5vh;
     }
     .container {        
+        margin-left: 5vw;
+        margin-right: 5vw;
+        padding: 1vw;
+        width: 88vw;
+    }
+    .overlay {  
         margin-left: 5vw;
         margin-right: 5vw;
         padding: 1vw;

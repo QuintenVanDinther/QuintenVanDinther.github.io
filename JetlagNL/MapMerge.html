@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Leaflet Map met Begrenzing en Pin</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // 1. Maak de kaart
+    const map = L.map('map', {
+        center: [51.505, -0.09],  // Startpositie
+        zoom: 14,
+        maxBounds: [
+            [51.49, -0.12], // zuidwest grens
+            [51.52, -0.06]  // noordoost grens
+        ],
+        maxBoundsViscosity: 1.0 // volledig geblokkeerd buiten de grens
+    });
+
+    // 2. Voeg tiles toe
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom: 12
+    }).addTo(map);
+
+    // 3. Voeg een pin toe
+    const marker = L.marker([51.505, -0.09]).addTo(map);
+
+    // 4. Optionele popup
+    marker.bindPopup("Hier is mijn pin!").openPopup();
+
+</script>
+
+</body>
+</html>
